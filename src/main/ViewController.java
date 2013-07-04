@@ -9,23 +9,6 @@ public class ViewController implements Runnable{
 	
 	Model model;
 	
-	public enum KeyPress {
-		FORWARD(Keyboard.KEY_W),
-		BACKWARD(Keyboard.KEY_S),
-		RIGHT(Keyboard.KEY_D),
-		LEFT(Keyboard.KEY_A);
-		
-		private int keyID;
-		
-		private KeyPress(int keyID){
-			this.keyID = keyID;
-		}
-		
-		public int getKeyID(){
-			return keyID;
-		}
-	}
-	
 	public ViewController(Model model){
 		this.model = model;
 	}
@@ -43,11 +26,40 @@ public class ViewController implements Runnable{
 		
 		while (!Display.isCloseRequested()) {
 			
+
+			handleInput();
+			
 			// render OpenGL here
 			
 			Display.update();
 		}
 		
 		Display.destroy();
+	}
+	
+	public void handleInput() {
+		while (Keyboard.next()) {
+		    if (Keyboard.getEventKeyState()) {
+		        if (Keyboard.getEventKey() == KeyPress.FORWARD.getKeyID()) {
+		        	System.out.println("forward");
+		        } else if (Keyboard.getEventKey() == KeyPress.BACKWARD.getKeyID()) {
+		        	System.out.println("backward");
+		        } else if (Keyboard.getEventKey() == KeyPress.LEFT.getKeyID()) {
+		        	System.out.println("left");
+		        } else if (Keyboard.getEventKey() == KeyPress.RIGHT.getKeyID()) {
+		        	System.out.println("right");
+		        }
+		    } else {
+		        if (Keyboard.getEventKey() == KeyPress.FORWARD.getKeyID()) {
+		        	System.out.println("forward released");
+		        } else if (Keyboard.getEventKey() == KeyPress.BACKWARD.getKeyID()) {
+		        	System.out.println("backward released");
+		        } else if (Keyboard.getEventKey() == KeyPress.LEFT.getKeyID()) {
+		        	System.out.println("left released");
+		        } else if (Keyboard.getEventKey() == KeyPress.RIGHT.getKeyID()) {
+		        	System.out.println("right released");
+		        }
+		    }
+		}	
 	}
 }
