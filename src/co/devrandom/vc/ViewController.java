@@ -1,10 +1,11 @@
 package co.devrandom.vc;
 
+import static org.lwjgl.opengl.GL11.*;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
 
 import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
@@ -28,24 +29,26 @@ public class ViewController implements Runnable{
 		
 		// Initialize OpenGL and LWJGL
 		{
-			GL11.glViewport(0, 0, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT);
-			GL11.glEnable(GL11.GL_DEPTH_TEST);
-			GL11.glDepthFunc(GL11.GL_LEQUAL);
-			GL11.glShadeModel(GL11.GL_SMOOTH);
-			GL11.glEnable(GL11.GL_LINE_SMOOTH);
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glEnable(GL11.GL_ALPHA_TEST);
-			GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
-			GL11.glClearColor(1, 1, 1, 1);
-			GL11.glLineWidth(3);
-			GL11.glTexParameteri( GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR );
+			glViewport(0, 0, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT);
+			glEnable(GL_DEPTH_TEST);
+			glDepthFunc(GL_LEQUAL);
+			glShadeModel(GL_SMOOTH);
+			glEnable(GL_LINE_SMOOTH);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glEnable(GL_BLEND);
+			glEnable(GL_ALPHA_TEST);
+			glAlphaFunc(GL_GREATER, 0.1f);
+			glClearColor(1, 1, 1, 1);
+			glLineWidth(3);
+			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
 		}
 		
 		while (!Display.isCloseRequested()) {
 			setCamera();
 
 			handleInput();
+			
+			TextureList.EVIL_SMILEY.bindTexture();
 			
 			// render OpenGL here
 			
@@ -86,12 +89,12 @@ public class ViewController implements Runnable{
 	 * at controller.getCameraPosition().
 	 */
 	private void setCamera() {
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glLoadIdentity();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
 		// TODO: Matrix transforms here
-	    GL11.glOrtho(0.0f, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT, 0.0f, 0.0f, 1.0f);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-		GL11.glLoadIdentity();
+	    glOrtho(0.0f, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT, 0.0f, 0.0f, 1.0f);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 	}
 }
