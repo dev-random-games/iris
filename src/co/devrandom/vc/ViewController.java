@@ -32,15 +32,16 @@ public class ViewController implements Runnable{
 			glViewport(0, 0, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT);
 			glEnable(GL_DEPTH_TEST);
 			glDepthFunc(GL_LEQUAL);
-			glShadeModel(GL_SMOOTH);
+			//glShadeModel(GL_SMOOTH);
 			glEnable(GL_LINE_SMOOTH);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glEnable(GL_BLEND);
 			glEnable(GL_ALPHA_TEST);
 			glAlphaFunc(GL_GREATER, 0.1f);
-			glClearColor(1, 1, 1, 1);
+			glEnable(GL_TEXTURE_2D);
+			glClearColor(0, 0, 0, 1);
 			glLineWidth(3);
-			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
+			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
 		}
 		
 		while (!Display.isCloseRequested()) {
@@ -48,7 +49,28 @@ public class ViewController implements Runnable{
 
 			handleInput();
 			
+			glPushMatrix();
+			
+			// Put all world matrix transforms here.
+			glTranslatef((float) GameState.WINDOW_WIDTH / 2, (float) GameState.WINDOW_HEIGHT / 2, 0);
+			glScalef(.5f, .5f, .5f);
+			
 			TextureList.EVIL_SMILEY.bindTexture();
+			
+			//glColor3f(0, 0, 0);
+			
+			glBegin(GL_QUADS);
+			glTexCoord2f(0,0);
+			glVertex2f(0, 0);
+			glTexCoord2f(1,0);
+			glVertex2f(100, 0);
+			glTexCoord2f(1,1);
+			glVertex2f(100, 100);
+			glTexCoord2f(0,1);
+			glVertex2f(0, 100);
+			glEnd();
+			
+			glPopMatrix();
 			
 			// render OpenGL here
 			
@@ -56,6 +78,7 @@ public class ViewController implements Runnable{
 		}
 		
 		Display.destroy();
+		System.exit(0);
 	}
 	
 	public void handleInput() {
@@ -92,7 +115,6 @@ public class ViewController implements Runnable{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		// TODO: Matrix transforms here
 	    glOrtho(0.0f, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT, 0.0f, 0.0f, 1.0f);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
