@@ -6,14 +6,11 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
+import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
 
 public class ViewController implements Runnable{
-	
 	Model model;
-	
-	private static final int WIDTH = 800;
-	private static final int HEIGHT = 600;	
 	
 	public ViewController(Model model){
 		this.model = model;
@@ -21,7 +18,8 @@ public class ViewController implements Runnable{
 	
 	public void run() {
 		try {
-			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+			Display.setDisplayMode(new DisplayMode(GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT));
+			Display.setTitle(GameState.NAME);
 			Display.create();
 		} catch (LWJGLException e) {
 			e.printStackTrace();
@@ -30,7 +28,7 @@ public class ViewController implements Runnable{
 		
 		// Initialize OpenGL and LWJGL
 		{
-			GL11.glViewport(0, 0, WIDTH, HEIGHT);
+			GL11.glViewport(0, 0, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT);
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
 			GL11.glDepthFunc(GL11.GL_LEQUAL);
 			GL11.glShadeModel(GL11.GL_SMOOTH);
@@ -92,7 +90,7 @@ public class ViewController implements Runnable{
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
 		// TODO: Matrix transforms here
-	    GL11.glOrtho(0.0f, WIDTH, HEIGHT, 0.0f, 0.0f, 1.0f);
+	    GL11.glOrtho(0.0f, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT, 0.0f, 0.0f, 1.0f);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glLoadIdentity();
 	}

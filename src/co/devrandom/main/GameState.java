@@ -3,6 +3,10 @@ package co.devrandom.main;
 public class GameState {
 	private static final GameState gameState = new GameState(State.MAIN_MENU);
 	
+	public static final String NAME = "Iris";
+	public static final int WINDOW_WIDTH = 800;
+	public static final int WINDOW_HEIGHT = 600;	
+	
 	private enum State {
 		RUNNING,
 		PAUSED,
