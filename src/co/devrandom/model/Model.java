@@ -1,6 +1,9 @@
-package main;
+package co.devrandom.model;
 
 import java.util.ArrayList;
+
+import co.devrandom.main.GameState;
+
 
 public class Model implements Runnable{
 	

@@ -1,4 +1,7 @@
-package main;
+package co.devrandom.main;
+
+import co.devrandom.model.Model;
+import co.devrandom.vc.ViewController;
 
 public class Main {
 	

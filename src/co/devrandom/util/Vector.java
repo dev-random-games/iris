@@ -1,4 +1,4 @@
-package main;
+package co.devrandom.util;
 
 public class Vector {
 	public double x, y;

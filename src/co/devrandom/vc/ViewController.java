@@ -1,9 +1,11 @@
-package main;
+package co.devrandom.vc;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+
+import co.devrandom.model.Model;
 
 public class ViewController implements Runnable{
 	

@@ -1,4 +1,4 @@
-package main;
+package co.devrandom.model;
 
 public class GameObject {
 

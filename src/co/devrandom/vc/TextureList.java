@@ -1,4 +1,4 @@
-package main;
+package co.devrandom.vc;
 
 public enum TextureList {
 	;

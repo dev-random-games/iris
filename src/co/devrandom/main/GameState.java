@@ -1,4 +1,4 @@
-package main;
+package co.devrandom.main;
 
 public class GameState {
 	private static final GameState gameState = new GameState(State.MAIN_MENU);
