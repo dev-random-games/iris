@@ -45,7 +45,7 @@ public class ViewController implements Runnable{
 		}
 		
 		while (!Display.isCloseRequested()) {
-			
+			setCamera();
 
 			handleInput();
 			
