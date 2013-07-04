@@ -1,5 +1,7 @@
 package co.devrandom.vc;
 
+import static org.lwjgl.opengl.GL11.*;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -38,6 +40,8 @@ public class ViewController implements Runnable{
 			setCamera();
 
 			handleInput();
+			
+			TextureList.EVIL_SMILEY.bindTexture();
 			
 			// render OpenGL here
 			
@@ -100,12 +104,12 @@ public class ViewController implements Runnable{
 	 * at controller.getCameraPosition().
 	 */
 	private void setCamera() {
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glLoadIdentity();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
 		// TODO: Matrix transforms here
-	    GL11.glOrtho(0.0f, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT, 0.0f, 0.0f, 1.0f);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-		GL11.glLoadIdentity();
+	    glOrtho(0.0f, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT, 0.0f, 0.0f, 1.0f);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 	}
 }
