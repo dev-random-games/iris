@@ -5,12 +5,17 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.TrueTypeFont;
 
 import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
+import co.devrandom.util.FontLoader;
 
 public class ViewController implements Runnable{
 	Model model;
+	TrueTypeFont headerFont;
+	TrueTypeFont bodyFont;
 	
 	public ViewController(Model model){
 		this.model = model;
@@ -26,21 +31,8 @@ public class ViewController implements Runnable{
 			System.exit(0);
 		}
 		
-		// Initialize OpenGL and LWJGL
-		{
-			GL11.glViewport(0, 0, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT);
-			GL11.glEnable(GL11.GL_DEPTH_TEST);
-			GL11.glDepthFunc(GL11.GL_LEQUAL);
-			GL11.glShadeModel(GL11.GL_SMOOTH);
-			GL11.glEnable(GL11.GL_LINE_SMOOTH);
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glEnable(GL11.GL_ALPHA_TEST);
-			GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
-			GL11.glClearColor(1, 1, 1, 1);
-			GL11.glLineWidth(3);
-			GL11.glTexParameteri( GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR );
-		}
+		initGL();
+		loadFonts();
 		
 		while (!Display.isCloseRequested()) {
 			setCamera();
@@ -48,6 +40,8 @@ public class ViewController implements Runnable{
 			handleInput();
 			
 			// render OpenGL here
+			
+			bodyFont.drawString(10, 10, "Fonts!", Color.black);
 			
 			Display.update();
 		}
@@ -79,6 +73,26 @@ public class ViewController implements Runnable{
 		        }
 		    }
 		}	
+	}
+	
+	private void initGL() {
+		GL11.glViewport(0, 0, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthFunc(GL11.GL_LEQUAL);
+		GL11.glShadeModel(GL11.GL_SMOOTH);
+		GL11.glEnable(GL11.GL_LINE_SMOOTH);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glEnable(GL11.GL_ALPHA_TEST);
+		GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
+		GL11.glClearColor(1, 1, 1, 1);
+		GL11.glLineWidth(3);
+		GL11.glTexParameteri( GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR );	
+	}
+
+	private void loadFonts() {
+		this.headerFont = FontLoader.loadTTF("iceland.ttf", 24f);
+		this.bodyFont = FontLoader.loadTTF("iceland.ttf", 16f);	
 	}
 	
 	/**
