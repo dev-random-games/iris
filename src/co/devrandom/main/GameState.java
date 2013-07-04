@@ -7,6 +7,7 @@ public class GameState {
 	public static final String ASSET_PATH = "/assets/";
 	public static final String FONT_PATH = ASSET_PATH + "fonts/";
 	public static final String IMG_PATH = ASSET_PATH + "img/";
+	public static final String AUDIO_PATH = ASSET_PATH + "audio/";
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
 	public static final boolean ANTIALIAS = true;
