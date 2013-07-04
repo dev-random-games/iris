@@ -4,8 +4,15 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
-public class ViewController {
-	public void start() {
+public class ViewController implements Runnable{
+	
+	Model model;
+	
+	public ViewController(Model model){
+		this.model = model;
+	}
+	
+	public void run() {
 		try {
 			Display.setDisplayMode(new DisplayMode(800,600));
 			Display.create();
@@ -24,10 +31,5 @@ public class ViewController {
 		}
 		
 		Display.destroy();
-	}
-	
-	public static void main(String[] argv) {
-		ViewController displayExample = new ViewController();
-		displayExample.start();
 	}
 }

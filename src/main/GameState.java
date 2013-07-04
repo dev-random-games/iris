@@ -1,7 +1,7 @@
 package main;
 
 public class GameState {
-	private static final GameState gameState = new GameState(State.RUNNING);
+	private static final GameState gameState = new GameState(State.MAIN_MENU);
 	
 	private enum State {
 		RUNNING,
