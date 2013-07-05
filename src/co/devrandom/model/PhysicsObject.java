@@ -63,7 +63,7 @@ public class PhysicsObject {
 	}
 	
 	public float getRotation() {
-		return body.getAngle();
+		return (float) (body.getAngle() * 180 / Math.PI);
 	}
 	
 	public Body getBody() {

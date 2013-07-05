@@ -119,7 +119,7 @@ public class ViewController implements Runnable{
 		
 			glPopMatrix();
 			
-			bodyFont.drawString(10, 10, "Fonts!", Color.black);
+			bodyFont.drawString(10, 10, "Ayyyyyyyy!", Color.black);
 			
 			SoundStore.get().poll(0);
 			

@@ -3,7 +3,7 @@ package co.devrandom.vc;
 import co.devrandom.util.Vector;
 
 public class TextureAttributes {
-	private static final float DEFAULT_WIDTH = 128, DEFAULT_HEIGHT = 128;
+	private static final float DEFAULT_WIDTH = 100, DEFAULT_HEIGHT = 100;
 	private static final long DEFAULT_FRAME_DURATION = 250l;
 	
 	public TextureList[] textures;

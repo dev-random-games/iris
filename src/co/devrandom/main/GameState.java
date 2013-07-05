@@ -14,7 +14,7 @@ public class GameState {
 	public static final boolean ANTIALIAS = true;
 	public static final int FPS = 60; 
 	
-	public static float SCALE = 10f;
+	public static float SCALE = 50f;
 	public static float TIME_STEP = 1f / 60f;
 	public static int VELOCITY_ITERATIONS = 6;
 	public static int POSITION_ITERATIONS = 2;
