@@ -53,6 +53,7 @@ public class ViewController implements Runnable{
 		try {
 			Display.setDisplayMode(new DisplayMode(GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT));
 			Display.setTitle(GameState.NAME);
+			Display.sync(GameState.FPS);
 			Display.create();
 		} catch (LWJGLException e) {
 			e.printStackTrace();
@@ -65,6 +66,12 @@ public class ViewController implements Runnable{
 		loadTextures();
 		
 		while (!Display.isCloseRequested()) {
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
 			setCamera();
 
 			handleInput();
@@ -81,6 +88,7 @@ public class ViewController implements Runnable{
 			for (GameObject gameObject : model.getGameObjects()){
 				TextureAttributes texAttr = gameObject.getTexAttributes();
 				if (texAttr != null) {
+					texAttr.checkAnimation();
 					texAttr.textures[texAttr.currentFrame].bindTexture();
 					glColor4f(texAttr.r, texAttr.g, texAttr.b, texAttr.a);
 					glPushMatrix();

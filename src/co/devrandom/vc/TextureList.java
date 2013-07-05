@@ -19,7 +19,11 @@ public enum TextureList {
 	/*
 	 * Put all textures needed in game right here!
 	 */
-	EVIL_SMILEY("evil-smiley.png", false, new Vector(), new Vector(12, 12));
+	EVIL_SMILEY("evil-smiley.png", false),
+	SMILEY_MOUTH_1("smiley-mouth.png", false, new Vector(0, 0), new Vector(16, 16)),
+	SMILEY_MOUTH_2("smiley-mouth.png", false, new Vector(16, 0), new Vector(32, 16)),
+	SMILEY_MOUTH_3("smiley-mouth.png", false, new Vector(0, 16), new Vector(16, 32)),
+	SMILEY_MOUTH_4("smiley-mouth.png", false, new Vector(16, 16), new Vector(32, 32));
 
 	private String filePath;
 	private Texture texture;
@@ -45,6 +49,11 @@ public enum TextureList {
 		try {
 			texture = TextureLoader.getTexture("PNG",
 					ResourceLoader.getResourceAsStream(GameState.IMG_PATH + filePath));
+			if (smooth) {
+				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			} else {
+				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			}
 			dim = new Vector(texture.getImageWidth(), texture.getImageHeight());
 			if (endParam == null){
 				startParam = new Vector((float) start.x / dim.x, (float) start.y / dim.y);
@@ -67,11 +76,6 @@ public enum TextureList {
 	}
 
 	public void bindTexture() {
-		if (smooth) {
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		} else {
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		}
 		texture.bind();
 	}
 }

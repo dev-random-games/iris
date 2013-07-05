@@ -11,7 +11,14 @@ public class GameObject {
 	private float rotation;
 	
 	public GameObject() {
-		texAttributes = new TextureAttributes(TextureList.EVIL_SMILEY);
+		texAttributes = new TextureAttributes(new TextureList[] {TextureList.SMILEY_MOUTH_1,
+																 TextureList.SMILEY_MOUTH_2,
+																 TextureList.SMILEY_MOUTH_3,
+																 TextureList.SMILEY_MOUTH_4,
+																 TextureList.SMILEY_MOUTH_4,
+																 TextureList.SMILEY_MOUTH_3,
+																 TextureList.SMILEY_MOUTH_2,
+																 TextureList.SMILEY_MOUTH_1});
 		position = new Vector();
 	}
 
