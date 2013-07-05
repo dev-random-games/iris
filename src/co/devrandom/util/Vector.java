@@ -1,13 +1,13 @@
 package co.devrandom.util;
 
 public class Vector {
-	public double x, y;
+	public float x, y;
 	
 	public Vector() {
 		x = y = 0;
 	}
 
-	public Vector(double x, double y) {
+	public Vector(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -17,11 +17,11 @@ public class Vector {
 		y = v.y;
 	}
 
-	public double dot(Vector v) {
+	public float dot(Vector v) {
 		return x * v.x + y * v.y;
 	}
 
-	public double cross(Vector v) {
+	public float cross(Vector v) {
 		return x * v.y - y * v.x;
 	}
 
@@ -39,11 +39,11 @@ public class Vector {
 		y = v.y;
 	}
 
-	public Vector scale(double scalar) {
+	public Vector scale(float scalar) {
 		return new Vector(x * scalar, y * scalar);
 	}
 	
-	public void scaleInPlace(double scalar) {
+	public void scaleInPlace(float scalar) {
 		x *= scalar;
 		y *= scalar;
 	}
@@ -56,22 +56,22 @@ public class Vector {
 		addInPlace(v.scale(-1));
 	}
 
-	public double mag() {
-		return Math.sqrt(x * x + y * y);
+	public float mag() {
+		return (float) Math.sqrt(x * x + y * y);
 	}
 
 	public Vector norm() {
 		return scale(1 / mag());
 	}
 
-	public Vector rot(double deg) {
-		double cos = Math.cos(deg);
-		double sin = Math.sin(deg);
+	public Vector rot(float deg) {
+		float cos = (float) Math.cos(deg);
+		float sin = (float) Math.sin(deg);
 		return new Vector(cos * x - sin * y, sin * x + cos * y);
 	}
 
 	public Vector projection(Vector v) {
-		return v.scale(dot(v) / Math.pow(v.mag(), 2));
+		return v.scale(dot(v) / (float) Math.pow(v.mag(), 2));
 	}
 	
 	public Vector perp(Vector v) {
