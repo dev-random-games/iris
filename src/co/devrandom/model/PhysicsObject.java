@@ -20,8 +20,15 @@ public class PhysicsObject {
 	private Body body;
 	
 	public PhysicsObject(World world, float x, float y, BodyType type, Shape shape, float density, float friction, float restitution) {
-		texAttributes = new TextureAttributes(TextureList.EVIL_SMILEY);
-		
+		texAttributes = new TextureAttributes(new TextureList[] {TextureList.SMILEY_MOUTH_1,
+				 TextureList.SMILEY_MOUTH_2,
+				 TextureList.SMILEY_MOUTH_3,
+				 TextureList.SMILEY_MOUTH_4,
+				 TextureList.SMILEY_MOUTH_4,
+				 TextureList.SMILEY_MOUTH_3,
+				 TextureList.SMILEY_MOUTH_2,
+				 TextureList.SMILEY_MOUTH_1});
+
 		bd = new BodyDef();
 		bd.position.set(x, y);
 		bd.type = type;
