@@ -7,7 +7,8 @@ public enum KeyPress {
 	BACKWARD(Keyboard.KEY_S),
 	RIGHT(Keyboard.KEY_D),
 	LEFT(Keyboard.KEY_A),
-	PING(Keyboard.KEY_P);
+	PING(Keyboard.KEY_P),
+	PAUSE(Keyboard.KEY_SPACE);
 	
 	private int keyID;
 	

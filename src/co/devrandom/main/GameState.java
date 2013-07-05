@@ -1,7 +1,7 @@
 package co.devrandom.main;
 
 public class GameState {
-	private static final GameState gameState = new GameState(State.MAIN_MENU);
+	private static final GameState gameState = new GameState(State.PAUSED);
 	
 	public static final String NAME = "Iris";
 	public static final String ASSET_PATH = "/assets/";
@@ -12,7 +12,7 @@ public class GameState {
 	public static final int WINDOW_HEIGHT = 600;
 	public static final boolean ANTIALIAS = true;
 	
-	private enum State {
+	public enum State {
 		RUNNING,
 		PAUSED,
 		MAIN_MENU;
@@ -30,5 +30,12 @@ public class GameState {
 	
 	public static boolean isModelRunning() {
 		return currentState == State.RUNNING;
+	}
+	
+	public static void pauseUnpause() {
+		if (currentState == State.PAUSED)
+			currentState = State.RUNNING;
+		else if (currentState == State.RUNNING)
+			currentState = State.PAUSED;
 	}
 }

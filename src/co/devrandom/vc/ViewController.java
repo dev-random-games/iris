@@ -12,6 +12,7 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.openal.Audio;
 
 import co.devrandom.main.GameState;
+import co.devrandom.model.GameObject;
 import co.devrandom.model.Model;
 import co.devrandom.util.FontLoader;
 import co.devrandom.util.AudioLoader;
@@ -41,6 +42,7 @@ public class ViewController implements Runnable{
 		initGL();
 		loadFonts();
 		loadAudio();
+		loadTextures();
 		
 		while (!Display.isCloseRequested()) {
 			setCamera();
@@ -53,24 +55,37 @@ public class ViewController implements Runnable{
 			glTranslatef((float) GameState.WINDOW_WIDTH / 2, (float) GameState.WINDOW_HEIGHT / 2, 0);
 			glScalef(.5f, .5f, .5f);
 			
-			TextureList.EVIL_SMILEY.bindTexture();
-			
-			//glColor3f(0, 0, 0);
-			
-			glBegin(GL_QUADS);
-			glTexCoord2f(0,0);
-			glVertex2f(0, 0);
-			glTexCoord2f(1,0);
-			glVertex2f(100, 0);
-			glTexCoord2f(1,1);
-			glVertex2f(100, 100);
-			glTexCoord2f(0,1);
-			glVertex2f(0, 100);
-			glEnd();
-			
+			/*
+			 * Draw all gameObjects;
+			 */
+			for (GameObject gameObject : model.getGameObjects()){
+				TextureAttributes texAttr = gameObject.getTexAttributes();
+				if (texAttr != null) {
+					texAttr.textures[texAttr.currentFrame].bindTexture();
+					glColor4f(texAttr.r, texAttr.g, texAttr.b, texAttr.a);
+					glPushMatrix();
+					{
+						glTranslatef((float) gameObject.getPosition().x, (float) gameObject.getPosition().y, 0);
+						glRotatef(gameObject.getRotation(), 0, 0, 1); 
+						glScalef(texAttr.width, texAttr.height, 0);
+						glBegin(GL_QUADS);
+						{
+							glTexCoord2f(0,0);
+							glVertex2f(-.5f, -.5f);
+							glTexCoord2f(1,0);
+							glVertex2f(.5f, -.5f);
+							glTexCoord2f(1,1);
+							glVertex2f(.5f, .5f);
+							glTexCoord2f(0,1);
+							glVertex2f(-.5f, .5f);
+						}
+						glEnd();
+					}
+					glPopMatrix();
+				}
+			}
+		
 			glPopMatrix();
-			
-			// render OpenGL here
 			
 			bodyFont.drawString(10, 10, "Fonts!", Color.black);
 			
@@ -94,6 +109,9 @@ public class ViewController implements Runnable{
 		        	System.out.println("right");
 		        } else if (Keyboard.getEventKey() == KeyPress.PING.getKeyID()) {
 		        	ping.playAsSoundEffect(1.0f, 1.0f, false);
+		        } else if (Keyboard.getEventKey() == KeyPress.PAUSE.getKeyID()) {
+		        	GameState.pauseUnpause();
+		        	System.out.println("Pause unPause");
 		        }
 		    } else {
 		        if (Keyboard.getEventKey() == KeyPress.FORWARD.getKeyID()) {
@@ -131,6 +149,12 @@ public class ViewController implements Runnable{
 	
 	private void loadAudio() {
 		this.ping = AudioLoader.loadOGG("sonar-pings.ogg");
+	}
+	
+	private void loadTextures() {
+		for (TextureList texture : TextureList.values()){
+			texture.initializeTexture();
+		}
 	}
 	
 	/**

@@ -22,9 +22,11 @@ public enum TextureList {
 	private boolean smooth;
 
 	private TextureList(String filePath, boolean smoothTexture) {
+		this.filePath = filePath;
+	}
+	
+	public void initializeTexture() {
 		try {
-			this.filePath = filePath;
-			this.smooth = smooth;
 			texture = TextureLoader.getTexture("PNG",
 					ResourceLoader.getResourceAsStream(GameState.IMG_PATH + filePath));
 		} catch (IOException e) {
