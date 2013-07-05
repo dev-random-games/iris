@@ -53,7 +53,7 @@ public class ViewController implements Runnable{
 		try {
 			Display.setDisplayMode(new DisplayMode(GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT));
 			Display.setTitle(GameState.NAME);
-			Display.sync(GameState.FPS);
+//			Display.sync(GameState.FPS);
 			Display.create();
 		} catch (LWJGLException e) {
 			e.printStackTrace();
@@ -66,11 +66,13 @@ public class ViewController implements Runnable{
 		loadTextures();
 		
 		while (!Display.isCloseRequested()) {
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				Thread.sleep(10);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			
+			Display.sync(GameState.FPS);
 			
 			TextureList.newFrame();
 			setCamera();
