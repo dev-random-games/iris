@@ -72,8 +72,8 @@ public class ViewController implements Runnable{
 				e.printStackTrace();
 			}
 			
+			TextureList.newFrame();
 			setCamera();
-
 			handleInput();
 			
 			glPushMatrix();

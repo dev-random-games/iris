@@ -6,6 +6,13 @@ public class TextureAttributes {
 	private static final float DEFAULT_WIDTH = 128, DEFAULT_HEIGHT = 128;
 	private static final long DEFAULT_FRAME_DURATION = 250l;
 	
+	public TextureList[] textures;
+	public int currentFrame;
+	public long frameDuration;
+	public long lastFrameUpdate;
+	public float r = 0, g = 0, b = 0, a = 1;
+	public float width, height;
+	
 	public TextureAttributes(TextureList[] textures, float w, float h, long frameDuration) {
 		this.textures = textures;
 		this.width = w;
@@ -44,11 +51,4 @@ public class TextureAttributes {
 			}
 		}
 	}
-	
-	public TextureList[] textures;
-	public int currentFrame;
-	public long frameDuration;
-	public long lastFrameUpdate;
-	public float r = 0, g = 0, b = 0, a = 1;
-	public float width, height;
 }
