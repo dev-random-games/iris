@@ -9,13 +9,15 @@ public class Model implements Runnable{
 	
 	private static final int SLEEP_TIME = 10;
 
-	protected ArrayList<GameObject> gameObjects;
+	private ArrayList<GameObject> gameObjects;
 	
 	public Model() {
 		gameObjects = new ArrayList<>();
 	}
 
 	public void run() {
+		gameObjects.add(new GameObject());
+		
 		while (true) {
 			try {
 				Thread.sleep(SLEEP_TIME);
@@ -24,9 +26,14 @@ public class Model implements Runnable{
 				e.printStackTrace();
 			}
 			if (GameState.isModelRunning()){
-				
+				for (GameObject obj : gameObjects){
+					obj.setRotation(obj.getRotation() + 1);
+				}
 			}
 		}
 	}
 
+	public ArrayList<GameObject> getGameObjects() {
+		return gameObjects;
+	}
 }
