@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="libs/slick-util.jar"/>
 	<classpathentry kind="lib" path="libs/jogg.jar"/>
 	<classpathentry kind="lib" path="libs/jorbis.jar"/>
+	<classpathentry kind="lib" path="libs/jbox2d.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
