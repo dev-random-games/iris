@@ -18,12 +18,16 @@ import co.devrandom.util.Vector;
 public class Model implements Runnable{	
 	private static final int SLEEP_TIME = 10;
 	private static final Vec2 DEFAULT_GRAVITY = new Vec2(0.0f, 9.8f);
-
+	
+	private long elapsedTime;
+	private long lastFrame;
 	private List<PhysicsObject> gameObjects;
 	private World world;
 	private PriorityQueue<TimedEvent> events;
 
 	public Model() {
+		elapsedTime = 0l;
+		lastFrame = System.currentTimeMillis();
 		gameObjects = Collections.synchronizedList(new ArrayList<PhysicsObject>());
 		world = new World(DEFAULT_GRAVITY);
 		events = new PriorityQueue<TimedEvent>();
@@ -53,6 +57,8 @@ public class Model implements Runnable{
 		gameObjects.add(po);
 		
 		while (true) {
+			lastFrame = System.currentTimeMillis();
+			
 			try {
 				Thread.sleep(SLEEP_TIME);
 			} catch (InterruptedException e) {
@@ -61,8 +67,9 @@ public class Model implements Runnable{
 			}
 			if (GameState.isModelRunning()) {
 				checkEvents();
-				
 				world.step(GameState.TIME_STEP, GameState.VELOCITY_ITERATIONS, GameState.POSITION_ITERATIONS);
+			
+				elapsedTime += System.currentTimeMillis() - lastFrame;
 			}
 		}
 	}
@@ -96,5 +103,9 @@ public class Model implements Runnable{
 	
 	public void addTimedEvent(TimedEvent event) {
 		this.events.add(event);
+	}
+
+	public long getElapsedTime() {
+		return elapsedTime;
 	}
 }

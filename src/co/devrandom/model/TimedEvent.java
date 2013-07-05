@@ -1,11 +1,13 @@
 package co.devrandom.model;
 
 public class TimedEvent implements Triggerable, Comparable<TimedEvent> {
+	private Model model;
 	private long start;
 	private long end;
 	
-	public TimedEvent(long timeUntil) {
-		start = System.currentTimeMillis();
+	public TimedEvent(Model model, long timeUntil) {
+		this.model = model;
+		start = model.getElapsedTime();
 		end = start + timeUntil;
 	}
 	
@@ -25,6 +27,6 @@ public class TimedEvent implements Triggerable, Comparable<TimedEvent> {
 
 	@Override
 	public boolean isTriggered() {
-		return System.currentTimeMillis() >= end;
+		return model.getElapsedTime() >= end;
 	}
 }
