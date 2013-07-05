@@ -31,7 +31,7 @@ import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.SoundStore;
 
 import co.devrandom.main.GameState;
-import co.devrandom.model.GameObject;
+import co.devrandom.model.PhysicsObject;
 import co.devrandom.model.Model;
 import co.devrandom.util.AudioLoader;
 import co.devrandom.util.FontLoader;
@@ -85,7 +85,7 @@ public class ViewController implements Runnable{
 			/*
 			 * Draw all gameObjects;
 			 */
-			for (GameObject gameObject : model.getGameObjects()){
+			for (PhysicsObject gameObject : model.getGameObjects()){
 				TextureAttributes texAttr = gameObject.getTexAttributes();
 				if (texAttr != null) {
 					texAttr.checkAnimation();

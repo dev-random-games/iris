@@ -77,4 +77,8 @@ public class Vector {
 	public Vector perp(Vector v) {
 		return minus(projection(v));
 	}
+	
+	public String toString() {
+		return x + ", " + y;
+	}
 }
