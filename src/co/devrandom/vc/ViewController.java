@@ -80,17 +80,17 @@ public class ViewController implements Runnable{
 			/*
 			 * Draw all gameObjects;
 			 */
-			for (PhysicsObject gameObject : model.getGameObjects()){
-				TextureAttributes texAttr = gameObject.getTexAttributes();
+			for (PhysicsObject physicsObject : model.getGameObjects()){
+				TextureAttributes texAttr = physicsObject.getTexAttributes();
 				if (texAttr != null) {
 					texAttr.checkAnimation();
 					texAttr.textures[texAttr.currentFrame].bindTexture();
 					glColor4f(texAttr.r, texAttr.g, texAttr.b, texAttr.a);
 					glPushMatrix();
 					{
-						glTranslatef((float) gameObject.getPosition().x, (float) gameObject.getPosition().y, 0);
-						glRotatef(gameObject.getRotation(), 0, 0, 1); 
-						glScalef(texAttr.width, texAttr.height, 0);
+						glTranslatef((float) physicsObject.getPosition().x, (float) physicsObject.getPosition().y, 0);
+						glRotatef(physicsObject.getRotation(), 0, 0, 1); 
+						glScalef(texAttr.dim.x, texAttr.dim.y, 0);
 						
 						Vector start = texAttr.getStartTexPosition();
 						Vector end = texAttr.getEndTexPosition();

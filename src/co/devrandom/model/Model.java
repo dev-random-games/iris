@@ -26,19 +26,19 @@ public class Model implements Runnable{
 
 	public void run() {
 		PolygonShape cs = new PolygonShape();
-		cs.setAsBox(1, 1);
+		cs.setAsBox(1f, 1f);  
 		
 		for (int i = 0; i < 100; i++) {
-			gameObjects.add(new PhysicsObject(world, new Vector(1, 1), BodyType.DYNAMIC, cs));
+			gameObjects.add(new PhysicsObject(world, new Vector(1, 9-i*2), BodyType.DYNAMIC, cs));
 		}
 		
-		gameObjects.add(new PhysicsObject(world, new Vector(1, 1), BodyType.DYNAMIC, cs));
-		gameObjects.add(new PhysicsObject(world, new Vector(1.5f, 2), BodyType.DYNAMIC, cs));
+		//gameObjects.add(new PhysicsObject(world, new Vector(1, 1), BodyType.DYNAMIC, cs));
+		//gameObjects.add(new PhysicsObject(world, new Vector(1.5f, 2), BodyType.DYNAMIC, cs));
 		
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(10, 10);
 		
-		PhysicsObject po = new PhysicsObject(world, new Vector(0, 20), BodyType.STATIC, cs);
+		PhysicsObject po = new PhysicsObject(world, new Vector(0, 20), BodyType.STATIC, ps);
 		po.getBody().createFixture(ps, 0);
 		
 		gameObjects.add(po);

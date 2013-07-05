@@ -3,7 +3,7 @@ package co.devrandom.vc;
 import co.devrandom.util.Vector;
 
 public class TextureAttributes {
-	private static final float DEFAULT_WIDTH = 100, DEFAULT_HEIGHT = 100;
+	private static final Vector DEFAULT_DIM = new Vector(100, 100);
 	private static final long DEFAULT_FRAME_DURATION = 250l;
 	
 	public TextureList[] textures;
@@ -11,26 +11,29 @@ public class TextureAttributes {
 	public long frameDuration;
 	public long lastFrameUpdate;
 	public float r = 0, g = 0, b = 0, a = 1;
-	public float width, height;
+	public Vector dim;
 	
-	public TextureAttributes(TextureList[] textures, float w, float h, long frameDuration) {
+	public TextureAttributes(TextureList[] textures, Vector dim, long frameDuration) {
 		this.textures = textures;
-		this.width = w;
-		this.height = h;
+		this.dim = dim;
 		this.frameDuration = frameDuration;
 		lastFrameUpdate = System.currentTimeMillis();
 	}
 	
-	public TextureAttributes(TextureList texture, float w, float h) {
-		this (new TextureList[] { texture }, w, h, Long.MAX_VALUE);
+	public TextureAttributes(TextureList texture, Vector dim) {
+		this (new TextureList[] { texture }, dim, Long.MAX_VALUE);
 	}
 	
 	public TextureAttributes(TextureList texture){
-		this(texture, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		this(texture, DEFAULT_DIM);
 	}
 	
 	public TextureAttributes(TextureList[] textures){
-		this(textures, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_FRAME_DURATION);
+		this(textures, DEFAULT_DIM, DEFAULT_FRAME_DURATION);
+	}
+	
+	public TextureAttributes(TextureList[] textures, Vector dim){
+		this(textures, dim, DEFAULT_FRAME_DURATION);
 	}
 	
 	public Vector getStartTexPosition() {
@@ -39,6 +42,10 @@ public class TextureAttributes {
 	
 	public Vector getEndTexPosition() {
 		return textures[currentFrame].getEndTexPosition();
+	}
+	
+	public void setSize(Vector size) {
+		dim = size;
 	}
 	
 	public void checkAnimation() {
