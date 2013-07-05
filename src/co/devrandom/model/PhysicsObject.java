@@ -50,7 +50,7 @@ public class PhysicsObject {
 	}
 	
 	public float getRotation() {
-		return rotation;
+		return body.getAngle();
 	}
 	
 	public void setRotation(float newRot) {

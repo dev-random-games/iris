@@ -15,8 +15,9 @@ import org.newdawn.slick.util.ResourceLoader;
 import co.devrandom.main.GameState;
 
 public enum TextureList {
-	EVIL_SMILEY("evil-smiley.png", false);
-
+	EVIL_SMILEY("evil-smiley.png", false),
+	GROUND("ground.png", false);
+	
 	private String filePath;
 	private Texture texture;
 	private boolean smooth;
