@@ -1,8 +1,11 @@
 package co.devrandom.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.PriorityQueue;
 
-import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyType;
@@ -16,24 +19,26 @@ public class Model implements Runnable{
 	private static final int SLEEP_TIME = 10;
 	private static final Vec2 DEFAULT_GRAVITY = new Vec2(0.0f, 9.8f);
 
-	private ArrayList<PhysicsObject> gameObjects;
+	private List<PhysicsObject> gameObjects;
 	private World world;
+	private PriorityQueue<TimedEvent> events;
 
 	public Model() {
-		gameObjects = new ArrayList<>();
+		gameObjects = Collections.synchronizedList(new ArrayList<PhysicsObject>());
 		world = new World(DEFAULT_GRAVITY);
+		events = new PriorityQueue<TimedEvent>();
 	}
 
 	public void run() {
 		PolygonShape cs = new PolygonShape();
 		cs.setAsBox(1, 1);
 		
-		for (int i = 0; i < 100; i++) {
-			gameObjects.add(new PhysicsObject(world, new Vector(1, 1), BodyType.DYNAMIC, cs));
-		}
+		PhysicsObject firework = new PhysicsObject(world, new Vector(1, 1), BodyType.DYNAMIC, cs);
+		firework.getBody().applyForceToCenter(new Vec2(0f, -2000f));
 		
-		gameObjects.add(new PhysicsObject(world, new Vector(1, 1), BodyType.DYNAMIC, cs));
-		gameObjects.add(new PhysicsObject(world, new Vector(1.5f, 2), BodyType.DYNAMIC, cs));
+		gameObjects.add(firework);
+		
+		events.add(new ExplodeFirework(2000, this, firework));
 		
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(10, 10);
@@ -50,13 +55,42 @@ public class Model implements Runnable{
 				System.err.println("Failed to sleep in Model loop. Error:");
 				e.printStackTrace();
 			}
-			if (GameState.isModelRunning()){				
+			if (GameState.isModelRunning()) {
+				checkEvents();
+				
 				world.step(GameState.TIME_STEP, GameState.VELOCITY_ITERATIONS, GameState.POSITION_ITERATIONS);
 			}
 		}
 	}
 
+	public void checkEvents() {
+		Iterator<TimedEvent> i = events.iterator();
+		
+		while (i.hasNext()) {
+			TimedEvent currentEvent = (TimedEvent) i.next();
+			
+			if (currentEvent.isTriggered()) {
+				currentEvent.onTrigger();
+				i.remove();
+			} else {
+				break;
+			}
+		}
+	}
+	
+	public World getWorld() {
+		return world;
+	}
+	
 	public ArrayList<PhysicsObject> getGameObjects() {
-		return gameObjects;
+		return new ArrayList<PhysicsObject>(gameObjects);
+	}
+	
+	public void addGameObject(PhysicsObject object) {
+		this.gameObjects.add(object);
+	}
+	
+	public void addTimedEvent(TimedEvent event) {
+		this.events.add(event);
 	}
 }

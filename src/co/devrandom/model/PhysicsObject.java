@@ -14,7 +14,7 @@ import co.devrandom.vc.TextureAttributes;
 import co.devrandom.vc.TextureList;
 
 public class PhysicsObject {
-	private static final float DEFAULT_DENSITY = 1.0f;
+	private static final float DEFAULT_DENSITY = 0.5f;
 	private static final float DEFAULT_FRICTION = 0.3f;
 	private static final float DEFAULT_RESTITUTION = 0.5f;
 	
