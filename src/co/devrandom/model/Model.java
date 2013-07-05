@@ -9,6 +9,7 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 
 import co.devrandom.main.GameState;
+import co.devrandom.util.Vector;
 
 
 public class Model implements Runnable{	
@@ -24,16 +25,20 @@ public class Model implements Runnable{
 	}
 
 	public void run() {
-		CircleShape cs = new CircleShape();
-		cs.m_radius = 5f;
+		PolygonShape cs = new PolygonShape();
+		cs.setAsBox(1, 1);
 		
-		gameObjects.add(new PhysicsObject(world, 1, 1, BodyType.DYNAMIC, cs, 0.5f, 0.3f, 0.5f));
-		gameObjects.add(new PhysicsObject(world, 2, 1, BodyType.DYNAMIC, cs, 0.5f, 0.3f, 0.5f));
+		for (int i = 0; i < 100; i++) {
+			gameObjects.add(new PhysicsObject(world, new Vector(1, 1), BodyType.DYNAMIC, cs));
+		}
+		
+		gameObjects.add(new PhysicsObject(world, new Vector(1, 1), BodyType.DYNAMIC, cs));
+		gameObjects.add(new PhysicsObject(world, new Vector(1.5f, 2), BodyType.DYNAMIC, cs));
 		
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(10, 10);
 		
-		PhysicsObject po = new PhysicsObject(world, 0, 20, BodyType.STATIC, cs, 0.5f, 0.3f, 0.5f);
+		PhysicsObject po = new PhysicsObject(world, new Vector(0, 20), BodyType.STATIC, cs);
 		po.getBody().createFixture(ps, 0);
 		
 		gameObjects.add(po);

@@ -14,12 +14,15 @@ import co.devrandom.vc.TextureAttributes;
 import co.devrandom.vc.TextureList;
 
 public class PhysicsObject {
+	private static final float DEFAULT_DENSITY = 1.0f;
+	private static final float DEFAULT_FRICTION = 0.3f;
+	private static final float DEFAULT_RESTITUTION = 0.5f;
 	
 	private TextureAttributes texAttributes;
 	private BodyDef bd;
 	private Body body;
 	
-	public PhysicsObject(World world, float x, float y, BodyType type, Shape shape, float density, float friction, float restitution) {
+	public PhysicsObject(World world, Vector position, BodyType type, Shape shape, float density, float friction, float restitution) {
 		texAttributes = new TextureAttributes(new TextureList[] {TextureList.SMILEY_MOUTH_1,
 				 TextureList.SMILEY_MOUTH_2,
 				 TextureList.SMILEY_MOUTH_3,
@@ -30,7 +33,7 @@ public class PhysicsObject {
 				 TextureList.SMILEY_MOUTH_1});
 
 		bd = new BodyDef();
-		bd.position.set(x, y);
+		bd.position.set(position.x, position.y);
 		bd.type = type;
 
 		FixtureDef fd = new FixtureDef();
@@ -41,6 +44,10 @@ public class PhysicsObject {
 		
 		body = world.createBody(bd);
 		body.createFixture(fd);
+	}
+	
+	public PhysicsObject(World world, Vector position, BodyType type, Shape shape) {
+		this(world, position, type, shape, DEFAULT_DENSITY, DEFAULT_FRICTION, DEFAULT_RESTITUTION);
 	}
 
 	public TextureAttributes getTexAttributes() {
