@@ -13,6 +13,8 @@ import org.jbox2d.dynamics.World;
 
 import co.devrandom.main.GameState;
 import co.devrandom.util.Vector;
+import co.devrandom.vc.TextureAttributes;
+import co.devrandom.vc.TextureList;
 
 
 public class Model implements Runnable{	
@@ -37,11 +39,16 @@ public class Model implements Runnable{
 		PolygonShape cs = new PolygonShape();
 		cs.setAsBox(.3f, .3f);  
 		
+		TextureAttributes smile = new TextureAttributes(new TextureList[] { TextureList.SMILEY_MOUTH_1,
+				TextureList.SMILEY_MOUTH_2, TextureList.SMILEY_MOUTH_3, TextureList.SMILEY_MOUTH_4,
+				TextureList.SMILEY_MOUTH_4, TextureList.SMILEY_MOUTH_3, TextureList.SMILEY_MOUTH_2,
+				TextureList.SMILEY_MOUTH_1 });
+		
 		for (int i = 0; i < 100; i++) {
-			gameObjects.add(new PhysicsObject(world, new Vector(1, -i*2), BodyType.DYNAMIC, cs));
+			gameObjects.add(new PhysicsObject(world, new Vector(1, -i*2), BodyType.DYNAMIC, cs, smile.clone()));
 		}
 		
-		PhysicsObject firework = new PhysicsObject(world, new Vector(4, 1), BodyType.DYNAMIC, cs);
+		PhysicsObject firework = new PhysicsObject(world, new Vector(4, 1), BodyType.DYNAMIC, cs, smile.clone());
 		firework.getBody().applyForceToCenter(new Vec2(0f, -300f));
 		
 		gameObjects.add(firework);
@@ -51,7 +58,7 @@ public class Model implements Runnable{
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(10, 10);
 		
-		PhysicsObject po = new PhysicsObject(world, new Vector(0, 10), BodyType.STATIC, ps);
+		PhysicsObject po = new PhysicsObject(world, new Vector(0, 10), BodyType.STATIC, ps, smile.clone());
 		po.getBody().createFixture(ps, 0);
 		
 		gameObjects.add(po);

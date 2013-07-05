@@ -26,13 +26,10 @@ public class PhysicsObject {
 	private Shape shape;
 
 	public PhysicsObject(World world, Vector position, BodyType type, Shape shape, float density,
-			float friction, float restitution) {
+			float friction, float restitution, TextureAttributes texAttributes) {
 		this.shape = shape;
-
-		texAttributes = new TextureAttributes(new TextureList[] { TextureList.SMILEY_MOUTH_1,
-				TextureList.SMILEY_MOUTH_2, TextureList.SMILEY_MOUTH_3, TextureList.SMILEY_MOUTH_4,
-				TextureList.SMILEY_MOUTH_4, TextureList.SMILEY_MOUTH_3, TextureList.SMILEY_MOUTH_2,
-				TextureList.SMILEY_MOUTH_1 });
+		
+		this.texAttributes = texAttributes;
 		
 		texAttributes.setSize(getSize().scale(GameState.SCALE));
 		
@@ -50,8 +47,8 @@ public class PhysicsObject {
 		body.createFixture(fd);
 	}
 
-	public PhysicsObject(World world, Vector position, BodyType type, Shape shape) {
-		this(world, position, type, shape, DEFAULT_DENSITY, DEFAULT_FRICTION, DEFAULT_RESTITUTION);
+	public PhysicsObject(World world, Vector position, BodyType type, Shape shape, TextureAttributes texAttributes) {
+		this(world, position, type, shape, DEFAULT_DENSITY, DEFAULT_FRICTION, DEFAULT_RESTITUTION, texAttributes);
 	}
 
 	public TextureAttributes getTexAttributes() {

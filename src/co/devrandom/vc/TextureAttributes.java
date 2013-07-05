@@ -20,6 +20,10 @@ public class TextureAttributes {
 		lastFrameUpdate = System.currentTimeMillis();
 	}
 	
+	public TextureAttributes clone() {
+		return new TextureAttributes(textures, dim, frameDuration);
+	}
+	
 	public TextureAttributes(TextureList texture, Vector dim) {
 		this (new TextureList[] { texture }, dim, Long.MAX_VALUE);
 	}
