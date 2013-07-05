@@ -35,10 +35,10 @@ public class Model implements Runnable{
 
 	public void run() {
 		PolygonShape cs = new PolygonShape();
-		cs.setAsBox(1f, 1f);  
+		cs.setAsBox(.3f, .3f);  
 		
 		for (int i = 0; i < 100; i++) {
-			gameObjects.add(new PhysicsObject(world, new Vector(1, 9-i*2), BodyType.DYNAMIC, cs));
+			gameObjects.add(new PhysicsObject(world, new Vector(1, -i*2), BodyType.DYNAMIC, cs));
 		}
 		
 		PhysicsObject firework = new PhysicsObject(world, new Vector(4, 1), BodyType.DYNAMIC, cs);
@@ -51,7 +51,7 @@ public class Model implements Runnable{
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(10, 10);
 		
-		PhysicsObject po = new PhysicsObject(world, new Vector(0, 20), BodyType.STATIC, ps);
+		PhysicsObject po = new PhysicsObject(world, new Vector(0, 10), BodyType.STATIC, ps);
 		po.getBody().createFixture(ps, 0);
 		
 		gameObjects.add(po);

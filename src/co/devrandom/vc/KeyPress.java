@@ -19,4 +19,8 @@ public enum KeyPress {
 	public int getKeyID(){
 		return keyID;
 	}
+	
+	public boolean isDown() {
+		return Keyboard.isKeyDown(getKeyID());
+	}
 }

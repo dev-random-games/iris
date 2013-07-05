@@ -37,18 +37,24 @@ import co.devrandom.util.AudioLoader;
 import co.devrandom.util.FontLoader;
 import co.devrandom.util.Vector;
 
-public class ViewController implements Runnable{
+public class ViewController implements Runnable {
 	Model model;
-	
+
 	TrueTypeFont headerFont;
 	TrueTypeFont bodyFont;
-	
+
 	Audio ping;
-	
-	public ViewController(Model model){
+
+	Vector cameraLocation;
+	float cameraZoom; // 1 standard pixel = cameraZoom pixels at current scale.
+						// Thus, smaller number means farther away.
+
+	public ViewController(Model model) {
 		this.model = model;
+		cameraLocation = new Vector();
+		cameraZoom = .05f;
 	}
-	
+
 	public void run() {
 		try {
 			Display.setDisplayMode(new DisplayMode(GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT));
@@ -58,29 +64,34 @@ public class ViewController implements Runnable{
 			e.printStackTrace();
 			System.exit(0);
 		}
-		
+
 		initGL();
 		loadFonts();
 		loadAudio();
 		loadTextures();
-		
+
 		while (!Display.isCloseRequested()) {
 			Display.sync(GameState.FPS);
-			
+
 			TextureList.newFrame();
 			setCamera();
 			handleInput();
-			
+
 			glPushMatrix();
 			
+			/*
+			 * Anything controlled by the camera goes below.
+			 */
+
 			// Put all world matrix transforms here.
-			glTranslatef((float) GameState.WINDOW_WIDTH / 2, (float) GameState.WINDOW_HEIGHT / 2, 0);
-			glScalef(.5f, .5f, .5f);
-			
+			glTranslatef((float) GameState.WINDOW_WIDTH / 2 + cameraLocation.x,
+					(float) GameState.WINDOW_HEIGHT / 2 + cameraLocation.y, 0);
+			glScalef(cameraZoom, cameraZoom, cameraZoom);
+
 			/*
 			 * Draw all gameObjects;
 			 */
-			for (PhysicsObject physicsObject : model.getGameObjects()){
+			for (PhysicsObject physicsObject : model.getGameObjects()) {
 				TextureAttributes texAttr = physicsObject.getTexAttributes();
 				if (texAttr != null) {
 					texAttr.checkAnimation();
@@ -88,13 +99,14 @@ public class ViewController implements Runnable{
 					glColor4f(texAttr.r, texAttr.g, texAttr.b, texAttr.a);
 					glPushMatrix();
 					{
-						glTranslatef((float) physicsObject.getPosition().x, (float) physicsObject.getPosition().y, 0);
-						glRotatef(physicsObject.getRotation(), 0, 0, 1); 
+						glTranslatef((float) physicsObject.getPosition().x,
+								(float) physicsObject.getPosition().y, 0);
+						glRotatef(physicsObject.getRotation(), 0, 0, 1);
 						glScalef(texAttr.dim.x, texAttr.dim.y, 0);
-						
+
 						Vector start = texAttr.getStartTexPosition();
 						Vector end = texAttr.getEndTexPosition();
-						
+
 						glBegin(GL_QUADS);
 						{
 							glTexCoord2f((float) start.x, (float) start.y);
@@ -111,51 +123,68 @@ public class ViewController implements Runnable{
 					glPopMatrix();
 				}
 			}
-		
+
 			glPopMatrix();
+
+			/*
+			 * Anything not controlled by the camera goes below.
+			 */
 			
 			bodyFont.drawString(10, 10, "Ayyyyyyyy!", Color.black);
-			
+
 			SoundStore.get().poll(0);
-			
+
 			Display.update();
 		}
-		
+
 		Display.destroy();
 		System.exit(0);
 	}
-	
+
 	public void handleInput() {
 		while (Keyboard.next()) {
-		    if (Keyboard.getEventKeyState()) {
-		        if (Keyboard.getEventKey() == KeyPress.FORWARD.getKeyID()) {
-		        	System.out.println("forward");
-		        } else if (Keyboard.getEventKey() == KeyPress.BACKWARD.getKeyID()) {
-		        	System.out.println("backward");
-		        } else if (Keyboard.getEventKey() == KeyPress.LEFT.getKeyID()) {
-		        	System.out.println("left");
-		        } else if (Keyboard.getEventKey() == KeyPress.RIGHT.getKeyID()) {
-		        	System.out.println("right");
-		        } else if (Keyboard.getEventKey() == KeyPress.PING.getKeyID()) {
-		        	ping.playAsSoundEffect(1.0f, 1.0f, false);
-		        } else if (Keyboard.getEventKey() == KeyPress.PAUSE.getKeyID()) {
-		        	GameState.pauseUnpause();
-		        	System.out.println("Pause unPause");
-		        }
-		    } else {
-		        if (Keyboard.getEventKey() == KeyPress.FORWARD.getKeyID()) {
-		        	System.out.println("forward released");
-		        } else if (Keyboard.getEventKey() == KeyPress.BACKWARD.getKeyID()) {
-		        	System.out.println("backward released");
-		        } else if (Keyboard.getEventKey() == KeyPress.LEFT.getKeyID()) {
-		        	System.out.println("left released");
-		        } else if (Keyboard.getEventKey() == KeyPress.RIGHT.getKeyID()) {
-		        	System.out.println("right released");
-		        }
-		    }
-		}	
+			if (Keyboard.getEventKeyState()) {
+				if (Keyboard.getEventKey() == KeyPress.FORWARD.getKeyID()) {
+					System.out.println("forward");
+				} else if (Keyboard.getEventKey() == KeyPress.BACKWARD.getKeyID()) {
+					System.out.println("backward");
+				} else if (Keyboard.getEventKey() == KeyPress.LEFT.getKeyID()) {
+					System.out.println("left");
+				} else if (Keyboard.getEventKey() == KeyPress.RIGHT.getKeyID()) {
+					System.out.println("right");
+				} else if (Keyboard.getEventKey() == KeyPress.PING.getKeyID()) {
+					ping.playAsSoundEffect(1.0f, 1.0f, false);
+				} else if (Keyboard.getEventKey() == KeyPress.PAUSE.getKeyID()) {
+					GameState.pauseUnpause();
+					System.out.println("Pause unPause");
+				}
+			} else {
+				if (Keyboard.getEventKey() == KeyPress.FORWARD.getKeyID()) {
+					System.out.println("forward released");
+				} else if (Keyboard.getEventKey() == KeyPress.BACKWARD.getKeyID()) {
+					System.out.println("backward released");
+				} else if (Keyboard.getEventKey() == KeyPress.LEFT.getKeyID()) {
+					System.out.println("left released");
+				} else if (Keyboard.getEventKey() == KeyPress.RIGHT.getKeyID()) {
+					System.out.println("right released");
+				}
+			}
+		}
+		
+		if (KeyPress.FORWARD.isDown()){
+			cameraLocation.addInPlace(new Vector(0, 5));
+		}
+		if (KeyPress.BACKWARD.isDown()){
+			cameraLocation.addInPlace(new Vector(0, -5));
+		}
+		if (KeyPress.LEFT.isDown()){
+			cameraLocation.addInPlace(new Vector(5, 0));
+		}
+		if (KeyPress.RIGHT.isDown()){
+			cameraLocation.addInPlace(new Vector(-5, 0));
+		}
 	}
-	
+
 	private void initGL() {
 		GL11.glViewport(0, 0, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
@@ -168,33 +197,34 @@ public class ViewController implements Runnable{
 		GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
 		GL11.glClearColor(1, 1, 1, 1);
 		GL11.glLineWidth(3);
-		GL11.glTexParameteri( GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR );	
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER,
+				GL11.GL_LINEAR_MIPMAP_LINEAR);
 	}
 
 	private void loadFonts() {
 		this.headerFont = FontLoader.loadTTF("iceland.ttf", 24f);
-		this.bodyFont = FontLoader.loadTTF("iceland.ttf", 16f);	
+		this.bodyFont = FontLoader.loadTTF("iceland.ttf", 16f);
 	}
-	
+
 	private void loadAudio() {
 		this.ping = AudioLoader.loadOGG("sonar-pings.ogg");
 	}
-	
+
 	private void loadTextures() {
-		for (TextureList texture : TextureList.values()){
+		for (TextureList texture : TextureList.values()) {
 			texture.initializeTexture();
 		}
 	}
-	
+
 	/**
-	 * Initialize the camera for the next frame of OpenGL. Positions the center of the camera
-	 * at controller.getCameraPosition().
+	 * Initialize the camera for the next frame of OpenGL. Positions the center
+	 * of the camera at controller.getCameraPosition().
 	 */
 	private void setCamera() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-	    glOrtho(0.0f, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT, 0.0f, 0.0f, 1.0f);
+		glOrtho(0.0f, GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT, 0.0f, 0.0f, 1.0f);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 	}

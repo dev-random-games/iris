@@ -4,7 +4,7 @@ import co.devrandom.util.Vector;
 
 public class TextureAttributes {
 	private static final Vector DEFAULT_DIM = new Vector(100, 100);
-	private static final long DEFAULT_FRAME_DURATION = 250l;
+	private static final long DEFAULT_FRAME_DURATION = 50l;
 	
 	public TextureList[] textures;
 	public int currentFrame;
