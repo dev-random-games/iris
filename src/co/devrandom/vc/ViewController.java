@@ -7,18 +7,18 @@ import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotatef;
 import static org.lwjgl.opengl.GL11.glScalef;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
-import static org.lwjgl.opengl.GL11.glColor4f;
-import static org.lwjgl.opengl.GL11.glRotatef;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -35,6 +35,7 @@ import co.devrandom.model.GameObject;
 import co.devrandom.model.Model;
 import co.devrandom.util.AudioLoader;
 import co.devrandom.util.FontLoader;
+import co.devrandom.util.Vector;
 
 public class ViewController implements Runnable{
 	Model model;
@@ -87,15 +88,19 @@ public class ViewController implements Runnable{
 						glTranslatef((float) gameObject.getPosition().x, (float) gameObject.getPosition().y, 0);
 						glRotatef(gameObject.getRotation(), 0, 0, 1); 
 						glScalef(texAttr.width, texAttr.height, 0);
+						
+						Vector start = texAttr.getStartTexPosition();
+						Vector end = texAttr.getEndTexPosition();
+						
 						glBegin(GL_QUADS);
 						{
-							glTexCoord2f(0,0);
+							glTexCoord2f((float) start.x, (float) start.y);
 							glVertex2f(-.5f, -.5f);
-							glTexCoord2f(1,0);
+							glTexCoord2f((float) end.x, (float) start.y);
 							glVertex2f(.5f, -.5f);
-							glTexCoord2f(1,1);
+							glTexCoord2f((float) end.x, (float) end.y);
 							glVertex2f(.5f, .5f);
-							glTexCoord2f(0,1);
+							glTexCoord2f((float) start.x, (float) end.y);
 							glVertex2f(-.5f, .5f);
 						}
 						glEnd();
