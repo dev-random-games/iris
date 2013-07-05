@@ -42,7 +42,7 @@ public class Model implements Runnable{
 		}
 		
 		PhysicsObject firework = new PhysicsObject(world, new Vector(4, 1), BodyType.DYNAMIC, cs);
-		firework.getBody().applyForceToCenter(new Vec2(0f, -2000f));
+		firework.getBody().applyForceToCenter(new Vec2(0f, -300f));
 		
 		gameObjects.add(firework);
 		
