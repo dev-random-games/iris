@@ -11,10 +11,10 @@ public class Particle extends PhysicsObject {
 	private static final float DENSITY = 0.01f;
 	private static final float FRICTION = 0.3f;
 	private static final float RESTITUTION = 0.5f;
-	private static final float GRAVITY = 0.01f;
-	private static final Shape SHAPE = PhysicsObject.makeBoxShape(0.01f, 0.01f);
+	private static final float GRAVITY = 1f;
+	private static final Shape SHAPE = PhysicsObject.makeCircle(0.5f);
 	private static final TextureAttributes TEX_ATTRIBUTES = 
-			new TextureAttributes(TextureList.DOT);
+			new TextureAttributes(TextureList.SPARKLE);
 	
 	public Particle(Model model, Vector position) {
 		super(model, position, BodyType.DYNAMIC,

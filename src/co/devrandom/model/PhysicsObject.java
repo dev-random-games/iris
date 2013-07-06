@@ -1,5 +1,6 @@
 package co.devrandom.model;
 
+import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.collision.shapes.ShapeType;
@@ -113,6 +114,15 @@ public class PhysicsObject {
 	protected static Shape makeBoxShape(float w, float h) {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(w, h);
+		return shape;
+	}
+
+	/**
+	 * Creates a new box with the specified width and height
+	 */
+	protected static Shape makeCircle(float r) {
+		CircleShape shape = new CircleShape();
+		shape.m_radius = r;
 		return shape;
 	}
 }

@@ -35,25 +35,10 @@ public class Model implements Runnable{
 		events = new PriorityQueue<TimedEvent>();
 	}
 
-	public void run() {
-		PolygonShape cs = new PolygonShape();
-		cs.setAsBox(.3f, .3f);  
-		
-		TextureAttributes smile = new TextureAttributes(new TextureList[] { TextureList.SMILEY_MOUTH_1,
-				TextureList.SMILEY_MOUTH_2, TextureList.SMILEY_MOUTH_3, TextureList.SMILEY_MOUTH_4,
-				TextureList.SMILEY_MOUTH_4, TextureList.SMILEY_MOUTH_3, TextureList.SMILEY_MOUTH_2,
-				TextureList.SMILEY_MOUTH_1 });
-		
-//		for (int i = 0; i < 100; i++) {
-//			gameObjects.add(new PhysicsObject(world, new Vector(1, -i*2), BodyType.DYNAMIC, cs, smile.clone()));
-//		}
-		
-//		PhysicsObject firework = new PhysicsObject(world, new Vector(4, 1), BodyType.DYNAMIC, cs, smile.clone());
-//		firework.getBody().applyForceToCenter(new Vec2(0f, -300f));
-//		
-		Firework fire0 = new Firework(this, new Vector(-1, 0));
+	public void run() { 
+		Firework fire0 = new Firework(this, new Vector(-5, 0));
 		Firework fire1 = new Firework(this, new Vector(0, 0));
-		Firework fire2 = new Firework(this, new Vector(1, 0));
+		Firework fire2 = new Firework(this, new Vector(5, 0));
 		
 		fire0.launch();
 		fire1.launch();
@@ -64,8 +49,13 @@ public class Model implements Runnable{
 		physicsObjects.add(fire2);
 		
 		events.add(new ExplodeFirework(this, fire0, 500));
-		events.add(new ExplodeFirework(this, fire1, 1000));
-		events.add(new ExplodeFirework(this, fire2, 1500));
+		events.add(new ExplodeFirework(this, fire1, 600));
+		events.add(new ExplodeFirework(this, fire2, 700));
+		
+		TextureAttributes smile = new TextureAttributes(new TextureList[] { TextureList.SMILEY_MOUTH_1,
+				TextureList.SMILEY_MOUTH_2, TextureList.SMILEY_MOUTH_3, TextureList.SMILEY_MOUTH_4,
+				TextureList.SMILEY_MOUTH_4, TextureList.SMILEY_MOUTH_3, TextureList.SMILEY_MOUTH_2,
+				TextureList.SMILEY_MOUTH_1 });
 		
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(10, 10);

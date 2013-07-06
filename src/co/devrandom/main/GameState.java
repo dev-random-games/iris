@@ -1,5 +1,9 @@
 package co.devrandom.main;
 
+import org.newdawn.slick.openal.Audio;
+
+import co.devrandom.util.AudioLoader;
+
 public class GameState {
 	private static final GameState gameState = new GameState(State.PAUSED);
 	
@@ -14,7 +18,7 @@ public class GameState {
 	public static final boolean ANTIALIAS = true;
 	public static final int FPS = 60; 
 	
-	public static float SCALE = 1000f;
+	public static float SCALE = 100f;
 	public static float TIME_STEP = 1f / 60f;
 	public static int VELOCITY_ITERATIONS = 6;
 	public static int POSITION_ITERATIONS = 2;

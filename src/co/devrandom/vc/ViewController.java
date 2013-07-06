@@ -31,8 +31,8 @@ import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.SoundStore;
 
 import co.devrandom.main.GameState;
-import co.devrandom.model.PhysicsObject;
 import co.devrandom.model.Model;
+import co.devrandom.model.PhysicsObject;
 import co.devrandom.util.AudioLoader;
 import co.devrandom.util.FontLoader;
 import co.devrandom.util.Vector;
@@ -44,6 +44,7 @@ public class ViewController implements Runnable {
 	TrueTypeFont bodyFont;
 
 	Audio ping;
+	Audio smallExplosion;
 
 	Vector cameraLocation;
 	float cameraZoom; // 1 standard pixel = cameraZoom pixels at current scale.
@@ -69,7 +70,7 @@ public class ViewController implements Runnable {
 		loadFonts();
 		loadAudio();
 		loadTextures();
-
+		
 		while (!Display.isCloseRequested()) {
 			Display.sync(GameState.FPS);
 
@@ -208,6 +209,7 @@ public class ViewController implements Runnable {
 
 	private void loadAudio() {
 		this.ping = AudioLoader.loadOGG("sonar-pings.ogg");
+		this.smallExplosion = AudioLoader.loadOGG("small-explosion.ogg");
 	}
 
 	private void loadTextures() {
