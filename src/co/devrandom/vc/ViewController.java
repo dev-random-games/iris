@@ -45,10 +45,11 @@ public class ViewController implements Runnable {
 	/*
 	 * FPS stuff
 	 */
-	long lastFrameTime;
-	float fps;
-	int numFrames;
+	private long lastFrameTime;
+	private float fps;
+	private int numFrames;
 	private static final int FPS_CHECK_TIME = 1000;
+	boolean fpsMeterVisible = true;
 
 	public ViewController(Model model) {
 		this.model = model;
@@ -113,8 +114,7 @@ public class ViewController implements Runnable {
 				 * Anything not controlled by the camera goes below.
 				 */
 
-				// FPS meter
-				{
+				if (fpsMeterVisible) {
 					long currentTime = System.currentTimeMillis();
 					long timeDif = currentTime - lastFrameTime;
 					
@@ -128,6 +128,8 @@ public class ViewController implements Runnable {
 					FontList.HEADER.getFont().drawString(10, 10, String.format("FPS: %.1f", fps), Color.black);
 				}
 				
+				if (GameState.isPaused())
+					renderTexture(new TextureAttributes(TextureList.PAUSE), new Vector(GameState.WINDOW_WIDTH - 100, 100), 0);
 			}
 			
 			SoundStore.get().poll(0);
@@ -198,7 +200,6 @@ public class ViewController implements Runnable {
 					AudioList.PING.getAudio().playAsSoundEffect(1.0f, 1.0f, false);
 				} else if (Keyboard.getEventKey() == KeyPress.PAUSE.getKeyID()) {
 					GameState.pauseUnpause();
-					System.out.println("Pause unPause");
 				}
 			} else {
 				if (Keyboard.getEventKey() == KeyPress.FORWARD.getKeyID()) {
