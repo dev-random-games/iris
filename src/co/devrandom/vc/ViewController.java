@@ -98,15 +98,9 @@ public class ViewController implements Runnable {
 				glPopMatrix();
 				
 				TextureAttributes textures = new TextureAttributes(TextureList.MAIN_MENU,
-						new Vector(GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT));
+						new Vector(2048f, 2048f));
 				
 				renderTexture(textures, new Vector(GameState.WINDOW_WIDTH / 2f, GameState.WINDOW_HEIGHT / 2f), 0f);
-//				System.out.println(GameState.WINDOW_WIDTH / 2f);
-//				renderTexture(textures, new Vector(500f, 500f), 0f);
-				
-				FontList.TITLE.getFont().drawString(10, 10, "Iris", Color.black);
-				
-				
 				
 			} else {
 				handleGameInput();

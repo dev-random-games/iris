@@ -52,7 +52,7 @@ public class Firework extends PhysicsObject {
 
 		Vec2 pos = this.getBody().getPosition();
 
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 200; i++) {
 			Vector rand = new Vector((float) Math.random() - 0.5f, (float) Math.random() - 0.5f).scale(20.0f);
 			Particle part = new Particle(this.getModel(), new Vector(pos.x, pos.y).plus(rand), (long) (Math.random() * 1000 +  500));
 
