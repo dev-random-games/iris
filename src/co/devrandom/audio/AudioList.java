@@ -13,7 +13,15 @@ public enum AudioList {
 		this.audio = AudioLoader.loadOGG(fileName);
 	}
 	
+	
+	
 	public Audio getAudio() {
 		return audio;
+	}
+	
+	public static void initAudio() {
+		for (AudioList value : AudioList.values()){
+			value.getAudio();
+		}
 	}
 }

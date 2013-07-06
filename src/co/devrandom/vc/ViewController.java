@@ -68,6 +68,8 @@ public class ViewController implements Runnable {
 		}
 
 		initGL();
+		AudioList.initAudio();
+		FontList.initFonts();
 		loadTextures();
 		
 		while (!Display.isCloseRequested()) {
@@ -136,7 +138,7 @@ public class ViewController implements Runnable {
 				}
 				
 				if (GameState.isPaused())
-					renderTexture(new TextureAttributes(TextureList.PAUSE), new Vector(GameState.WINDOW_WIDTH - 100, 100), 0);
+					renderTexture(new TextureAttributes(TextureList.PAUSE), new Vector(GameState.WINDOW_WIDTH - 100 , 100), 0);
 			}
 			
 			SoundStore.get().poll(0);

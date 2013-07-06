@@ -16,5 +16,11 @@ public enum FontList {
 	public TrueTypeFont getFont() {
 		return font;
 	}
+	
+	public static void initFonts() {
+		for (FontList font : FontList.values()){
+			font.getFont();
+		}
+	}
 }
 
