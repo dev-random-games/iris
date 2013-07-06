@@ -1,4 +1,4 @@
-package co.devrandom.model;
+package co.devrandom.model.objects.util;
 
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.dynamics.FixtureDef;

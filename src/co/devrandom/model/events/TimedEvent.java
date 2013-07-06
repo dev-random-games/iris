@@ -1,4 +1,6 @@
-package co.devrandom.model;
+package co.devrandom.model.events;
+
+import co.devrandom.model.Model;
 
 public class TimedEvent implements Triggerable, Comparable<TimedEvent> {
 	private Model model;

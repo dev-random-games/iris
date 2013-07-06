@@ -1,4 +1,4 @@
-package co.devrandom.model;
+package co.devrandom.model.events;
 
 public interface Triggerable {	
 	

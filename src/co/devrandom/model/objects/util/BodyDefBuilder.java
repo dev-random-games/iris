@@ -1,4 +1,4 @@
-package co.devrandom.model;
+package co.devrandom.model.objects.util;
 
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;

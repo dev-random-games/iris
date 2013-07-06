@@ -1,4 +1,4 @@
-package co.devrandom.model;
+package co.devrandom.model.objects;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -10,6 +10,7 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.FixtureDef;
 
 import co.devrandom.main.GameState;
+import co.devrandom.model.Model;
 import co.devrandom.util.Vector;
 import co.devrandom.vc.TextureAttributes;
 

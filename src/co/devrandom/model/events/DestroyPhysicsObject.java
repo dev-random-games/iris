@@ -1,4 +1,7 @@
-package co.devrandom.model;
+package co.devrandom.model.events;
+
+import co.devrandom.model.Model;
+import co.devrandom.model.objects.PhysicsObject;
 
 public class DestroyPhysicsObject extends TimedEvent{
 

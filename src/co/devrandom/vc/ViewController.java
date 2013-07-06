@@ -31,7 +31,7 @@ import org.newdawn.slick.openal.SoundStore;
 import co.devrandom.audio.AudioList;
 import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
-import co.devrandom.model.PhysicsObject;
+import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.util.Vector;
 import co.devrandom.view.fonts.FontList;
 

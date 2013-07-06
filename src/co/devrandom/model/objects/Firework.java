@@ -1,4 +1,4 @@
-package co.devrandom.model;
+package co.devrandom.model.objects;
 
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
@@ -7,6 +7,9 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
 import co.devrandom.audio.AudioList;
+import co.devrandom.model.Model;
+import co.devrandom.model.objects.util.BodyDefBuilder;
+import co.devrandom.model.objects.util.FixtureDefBuilder;
 import co.devrandom.util.Vector;
 import co.devrandom.vc.TextureAttributes;
 import co.devrandom.vc.TextureList;

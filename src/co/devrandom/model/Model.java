@@ -13,6 +13,13 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
 import co.devrandom.main.GameState;
+import co.devrandom.model.events.ExplodeFirework;
+import co.devrandom.model.events.LaunchFirework;
+import co.devrandom.model.events.TimedEvent;
+import co.devrandom.model.objects.Firework;
+import co.devrandom.model.objects.PhysicsObject;
+import co.devrandom.model.objects.util.BodyDefBuilder;
+import co.devrandom.model.objects.util.FixtureDefBuilder;
 import co.devrandom.util.Vector;
 import co.devrandom.vc.TextureAttributes;
 import co.devrandom.vc.TextureList;
