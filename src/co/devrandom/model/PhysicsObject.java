@@ -17,6 +17,7 @@ public class PhysicsObject {
 	private static final float DEFAULT_DENSITY = 0.5f;
 	private static final float DEFAULT_FRICTION = 0.3f;
 	private static final float DEFAULT_RESTITUTION = 0.5f;
+	private static final float DEFAULT_LINEAR_DAMPING = 1f;
 
 	private Model model;
 	private TextureAttributes texAttributes;
@@ -25,7 +26,7 @@ public class PhysicsObject {
 	private Shape shape;
 
 	public PhysicsObject(Model model, Vector position, BodyType type, Shape shape, float density,
-			float friction, float restitution, TextureAttributes texAttributes) {
+			float friction, float restitution, float gravity, TextureAttributes texAttributes) {
 		
 		this.model = model;
 		
@@ -37,6 +38,7 @@ public class PhysicsObject {
 		bd = new BodyDef();
 		bd.position.set(position.x, position.y);
 		bd.type = type;
+		bd.gravityScale = gravity;
 
 		FixtureDef fd = new FixtureDef();
 		fd.shape = shape;
@@ -49,7 +51,9 @@ public class PhysicsObject {
 	}
 
 	public PhysicsObject(Model model, Vector position, BodyType type, Shape shape, TextureAttributes texAttributes) {
-		this(model, position, type, shape, DEFAULT_DENSITY, DEFAULT_FRICTION, DEFAULT_RESTITUTION, texAttributes);
+		this(model, position, type, shape, 
+				DEFAULT_DENSITY, DEFAULT_FRICTION, DEFAULT_RESTITUTION, DEFAULT_LINEAR_DAMPING, 
+				texAttributes);
 	}
 
 	public TextureAttributes getTexAttributes() {

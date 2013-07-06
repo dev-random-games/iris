@@ -23,14 +23,14 @@ public class Model implements Runnable{
 	
 	private long elapsedTime;
 	private long lastFrame;
-	private List<PhysicsObject> gameObjects;
+	private List<PhysicsObject> physicsObjects;
 	private World world;
 	private PriorityQueue<TimedEvent> events;
 
 	public Model() {
 		elapsedTime = 0l;
 		lastFrame = System.currentTimeMillis();
-		gameObjects = Collections.synchronizedList(new ArrayList<PhysicsObject>());
+		physicsObjects = Collections.synchronizedList(new ArrayList<PhysicsObject>());
 		world = new World(DEFAULT_GRAVITY);
 		events = new PriorityQueue<TimedEvent>();
 	}
@@ -59,11 +59,13 @@ public class Model implements Runnable{
 		fire1.launch();
 		fire2.launch();
 		
-		gameObjects.add(fire0);
-		gameObjects.add(fire1);
-		gameObjects.add(fire2);
+		physicsObjects.add(fire0);
+		physicsObjects.add(fire1);
+		physicsObjects.add(fire2);
 		
 		events.add(new ExplodeFirework(this, fire0, 500));
+		events.add(new ExplodeFirework(this, fire1, 1000));
+		events.add(new ExplodeFirework(this, fire2, 1500));
 		
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(10, 10);
@@ -71,7 +73,7 @@ public class Model implements Runnable{
 		PhysicsObject po = new PhysicsObject(this, new Vector(0, 10), BodyType.STATIC, ps, smile.clone());
 		po.getBody().createFixture(ps, 0);
 		
-		gameObjects.add(po);
+		physicsObjects.add(po);
 		
 		while (true) {
 			lastFrame = System.currentTimeMillis();
@@ -111,11 +113,15 @@ public class Model implements Runnable{
 	}
 	
 	public ArrayList<PhysicsObject> getGameObjects() {
-		return new ArrayList<PhysicsObject>(gameObjects);
+		return new ArrayList<PhysicsObject>(physicsObjects);
 	}
 	
-	public void addGameObject(PhysicsObject object) {
-		this.gameObjects.add(object);
+	public void addPhysicsObject(PhysicsObject object) {
+		this.physicsObjects.add(object);
+	}
+	
+	public void removePhysicsObject(PhysicsObject object) {
+		this.physicsObjects.remove(object);
 	}
 	
 	public void addTimedEvent(TimedEvent event) {

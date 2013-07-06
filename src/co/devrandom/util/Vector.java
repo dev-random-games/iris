@@ -1,5 +1,7 @@
 package co.devrandom.util;
 
+import org.jbox2d.common.Vec2;
+
 public class Vector {
 	public float x, y;
 	
@@ -80,5 +82,9 @@ public class Vector {
 	
 	public String toString() {
 		return x + ", " + y;
+	}
+	
+	public Vec2 toVec2() {
+		return new Vec2(x, y);
 	}
 }
