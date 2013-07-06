@@ -29,4 +29,8 @@ public class TimedEvent implements Triggerable, Comparable<TimedEvent> {
 	public boolean isTriggered() {
 		return model.getElapsedTime() >= end;
 	}
+	
+	protected Model getModel() {
+		return model;
+	}
 }

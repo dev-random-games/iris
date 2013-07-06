@@ -27,19 +27,21 @@ public class PhysicsObject {
 	private Shape shape;
 
 	public PhysicsObject(Model model, Vector position, BodyType type, Shape shape, float density,
-			float friction, float restitution, float gravity, TextureAttributes texAttributes) {
-		
+			float friction, float restitution, float gravity, boolean canRotate,
+			TextureAttributes texAttributes) {
+
 		this.model = model;
-		
+
 		this.shape = shape;
-		
+
 		this.texAttributes = texAttributes;
 		texAttributes.setSize(getSize().scale(GameState.SCALE));
-		
+
 		bd = new BodyDef();
 		bd.position.set(position.x, position.y);
 		bd.type = type;
 		bd.gravityScale = gravity;
+		bd.fixedRotation = !canRotate;
 
 		FixtureDef fd = new FixtureDef();
 		fd.shape = shape;
@@ -51,10 +53,16 @@ public class PhysicsObject {
 		body.createFixture(fd);
 	}
 
-	public PhysicsObject(Model model, Vector position, BodyType type, Shape shape, TextureAttributes texAttributes) {
-		this(model, position, type, shape, 
-				DEFAULT_DENSITY, DEFAULT_FRICTION, DEFAULT_RESTITUTION, DEFAULT_LINEAR_DAMPING, 
+	public PhysicsObject(Model model, Vector position, BodyType type, Shape shape, float density,
+			float friction, float restitution, float gravity, TextureAttributes texAttributes) {
+		this(model, position, type, shape, density, friction, restitution, gravity, true,
 				texAttributes);
+	}
+
+	public PhysicsObject(Model model, Vector position, BodyType type, Shape shape,
+			TextureAttributes texAttributes) {
+		this(model, position, type, shape, DEFAULT_DENSITY, DEFAULT_FRICTION, DEFAULT_RESTITUTION,
+				DEFAULT_LINEAR_DAMPING, true, texAttributes);
 	}
 
 	public TextureAttributes getTexAttributes() {
@@ -77,11 +85,11 @@ public class PhysicsObject {
 		if (shape.m_type == ShapeType.POLYGON) {
 			// If the shape is a polygon, find the minimum bounding box.
 			PolygonShape shape = (PolygonShape) this.shape;
-			
+
 			Vec2 vertex0 = shape.getVertex(0);
 			Vector c1 = new Vector(vertex0.x, vertex0.y);
 			Vector c2 = new Vector(c1);
-			
+
 			for (Vec2 vertex : shape.getVertices()) {
 				c1.x = Math.min(c1.x, vertex.x);
 				c2.x = Math.max(c2.x, vertex.x);
@@ -95,7 +103,7 @@ public class PhysicsObject {
 			return new Vector(dimension, dimension);
 		}
 	}
-	
+
 	public Model getModel() {
 		return this.model;
 	}
@@ -107,7 +115,11 @@ public class PhysicsObject {
 	public Body getBody() {
 		return body;
 	}
-	
+
+	public BodyDef getBD() {
+		return bd;
+	}
+
 	/**
 	 * Creates a new box with the specified width and height
 	 */
