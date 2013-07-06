@@ -13,7 +13,6 @@ import org.jbox2d.dynamics.World;
 import co.devrandom.main.GameState;
 import co.devrandom.util.Vector;
 import co.devrandom.vc.TextureAttributes;
-import co.devrandom.vc.TextureList;
 
 public class PhysicsObject {
 	private static final float DEFAULT_DENSITY = 0.5f;
@@ -30,7 +29,6 @@ public class PhysicsObject {
 		this.shape = shape;
 		
 		this.texAttributes = texAttributes;
-		
 		texAttributes.setSize(getSize().scale(GameState.SCALE));
 		
 		bd = new BodyDef();
@@ -75,13 +73,14 @@ public class PhysicsObject {
 			Vec2 vertex0 = shape.getVertex(0);
 			Vector c1 = new Vector(vertex0.x, vertex0.y);
 			Vector c2 = new Vector(c1);
-			for (Vec2 vertex : shape.getVertices()){
+			
+			for (Vec2 vertex : shape.getVertices()) {
 				c1.x = Math.min(c1.x, vertex.x);
 				c2.x = Math.max(c2.x, vertex.x);
 				c1.y = Math.min(c1.y, vertex.y);
 				c2.y = Math.max(c2.y, vertex.y);
 			}
-			System.out.println(c2.minus(c1));
+
 			return c2.minus(c1);
 		} else {
 			float dimension = shape.getRadius() * 2;

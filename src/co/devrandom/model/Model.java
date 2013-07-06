@@ -44,16 +44,26 @@ public class Model implements Runnable{
 				TextureList.SMILEY_MOUTH_4, TextureList.SMILEY_MOUTH_3, TextureList.SMILEY_MOUTH_2,
 				TextureList.SMILEY_MOUTH_1 });
 		
-		for (int i = 0; i < 100; i++) {
-			gameObjects.add(new PhysicsObject(world, new Vector(1, -i*2), BodyType.DYNAMIC, cs, smile.clone()));
-		}
+//		for (int i = 0; i < 100; i++) {
+//			gameObjects.add(new PhysicsObject(world, new Vector(1, -i*2), BodyType.DYNAMIC, cs, smile.clone()));
+//		}
 		
-		PhysicsObject firework = new PhysicsObject(world, new Vector(4, 1), BodyType.DYNAMIC, cs, smile.clone());
-		firework.getBody().applyForceToCenter(new Vec2(0f, -300f));
+//		PhysicsObject firework = new PhysicsObject(world, new Vector(4, 1), BodyType.DYNAMIC, cs, smile.clone());
+//		firework.getBody().applyForceToCenter(new Vec2(0f, -300f));
+//		
+		Firework fire0 = new Firework(world, new Vector(-1, 0));
+		Firework fire1 = new Firework(world, new Vector(0, 0));
+		Firework fire2 = new Firework(world, new Vector(1, 0));
 		
-		gameObjects.add(firework);
+		fire0.launch();
+		fire1.launch();
+		fire2.launch();
 		
-		events.add(new ExplodeFirework(2000, this, firework));
+		gameObjects.add(fire0);
+		gameObjects.add(fire1);
+		gameObjects.add(fire2);
+		
+//		events.add(new ExplodeFirework(this, firework, 2000));
 		
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(10, 10);

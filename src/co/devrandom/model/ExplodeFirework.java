@@ -11,7 +11,7 @@ public class ExplodeFirework extends TimedEvent {
 	private Model model;
 	private PhysicsObject firework;
 
-	public ExplodeFirework(long timeUntil, Model model, PhysicsObject firework) {
+	public ExplodeFirework(Model model, PhysicsObject firework, long timeUntil) {
 		super(model, timeUntil);
 
 		this.model = model;
