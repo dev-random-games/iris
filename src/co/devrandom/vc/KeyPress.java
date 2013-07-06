@@ -8,7 +8,8 @@ public enum KeyPress {
 	RIGHT(Keyboard.KEY_D),
 	LEFT(Keyboard.KEY_A),
 	PING(Keyboard.KEY_P),
-	PAUSE(Keyboard.KEY_SPACE);
+	PAUSE(Keyboard.KEY_SPACE),
+	START(Keyboard.KEY_SPACE);
 	
 	private int keyID;
 	

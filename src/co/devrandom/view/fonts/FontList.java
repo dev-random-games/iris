@@ -4,7 +4,8 @@ import org.newdawn.slick.TrueTypeFont;
 
 public enum FontList {
 	BODY("iceland.ttf", 14),
-	HEADER("iceland.ttf", 22);
+	HEADER("iceland.ttf", 22),
+	TITLE("iceland.ttf", 48);
 	
 	private TrueTypeFont font;
 	

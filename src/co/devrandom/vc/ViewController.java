@@ -66,7 +66,6 @@ public class ViewController implements Runnable {
 
 			TextureList.newFrame();
 			setCamera();
-			handleInput();
 
 			glPushMatrix();
 			
@@ -79,50 +78,36 @@ public class ViewController implements Runnable {
 					(float) GameState.WINDOW_HEIGHT / 2 + cameraLocation.y, 0);
 			glScalef(cameraZoom, cameraZoom, cameraZoom);
 
-			/*
-			 * Draw all gameObjects;
-			 */
-			for (PhysicsObject physicsObject : model.getGameObjects()) {
-				TextureAttributes texAttr = physicsObject.getTexAttributes();
-				if (texAttr != null) {
-					texAttr.checkAnimation();
-					texAttr.textures[texAttr.currentFrame].bindTexture();
-					glColor4f(texAttr.r, texAttr.g, texAttr.b, texAttr.a);
-					glPushMatrix();
-					{
-						glTranslatef((float) physicsObject.getPosition().x,
-								(float) physicsObject.getPosition().y, 0);
-						glRotatef(physicsObject.getRotation(), 0, 0, 1);
-						glScalef(texAttr.dim.x, texAttr.dim.y, 0);
-
-						Vector start = texAttr.getStartTexPosition();
-						Vector end = texAttr.getEndTexPosition();
-
-						glBegin(GL_QUADS);
-						{
-							glTexCoord2f((float) start.x, (float) start.y);
-							glVertex2f(-.5f, -.5f);
-							glTexCoord2f((float) end.x, (float) start.y);
-							glVertex2f(.5f, -.5f);
-							glTexCoord2f((float) end.x, (float) end.y);
-							glVertex2f(.5f, .5f);
-							glTexCoord2f((float) start.x, (float) end.y);
-							glVertex2f(-.5f, .5f);
-						}
-						glEnd();
-					}
-					glPopMatrix();
-				}
-			}
-
-			glPopMatrix();
-
-			/*
-			 * Anything not controlled by the camera goes below.
-			 */
+			if (GameState.isMainMenu()) {
+				handleMainMenuInput();
+				
+				glPopMatrix();
+				
+				FontList.TITLE.getFont().drawString(10, 10, "Iris", Color.black);
+				
+				FontList.TITLE.getFont().drawString(10, 10, "Iris", Color.black);
 			
-			FontList.BODY.getFont().drawString(10, 10, "Ayyyyyyyy!", Color.black);
+			} else {
+				handleGameInput();
+				
+				/*
+				 * Draw all gameObjects;
+				 */
+				for (PhysicsObject physicsObject : model.getGameObjects()) {
+					renderTexture(physicsObject.getTexAttributes(),
+							physicsObject.getPosition(),
+							physicsObject.getRotation());
+				}
 
+				glPopMatrix();
+
+				/*
+				 * Anything not controlled by the camera goes below.
+				 */
+
+				FontList.BODY.getFont().drawString(10, 10, "Ayyyyyyyy!", Color.black);
+			}
+			
 			SoundStore.get().poll(0);
 
 			Display.update();
@@ -132,7 +117,51 @@ public class ViewController implements Runnable {
 		System.exit(0);
 	}
 
-	public void handleInput() {
+	public void renderTexture(TextureAttributes texAttr, Vector position, float rotation) {
+		if (texAttr != null) {
+			texAttr.checkAnimation();
+			texAttr.textures[texAttr.currentFrame].bindTexture();
+			glColor4f(texAttr.r, texAttr.g, texAttr.b, texAttr.a);
+			glPushMatrix();
+			{
+				glTranslatef((float) position.x,
+						(float) position.y, 0);
+				glRotatef(rotation, 0, 0, 1);
+				glScalef(texAttr.dim.x, texAttr.dim.y, 0);
+
+				Vector start = texAttr.getStartTexPosition();
+				Vector end = texAttr.getEndTexPosition();
+
+				glBegin(GL_QUADS);
+				{
+					glTexCoord2f((float) start.x, (float) start.y);
+					glVertex2f(-.5f, -.5f);
+					glTexCoord2f((float) end.x, (float) start.y);
+					glVertex2f(.5f, -.5f);
+					glTexCoord2f((float) end.x, (float) end.y);
+					glVertex2f(.5f, .5f);
+					glTexCoord2f((float) start.x, (float) end.y);
+					glVertex2f(-.5f, .5f);
+				}
+				glEnd();
+			}
+			glPopMatrix();
+		}
+	}
+	
+	public void handleMainMenuInput() {
+		while (Keyboard.next()) {
+			if (Keyboard.getEventKeyState()) {
+				if (Keyboard.getEventKey() == KeyPress.START.getKeyID()) {
+					System.out.println("start");
+					
+					GameState.startGame();
+				}
+			}
+		}
+	}
+	
+	public void handleGameInput() {
 		while (Keyboard.next()) {
 			if (Keyboard.getEventKeyState()) {
 				if (Keyboard.getEventKey() == KeyPress.FORWARD.getKeyID()) {

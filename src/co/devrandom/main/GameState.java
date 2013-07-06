@@ -5,7 +5,7 @@ import org.newdawn.slick.openal.Audio;
 import co.devrandom.audio.AudioLoader;
 
 public class GameState {
-	private static final GameState gameState = new GameState(State.PAUSED);
+	private static final GameState gameState = new GameState(State.MAIN_MENU);
 	
 	public static final String NAME = "Iris";
 	public static final String ASSET_PATH = "/assets/";
@@ -42,8 +42,16 @@ public class GameState {
 		return gameState;
 	}
 	
+	public static boolean isMainMenu() {
+		return currentState == State.MAIN_MENU;
+	}
+	
 	public static boolean isModelRunning() {
 		return currentState == State.RUNNING;
+	}
+	
+	public static void startGame() {
+		currentState = State.PAUSED;
 	}
 	
 	public static void pauseUnpause() {
