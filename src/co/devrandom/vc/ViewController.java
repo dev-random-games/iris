@@ -41,6 +41,15 @@ public class ViewController implements Runnable {
 	Vector cameraLocation;
 	float cameraZoom; // 1 standard pixel = cameraZoom pixels at current scale.
 						// Thus, smaller number means farther away.
+	
+	/*
+	 * FPS stuff
+	 */
+	private long lastFrameTime;
+	private float fps;
+	private int numFrames;
+	private static final int FPS_CHECK_TIME = 1000;
+	boolean fpsMeterVisible = true;
 
 	public ViewController(Model model) {
 		this.model = model;
@@ -112,7 +121,22 @@ public class ViewController implements Runnable {
 				 * Anything not controlled by the camera goes below.
 				 */
 
-				FontList.BODY.getFont().drawString(10, 10, "Ayyyyyyyy!", Color.black);
+				if (fpsMeterVisible) {
+					long currentTime = System.currentTimeMillis();
+					long timeDif = currentTime - lastFrameTime;
+					
+					if (timeDif > FPS_CHECK_TIME){
+						fps = (float) numFrames / timeDif * 1000;
+						lastFrameTime = currentTime;
+						numFrames = 0;
+					}
+					
+					numFrames++;
+					FontList.HEADER.getFont().drawString(10, 10, String.format("FPS: %.1f", fps), Color.black);
+				}
+				
+				if (GameState.isPaused())
+					renderTexture(new TextureAttributes(TextureList.PAUSE), new Vector(GameState.WINDOW_WIDTH - 100, 100), 0);
 			}
 			
 			SoundStore.get().poll(0);
@@ -184,7 +208,6 @@ public class ViewController implements Runnable {
 					AudioList.PING.getAudio().playAsSoundEffect(1.0f, 1.0f, false);
 				} else if (Keyboard.getEventKey() == KeyPress.PAUSE.getKeyID()) {
 					GameState.pauseUnpause();
-					System.out.println("Pause unPause");
 				}
 			} else {
 				if (Keyboard.getEventKey() == KeyPress.FORWARD.getKeyID()) {

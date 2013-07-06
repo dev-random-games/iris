@@ -66,4 +66,8 @@ public class GameState {
 		else if (currentState == State.RUNNING)
 			currentState = State.PAUSED;
 	}
+	
+	public static boolean isPaused() {
+		return currentState == State.PAUSED;
+	}
 }
