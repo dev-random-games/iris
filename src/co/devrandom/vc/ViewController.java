@@ -251,7 +251,7 @@ public class ViewController implements Runnable {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
 		GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
-		GL11.glClearColor(1, 1, 1, 1);
+		GL11.glClearColor(0.99f, 0.99f, 0.99f, 1f);
 		GL11.glLineWidth(3);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER,
 				GL11.GL_LINEAR_MIPMAP_LINEAR);
