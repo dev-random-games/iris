@@ -1,5 +1,7 @@
 package co.devrandom.main;
 
+import org.jbox2d.common.Vec2;
+
 
 public class GameState {
 	private static final GameState gameState = new GameState(State.PAUSED);
@@ -28,6 +30,7 @@ public class GameState {
 	public static float TIME_STEP = 1f / 60f;
 	public static int VELOCITY_ITERATIONS = 6;
 	public static int POSITION_ITERATIONS = 2;
+	public static final Vec2 DEFAULT_GRAVITY = new Vec2(0.0f, 9.8f);
 
 	public enum State {
 		RUNNING,

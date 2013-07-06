@@ -20,7 +20,6 @@ import co.devrandom.vc.TextureList;
 
 public class Model implements Runnable{	
 	private static final int SLEEP_TIME = 10;
-	private static final Vec2 DEFAULT_GRAVITY = new Vec2(0.0f, 9.8f);
 	
 	private long elapsedTime;
 	private long lastFrame;
@@ -32,7 +31,7 @@ public class Model implements Runnable{
 		elapsedTime = 0l;
 		lastFrame = System.currentTimeMillis();
 		physicsObjects = Collections.synchronizedList(new ArrayList<PhysicsObject>());
-		world = new World(DEFAULT_GRAVITY);
+		world = new World(GameState.DEFAULT_GRAVITY);
 		events = new PriorityBlockingQueue<TimedEvent>();
 	}
 
