@@ -10,7 +10,7 @@ public class TextureAttributes {
 	public int currentFrame;
 	public long frameDuration;
 	public long lastFrameUpdate;
-	public float r = 0, g = 0, b = 0, a = 1;
+	public float r = 1, g = 1, b = 1, a = 1;
 	public Vector dim;
 	
 	public TextureAttributes(TextureList[] textures, Vector dim, long frameDuration) {
