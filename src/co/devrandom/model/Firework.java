@@ -26,7 +26,7 @@ public class Firework extends PhysicsObject {
 	public void launch() {
 		AudioList.SWISH.getAudio().playAsSoundEffect(1f, 1f, false);
 		
-		this.getBody().applyForceToCenter(new Vec2(0f, -100f));
+		this.getBody().applyForceToCenter(new Vec2(0f, -70f));
 	}
 	
 	public void explode() {
@@ -36,7 +36,7 @@ public class Firework extends PhysicsObject {
 		
 		for (int i = 0; i < 50; i++) {
 			Vector rand = new Vector((float) Math.random() - 0.5f, (float) Math.random() - 0.5f).scale(20.0f);
-			Particle part = new Particle(this.getModel(), new Vector(pos.x, pos.y).plus(rand));
+			Particle part = new Particle(this.getModel(), new Vector(pos.x, pos.y).plus(rand), (long) (Math.random() * 1000 +  500));
 			
 			part.getBody().applyForceToCenter(rand.toVec2());
 			
