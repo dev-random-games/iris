@@ -41,6 +41,14 @@ public class ViewController implements Runnable {
 	Vector cameraLocation;
 	float cameraZoom; // 1 standard pixel = cameraZoom pixels at current scale.
 						// Thus, smaller number means farther away.
+	
+	/*
+	 * FPS stuff
+	 */
+	long lastFrameTime;
+	float fps;
+	int numFrames;
+	private static final int FPS_CHECK_TIME = 1000;
 
 	public ViewController(Model model) {
 		this.model = model;
@@ -105,7 +113,21 @@ public class ViewController implements Runnable {
 				 * Anything not controlled by the camera goes below.
 				 */
 
-				FontList.BODY.getFont().drawString(10, 10, "Ayyyyyyyy!", Color.black);
+				// FPS meter
+				{
+					long currentTime = System.currentTimeMillis();
+					long timeDif = currentTime - lastFrameTime;
+					
+					if (timeDif > FPS_CHECK_TIME){
+						fps = (float) numFrames / timeDif * 1000;
+						lastFrameTime = currentTime;
+						numFrames = 0;
+					}
+					
+					numFrames++;
+					FontList.HEADER.getFont().drawString(10, 10, String.format("FPS: %.1f", fps), Color.black);
+				}
+				
 			}
 			
 			SoundStore.get().poll(0);
