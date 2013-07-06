@@ -26,22 +26,18 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.openal.SoundStore;
 
 import co.devrandom.audio.AudioList;
 import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
 import co.devrandom.model.PhysicsObject;
-import co.devrandom.util.FontLoader;
 import co.devrandom.util.Vector;
+import co.devrandom.view.fonts.FontList;
 
 public class ViewController implements Runnable {
 	Model model;
-
-	TrueTypeFont headerFont;
-	TrueTypeFont bodyFont;
-
+	
 	Vector cameraLocation;
 	float cameraZoom; // 1 standard pixel = cameraZoom pixels at current scale.
 						// Thus, smaller number means farther away.
@@ -63,7 +59,6 @@ public class ViewController implements Runnable {
 		}
 
 		initGL();
-		loadFonts();
 		loadTextures();
 		
 		while (!Display.isCloseRequested()) {
@@ -126,7 +121,7 @@ public class ViewController implements Runnable {
 			 * Anything not controlled by the camera goes below.
 			 */
 			
-			bodyFont.drawString(10, 10, "Ayyyyyyyy!", Color.black);
+			FontList.BODY.getFont().drawString(10, 10, "Ayyyyyyyy!", Color.black);
 
 			SoundStore.get().poll(0);
 
@@ -195,11 +190,6 @@ public class ViewController implements Runnable {
 		GL11.glLineWidth(3);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER,
 				GL11.GL_LINEAR_MIPMAP_LINEAR);
-	}
-
-	private void loadFonts() {
-		this.headerFont = FontLoader.loadTTF("iceland.ttf", 24f);
-		this.bodyFont = FontLoader.loadTTF("iceland.ttf", 16f);
 	}
 
 	private void loadTextures() {
