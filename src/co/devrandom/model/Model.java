@@ -51,9 +51,9 @@ public class Model implements Runnable{
 //		PhysicsObject firework = new PhysicsObject(world, new Vector(4, 1), BodyType.DYNAMIC, cs, smile.clone());
 //		firework.getBody().applyForceToCenter(new Vec2(0f, -300f));
 //		
-		Firework fire0 = new Firework(world, new Vector(-1, 0));
-		Firework fire1 = new Firework(world, new Vector(0, 0));
-		Firework fire2 = new Firework(world, new Vector(1, 0));
+		Firework fire0 = new Firework(this, new Vector(-1, 0));
+		Firework fire1 = new Firework(this, new Vector(0, 0));
+		Firework fire2 = new Firework(this, new Vector(1, 0));
 		
 		fire0.launch();
 		fire1.launch();
@@ -63,12 +63,12 @@ public class Model implements Runnable{
 		gameObjects.add(fire1);
 		gameObjects.add(fire2);
 		
-//		events.add(new ExplodeFirework(this, firework, 2000));
+		events.add(new ExplodeFirework(this, fire0, 500));
 		
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(10, 10);
 		
-		PhysicsObject po = new PhysicsObject(world, new Vector(0, 10), BodyType.STATIC, ps, smile.clone());
+		PhysicsObject po = new PhysicsObject(this, new Vector(0, 10), BodyType.STATIC, ps, smile.clone());
 		po.getBody().createFixture(ps, 0);
 		
 		gameObjects.add(po);

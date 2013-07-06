@@ -8,7 +8,6 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.World;
 
 import co.devrandom.main.GameState;
 import co.devrandom.util.Vector;
@@ -19,13 +18,17 @@ public class PhysicsObject {
 	private static final float DEFAULT_FRICTION = 0.3f;
 	private static final float DEFAULT_RESTITUTION = 0.5f;
 
+	private Model model;
 	private TextureAttributes texAttributes;
 	private BodyDef bd;
 	private Body body;
 	private Shape shape;
 
-	public PhysicsObject(World world, Vector position, BodyType type, Shape shape, float density,
+	public PhysicsObject(Model model, Vector position, BodyType type, Shape shape, float density,
 			float friction, float restitution, TextureAttributes texAttributes) {
+		
+		this.model = model;
+		
 		this.shape = shape;
 		
 		this.texAttributes = texAttributes;
@@ -41,12 +44,12 @@ public class PhysicsObject {
 		fd.friction = friction;
 		fd.restitution = restitution;
 
-		body = world.createBody(bd);
+		body = model.getWorld().createBody(bd);
 		body.createFixture(fd);
 	}
 
-	public PhysicsObject(World world, Vector position, BodyType type, Shape shape, TextureAttributes texAttributes) {
-		this(world, position, type, shape, DEFAULT_DENSITY, DEFAULT_FRICTION, DEFAULT_RESTITUTION, texAttributes);
+	public PhysicsObject(Model model, Vector position, BodyType type, Shape shape, TextureAttributes texAttributes) {
+		this(model, position, type, shape, DEFAULT_DENSITY, DEFAULT_FRICTION, DEFAULT_RESTITUTION, texAttributes);
 	}
 
 	public TextureAttributes getTexAttributes() {
@@ -87,6 +90,10 @@ public class PhysicsObject {
 			return new Vector(dimension, dimension);
 		}
 	}
+	
+	public Model getModel() {
+		return this.model;
+	}
 
 	public float getRotation() {
 		return (float) (body.getAngle() * 180 / Math.PI);
@@ -94,5 +101,14 @@ public class PhysicsObject {
 
 	public Body getBody() {
 		return body;
+	}
+	
+	/**
+	 * Creates a new box with the specified width and height
+	 */
+	protected static Shape makeBoxShape(float w, float h) {
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(w, h);
+		return shape;
 	}
 }
