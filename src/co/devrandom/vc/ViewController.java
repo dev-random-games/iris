@@ -141,7 +141,7 @@ public class ViewController implements Runnable {
 				}
 				
 				if (GameState.isPaused())
-					renderTexture(new TextureAttributes(TextureList.PAUSE), new Vector(GameState.WINDOW_WIDTH - 100 , 100), 0);
+					renderTexture(new TextureAttributes(TextureList.PAUSE, new Vector(64, 64)), new Vector(GameState.WINDOW_WIDTH - 42 , 42), 0);
 			}
 			
 			SoundStore.get().poll(0);
