@@ -21,8 +21,8 @@ import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.util.BodyDefBuilder;
 import co.devrandom.model.objects.util.FixtureDefBuilder;
 import co.devrandom.util.Vector;
-import co.devrandom.vc.TextureAttributes;
-import co.devrandom.vc.TextureList;
+import co.devrandom.vc.view.TextureAttributes;
+import co.devrandom.vc.view.TextureList;
 
 public class Model implements Runnable{	
 	private static final int SLEEP_TIME = 10;

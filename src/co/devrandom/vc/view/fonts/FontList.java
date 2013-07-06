@@ -1,4 +1,4 @@
-package co.devrandom.view.fonts;
+package co.devrandom.vc.view.fonts;
 
 import org.newdawn.slick.TrueTypeFont;
 

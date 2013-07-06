@@ -33,7 +33,10 @@ import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.util.Vector;
-import co.devrandom.view.fonts.FontList;
+import co.devrandom.vc.controller.KeyPress;
+import co.devrandom.vc.view.TextureAttributes;
+import co.devrandom.vc.view.TextureList;
+import co.devrandom.vc.view.fonts.FontList;
 
 public class ViewController implements Runnable {
 	Model model;

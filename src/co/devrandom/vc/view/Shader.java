@@ -1,4 +1,4 @@
-package co.devrandom.vc;
+package co.devrandom.vc.view;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

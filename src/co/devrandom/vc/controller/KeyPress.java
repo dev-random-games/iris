@@ -1,4 +1,4 @@
-package co.devrandom.vc;
+package co.devrandom.vc.controller;
 
 import org.lwjgl.input.Keyboard;
 

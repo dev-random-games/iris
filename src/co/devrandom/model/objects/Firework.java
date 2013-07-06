@@ -11,8 +11,8 @@ import co.devrandom.model.Model;
 import co.devrandom.model.objects.util.BodyDefBuilder;
 import co.devrandom.model.objects.util.FixtureDefBuilder;
 import co.devrandom.util.Vector;
-import co.devrandom.vc.TextureAttributes;
-import co.devrandom.vc.TextureList;
+import co.devrandom.vc.view.TextureAttributes;
+import co.devrandom.vc.view.TextureList;
 
 public class Firework extends PhysicsObject {
 	private static final float DENSITY = 0.1f;
