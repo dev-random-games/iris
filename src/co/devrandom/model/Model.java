@@ -20,13 +20,14 @@ import co.devrandom.model.objects.Firework;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.util.BodyDefBuilder;
 import co.devrandom.model.objects.util.FixtureDefBuilder;
+import co.devrandom.model.objects.util.FixtureListBuilder;
 import co.devrandom.util.Vector;
 import co.devrandom.vc.view.TextureAttributes;
 import co.devrandom.vc.view.TextureList;
 
-public class Model implements Runnable{	
+public class Model implements Runnable {
 	private static final int SLEEP_TIME = 10;
-	
+
 	private long elapsedTime;
 	private long lastFrame;
 	private List<PhysicsObject> physicsObjects;
@@ -41,8 +42,8 @@ public class Model implements Runnable{
 		events = new PriorityBlockingQueue<TimedEvent>();
 	}
 
-	public void run() { 
-		for (int x = -30; x <= 30; x += 10){
+	public void run() {
+		for (int x = -30; x <= 30; x += 10) {
 			Firework fire = new Firework(this, new Vector(x, 0));
 			events.add(new LaunchFirework(this, fire, 9000 + x * 300));
 			physicsObjects.add(fire);
@@ -51,23 +52,38 @@ public class Model implements Runnable{
 
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(60, 10);
-		
-		BodyDef groundBody = new BodyDefBuilder().position(new Vector(0, 10))
-				.type(BodyType.STATIC)
+
+		BodyDef groundBody = new BodyDefBuilder().position(new Vector(0, 10)).type(BodyType.STATIC)
 				.build();
-		
-		FixtureDef groundFixture = new FixtureDefBuilder().shape(ps)
-				.build();
-		
+
+		FixtureDef groundFixture = new FixtureDefBuilder().shape(ps).build();
+
 		PhysicsObject ground = new PhysicsObject(this, groundBody,
-				new FixtureDef[] { groundFixture },
-				new TextureAttributes(TextureList.DOT));
-		
+				new FixtureDef[] { groundFixture }, new TextureAttributes(TextureList.DOT));
+
 		physicsObjects.add(ground);
-		
+
+		{
+			for (int i = 0; i < 20; i++) {
+				BodyDef weightBody = new BodyDefBuilder().position(new Vector(0, -i * 5))
+						.type(BodyType.DYNAMIC).build();
+			
+				FixtureDef[] weightFixtures = new FixtureListBuilder().shape(new float[] {-8f, -8f, -16f, -8f, -16f, 8f, -8f, 8f})
+																	  .shape(new float[] {8f, -8f, 16f, -8f, 16f, 8f, 8f, 8f})
+																	  .shape(new float[] {-8f, -2f, 8f, -2f, 8f, 2f, -8f, 2f}).size(new Vector(10, 5)).build();
+				
+				PhysicsObject weight = new PhysicsObject(this, weightBody, weightFixtures,
+						new TextureAttributes(TextureList.WEIGHT));
+	
+				physicsObjects.add(weight);
+			}
+		}
+
+		// FixtureDef weightFixture1 = new FixtureDefBuilder().shape
+
 		while (true) {
 			lastFrame = System.currentTimeMillis();
-			
+
 			try {
 				Thread.sleep(SLEEP_TIME);
 			} catch (InterruptedException e) {
@@ -76,8 +92,13 @@ public class Model implements Runnable{
 			}
 			if (GameState.isModelRunning()) {
 				checkEvents();
-				world.step(GameState.TIME_STEP, GameState.VELOCITY_ITERATIONS, GameState.POSITION_ITERATIONS);
-			
+				try {
+					world.step(GameState.TIME_STEP, GameState.VELOCITY_ITERATIONS,
+							GameState.POSITION_ITERATIONS);
+				} catch (ArrayIndexOutOfBoundsException e) {
+					e.printStackTrace();
+				}
+
 				elapsedTime += System.currentTimeMillis() - lastFrame;
 			}
 		}
@@ -86,10 +107,10 @@ public class Model implements Runnable{
 	public void checkEvents() {
 		synchronized (events) {
 			Iterator<TimedEvent> i = events.iterator();
-			
+
 			while (i.hasNext()) {
 				TimedEvent currentEvent = (TimedEvent) i.next();
-				
+
 				if (currentEvent.isTriggered()) {
 					currentEvent.onTrigger();
 					i.remove();
@@ -99,24 +120,24 @@ public class Model implements Runnable{
 			}
 		}
 	}
-	
+
 	public World getWorld() {
 		return world;
 	}
-	
+
 	public ArrayList<PhysicsObject> getGameObjects() {
 		return new ArrayList<PhysicsObject>(physicsObjects);
 	}
-	
+
 	public void addPhysicsObject(PhysicsObject object) {
 		this.physicsObjects.add(object);
 	}
-	
+
 	public void removePhysicsObject(PhysicsObject object) {
 		this.physicsObjects.remove(object);
 		world.destroyBody(object.getBody());
 	}
-	
+
 	public void addTimedEvent(TimedEvent event) {
 		this.events.add(event);
 	}

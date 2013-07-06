@@ -90,7 +90,7 @@ public class ViewController implements Runnable {
 			// Put all world matrix transforms here.
 			glTranslatef((float) GameState.WINDOW_WIDTH / 2 + cameraLocation.x,
 					(float) GameState.WINDOW_HEIGHT / 2 + cameraLocation.y, 0);
-			glScalef(cameraZoom, cameraZoom, cameraZoom);
+			glScalef(cameraZoom, cameraZoom, 0);
 
 			if (GameState.isMainMenu()) {
 				handleMainMenuInput();

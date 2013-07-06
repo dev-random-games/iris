@@ -25,12 +25,24 @@ public class PhysicsObject {
 
 		body = model.getWorld().createBody(bd);
 		
+		Vector c1 = new Vector(Float.MAX_VALUE, Float.MAX_VALUE);
+		Vector c2 = new Vector(Float.MIN_VALUE, Float.MIN_VALUE);
+		
 		for (FixtureDef fd : fixtures) {
-			body.createFixture(fd);	
+			body.createFixture(fd);
+			Vector[] corners = getCorners(fd.shape);
+			c1.x = Math.min(corners[0].x, c1.x);
+			c1.y = Math.min(corners[0].y, c1.y);
+			c2.x = Math.max(corners[1].x, c2.x);
+			c2.y = Math.max(corners[1].y, c2.y);
 		}
 		
 		this.texAttributes = texAttributes;
-		texAttributes.setSize(getSize().scale(GameState.SCALE));
+		texAttributes.setSize(c2.minus(c1).scale(GameState.SCALE));
+	}
+
+	public PhysicsObject(Model model, BodyDef bd, FixtureDef fixtures, TextureAttributes texAttributes) {
+		this(model, bd, new FixtureDef[] {fixtures}, texAttributes);
 	}
 
 	public TextureAttributes getTexAttributes() {
@@ -50,10 +62,7 @@ public class PhysicsObject {
 		return getSize(body.getFixtureList().getShape());
 	}
 	
-	/**
-	 * Attempts to find the minimum bounding box of the physics shape.
-	 */
-	private Vector getSize(Shape shape) {
+	private Vector[] getCorners(Shape shape) {
 		if (shape.m_type == ShapeType.POLYGON) {
 			// If the shape is a polygon, find the minimum bounding box.
 			PolygonShape polyShape = (PolygonShape) shape;
@@ -69,11 +78,19 @@ public class PhysicsObject {
 				c2.y = Math.max(c2.y, vertex.y);
 			}
 
-			return c2.minus(c1);
+			return new Vector[] {c1, c2};
 		} else {
-			float dimension = shape.getRadius() * 2;
-			return new Vector(dimension, dimension);
+			float rad = shape.getRadius() * 2;
+			return new Vector[] { new Vector(-rad, -rad), new Vector(rad, rad) };
 		}
+	}
+	
+	/**
+	 * Attempts to find the minimum bounding box of the physics shape.
+	 */
+	private Vector getSize(Shape shape) {
+		Vector[] corners = getCorners(shape);
+		return corners[1].minus(corners[0]);
 	}
 
 	public Model getModel() {
@@ -83,7 +100,7 @@ public class PhysicsObject {
 	public float getRotation() {
 		return (float) (body.getAngle() * 180 / Math.PI);
 	}
-
+	
 	public Body getBody() {
 		return body;
 	}
