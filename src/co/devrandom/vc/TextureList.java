@@ -40,7 +40,7 @@ public enum TextureList {
 
 	private TextureList(String filePath, boolean smoothTexture, Vector start, Vector end) {
 		this.filePath = filePath;
-		smooth = smoothTexture;
+		this.smooth = smoothTexture;
 		this.start = start;
 		this.end = end;
 	}

@@ -2,7 +2,7 @@ package co.devrandom.main;
 
 import org.newdawn.slick.openal.Audio;
 
-import co.devrandom.util.AudioLoader;
+import co.devrandom.audio.AudioLoader;
 
 public class GameState {
 	private static final GameState gameState = new GameState(State.PAUSED);
@@ -22,6 +22,9 @@ public class GameState {
 	public static float TIME_STEP = 1f / 60f;
 	public static int VELOCITY_ITERATIONS = 6;
 	public static int POSITION_ITERATIONS = 2;
+	
+	public static final Audio PING = AudioLoader.loadOGG("sonar-pings.ogg");
+//	Audio smallExplosion;
 	
 	public enum State {
 		RUNNING,

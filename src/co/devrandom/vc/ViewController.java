@@ -27,13 +27,12 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.SoundStore;
 
+import co.devrandom.audio.AudioList;
 import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
 import co.devrandom.model.PhysicsObject;
-import co.devrandom.util.AudioLoader;
 import co.devrandom.util.FontLoader;
 import co.devrandom.util.Vector;
 
@@ -42,9 +41,6 @@ public class ViewController implements Runnable {
 
 	TrueTypeFont headerFont;
 	TrueTypeFont bodyFont;
-
-	Audio ping;
-	Audio smallExplosion;
 
 	Vector cameraLocation;
 	float cameraZoom; // 1 standard pixel = cameraZoom pixels at current scale.
@@ -68,7 +64,6 @@ public class ViewController implements Runnable {
 
 		initGL();
 		loadFonts();
-		loadAudio();
 		loadTextures();
 		
 		while (!Display.isCloseRequested()) {
@@ -154,7 +149,7 @@ public class ViewController implements Runnable {
 				} else if (Keyboard.getEventKey() == KeyPress.RIGHT.getKeyID()) {
 					System.out.println("right");
 				} else if (Keyboard.getEventKey() == KeyPress.PING.getKeyID()) {
-					ping.playAsSoundEffect(1.0f, 1.0f, false);
+					AudioList.PING.getAudio().playAsSoundEffect(1.0f, 1.0f, false);
 				} else if (Keyboard.getEventKey() == KeyPress.PAUSE.getKeyID()) {
 					GameState.pauseUnpause();
 					System.out.println("Pause unPause");
@@ -205,11 +200,6 @@ public class ViewController implements Runnable {
 	private void loadFonts() {
 		this.headerFont = FontLoader.loadTTF("iceland.ttf", 24f);
 		this.bodyFont = FontLoader.loadTTF("iceland.ttf", 16f);
-	}
-
-	private void loadAudio() {
-		this.ping = AudioLoader.loadOGG("sonar-pings.ogg");
-		this.smallExplosion = AudioLoader.loadOGG("small-explosion.ogg");
 	}
 
 	private void loadTextures() {

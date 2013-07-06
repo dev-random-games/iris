@@ -4,7 +4,6 @@ import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyType;
 
-import co.devrandom.main.GameState;
 import co.devrandom.util.Vector;
 import co.devrandom.vc.TextureAttributes;
 import co.devrandom.vc.TextureList;
@@ -28,7 +27,6 @@ public class Firework extends PhysicsObject {
 	}
 	
 	public void explode() {
-		GameState.PING.playAsSoundEffect(1.0f, 1.0f, false);
 		Vec2 pos = this.getBody().getPosition();
 		
 		for (int i = 0; i < 50; i++) {
