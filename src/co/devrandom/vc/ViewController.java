@@ -83,10 +83,17 @@ public class ViewController implements Runnable {
 				
 				glPopMatrix();
 				
-				FontList.TITLE.getFont().drawString(10, 10, "Iris", Color.black);
+				TextureAttributes textures = new TextureAttributes(TextureList.MAIN_MENU,
+						new Vector(GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT));
+				
+				renderTexture(textures, new Vector(GameState.WINDOW_WIDTH / 2f, GameState.WINDOW_HEIGHT / 2f), 0f);
+//				System.out.println(GameState.WINDOW_WIDTH / 2f);
+//				renderTexture(textures, new Vector(500f, 500f), 0f);
 				
 				FontList.TITLE.getFont().drawString(10, 10, "Iris", Color.black);
-			
+				
+				
+				
 			} else {
 				handleGameInput();
 				
@@ -94,7 +101,7 @@ public class ViewController implements Runnable {
 				 * Draw all gameObjects;
 				 */
 				for (PhysicsObject physicsObject : model.getGameObjects()) {
-					renderTexture(physicsObject.getTexAttributes(),
+					this.renderTexture(physicsObject.getTexAttributes(),
 							physicsObject.getPosition(),
 							physicsObject.getRotation());
 				}
@@ -117,7 +124,7 @@ public class ViewController implements Runnable {
 		System.exit(0);
 	}
 
-	public void renderTexture(TextureAttributes texAttr, Vector position, float rotation) {
+	private void renderTexture(TextureAttributes texAttr, Vector position, float rotation) {
 		if (texAttr != null) {
 			texAttr.checkAnimation();
 			texAttr.textures[texAttr.currentFrame].bindTexture();
@@ -127,11 +134,12 @@ public class ViewController implements Runnable {
 				glTranslatef((float) position.x,
 						(float) position.y, 0);
 				glRotatef(rotation, 0, 0, 1);
+				
 				glScalef(texAttr.dim.x, texAttr.dim.y, 0);
 
 				Vector start = texAttr.getStartTexPosition();
 				Vector end = texAttr.getEndTexPosition();
-
+				
 				glBegin(GL_QUADS);
 				{
 					glTexCoord2f((float) start.x, (float) start.y);
@@ -149,7 +157,7 @@ public class ViewController implements Runnable {
 		}
 	}
 	
-	public void handleMainMenuInput() {
+	private void handleMainMenuInput() {
 		while (Keyboard.next()) {
 			if (Keyboard.getEventKeyState()) {
 				if (Keyboard.getEventKey() == KeyPress.START.getKeyID()) {
@@ -161,7 +169,7 @@ public class ViewController implements Runnable {
 		}
 	}
 	
-	public void handleGameInput() {
+	private void handleGameInput() {
 		while (Keyboard.next()) {
 			if (Keyboard.getEventKeyState()) {
 				if (Keyboard.getEventKey() == KeyPress.FORWARD.getKeyID()) {

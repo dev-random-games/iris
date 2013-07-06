@@ -7,7 +7,6 @@ import org.jbox2d.collision.shapes.ShapeType;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
 import co.devrandom.main.GameState;
@@ -15,54 +14,22 @@ import co.devrandom.util.Vector;
 import co.devrandom.vc.TextureAttributes;
 
 public class PhysicsObject {
-	private static final float DEFAULT_DENSITY = 0.5f;
-	private static final float DEFAULT_FRICTION = 0.3f;
-	private static final float DEFAULT_RESTITUTION = 0.5f;
-	private static final float DEFAULT_LINEAR_DAMPING = 1f;
-
 	private Model model;
 	private TextureAttributes texAttributes;
 	private BodyDef bd;
 	private Body body;
-	private Shape shape;
 
-	public PhysicsObject(Model model, Vector position, BodyType type, Shape shape, float density,
-			float friction, float restitution, float gravity, boolean canRotate,
-			TextureAttributes texAttributes) {
-
+	public PhysicsObject(Model model, BodyDef bd, FixtureDef[] fixtures, TextureAttributes texAttributes) {
 		this.model = model;
 
-		this.shape = shape;
-
+		body = model.getWorld().createBody(bd);
+		
+		for (FixtureDef fd : fixtures) {
+			body.createFixture(fd);	
+		}
+		
 		this.texAttributes = texAttributes;
 		texAttributes.setSize(getSize().scale(GameState.SCALE));
-
-		bd = new BodyDefBuilder().position(position)
-								 .type(type)
-								 .gravityScale(gravity)
-								 .canRotate(canRotate)
-								 .build();
-
-		FixtureDef fd = new FixtureDef();
-		fd.shape = shape;
-		fd.density = density;
-		fd.friction = friction;
-		fd.restitution = restitution;
-
-		body = model.getWorld().createBody(bd);
-		body.createFixture(fd);
-	}
-
-	public PhysicsObject(Model model, Vector position, BodyType type, Shape shape, float density,
-			float friction, float restitution, float gravity, TextureAttributes texAttributes) {
-		this(model, position, type, shape, density, friction, restitution, gravity, true,
-				texAttributes);
-	}
-
-	public PhysicsObject(Model model, Vector position, BodyType type, Shape shape,
-			TextureAttributes texAttributes) {
-		this(model, position, type, shape, DEFAULT_DENSITY, DEFAULT_FRICTION, DEFAULT_RESTITUTION,
-				DEFAULT_LINEAR_DAMPING, true, texAttributes);
 	}
 
 	public TextureAttributes getTexAttributes() {
@@ -78,19 +45,23 @@ public class PhysicsObject {
 		return new Vector(position.x, position.y).scale(GameState.SCALE);
 	}
 
+	private Vector getSize() {
+		return getSize(body.getFixtureList().getShape());
+	}
+	
 	/**
 	 * Attempts to find the minimum bounding box of the physics shape.
 	 */
-	public Vector getSize() {
+	private Vector getSize(Shape shape) {
 		if (shape.m_type == ShapeType.POLYGON) {
 			// If the shape is a polygon, find the minimum bounding box.
-			PolygonShape shape = (PolygonShape) this.shape;
-
-			Vec2 vertex0 = shape.getVertex(0);
+			PolygonShape polyShape = (PolygonShape) shape;
+			
+			Vec2 vertex0 = polyShape.getVertex(0);
 			Vector c1 = new Vector(vertex0.x, vertex0.y);
 			Vector c2 = new Vector(c1);
 
-			for (Vec2 vertex : shape.getVertices()) {
+			for (Vec2 vertex : polyShape.getVertices()) {
 				c1.x = Math.min(c1.x, vertex.x);
 				c2.x = Math.max(c2.x, vertex.x);
 				c1.y = Math.min(c1.y, vertex.y);

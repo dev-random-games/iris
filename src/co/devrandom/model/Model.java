@@ -4,19 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
 import co.devrandom.main.GameState;
 import co.devrandom.util.Vector;
 import co.devrandom.vc.TextureAttributes;
 import co.devrandom.vc.TextureList;
-
 
 public class Model implements Runnable{	
 	private static final int SLEEP_TIME = 10;
@@ -36,41 +35,28 @@ public class Model implements Runnable{
 	}
 
 	public void run() { 
-//		Firework fire0 = new Firework(this, new Vector(-5, 0));
-//		Firework fire1 = new Firework(this, new Vector(0, 0));
-//		Firework fire2 = new Firework(this, new Vector(5, 0));
-		
 		for (int x = -30; x <= 30; x += 10){
 			Firework fire = new Firework(this, new Vector(x, 0));
 			events.add(new LaunchFirework(this, fire, 9000 + x * 300));
 			physicsObjects.add(fire);
 			events.add(new ExplodeFirework(this, fire, 10000 + x * 300));
 		}
-		
-//		events.add(new LaunchFirework(this, fire0, 0));
-//		events.add(new LaunchFirework(this, firei1, 0));
-//		events.add(new LaunchFirework(this, fire2, 0));
-		
-//		physicsObjects.add(fire0);
-//		physicsObjects.add(fire1);
-//		physicsObjects.add(fire2);
-//		
-//		events.add(new ExplodeFirework(this, fire0, 500));
-//		events.add(new ExplodeFirework(this, fire1, 600));
-//		events.add(new ExplodeFirework(this, fire2, 700));
-		
-		TextureAttributes smile = new TextureAttributes(new TextureList[] { TextureList.SMILEY_MOUTH_1,
-				TextureList.SMILEY_MOUTH_2, TextureList.SMILEY_MOUTH_3, TextureList.SMILEY_MOUTH_4,
-				TextureList.SMILEY_MOUTH_4, TextureList.SMILEY_MOUTH_3, TextureList.SMILEY_MOUTH_2,
-				TextureList.SMILEY_MOUTH_1 });
-		
+
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(60, 10);
 		
-		PhysicsObject po = new PhysicsObject(this, new Vector(0, 10), BodyType.STATIC, ps, new TextureAttributes(TextureList.DOT));
-		po.getBody().createFixture(ps, 0);
+		BodyDef groundBody = new BodyDefBuilder().position(new Vector(0, 10))
+				.type(BodyType.STATIC)
+				.build();
 		
-		physicsObjects.add(po);
+		FixtureDef groundFixture = new FixtureDefBuilder().shape(ps)
+				.build();
+		
+		PhysicsObject ground = new PhysicsObject(this, groundBody,
+				new FixtureDef[] { groundFixture },
+				new TextureAttributes(TextureList.DOT));
+		
+		physicsObjects.add(ground);
 		
 		while (true) {
 			lastFrame = System.currentTimeMillis();

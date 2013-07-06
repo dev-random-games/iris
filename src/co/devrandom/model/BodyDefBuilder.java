@@ -1,10 +1,8 @@
 package co.devrandom.model;
 
-import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 
-import co.devrandom.main.GameState;
 import co.devrandom.util.Vector;
 
 public class BodyDefBuilder {
@@ -36,5 +34,10 @@ public class BodyDefBuilder {
 	public BodyDefBuilder canRotate(boolean r) {
 		bd.fixedRotation = !r;
 		return this;
+	}
+	
+	public static BodyDef setPosition(BodyDef bd, Vector position) {
+		bd.position = position.toVec2();
+		return bd;
 	}
 }
