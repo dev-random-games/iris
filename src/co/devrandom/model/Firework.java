@@ -4,6 +4,7 @@ import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyType;
 
+import co.devrandom.audio.AudioList;
 import co.devrandom.util.Vector;
 import co.devrandom.vc.TextureAttributes;
 import co.devrandom.vc.TextureList;
@@ -23,10 +24,14 @@ public class Firework extends PhysicsObject {
 	}
 	
 	public void launch() {
+		AudioList.SWISH.getAudio().playAsSoundEffect(1f, 1f, false);
+		
 		this.getBody().applyForceToCenter(new Vec2(0f, -100f));
 	}
 	
 	public void explode() {
+		AudioList.SMALL_EXPLOSION.getAudio().playAsSoundEffect(1f, 1f, false);
+		
 		Vec2 pos = this.getBody().getPosition();
 		
 		for (int i = 0; i < 50; i++) {

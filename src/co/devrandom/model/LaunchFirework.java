@@ -1,9 +1,9 @@
 package co.devrandom.model;
 
-public class ExplodeFirework extends TimedEvent {
+public class LaunchFirework extends TimedEvent {
 	private Firework firework;
 
-	public ExplodeFirework(Model model, Firework firework, long timeUntil) {
+	public LaunchFirework(Model model, Firework firework, long timeUntil) {
 		super(model, timeUntil);
 
 		this.firework = firework;
@@ -11,6 +11,6 @@ public class ExplodeFirework extends TimedEvent {
 
 	@Override
 	public void onTrigger() {
-		firework.explode();
+		firework.launch();
 	}
 }

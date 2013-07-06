@@ -40,9 +40,9 @@ public class Model implements Runnable{
 		Firework fire1 = new Firework(this, new Vector(0, 0));
 		Firework fire2 = new Firework(this, new Vector(5, 0));
 		
-		fire0.launch();
-		fire1.launch();
-		fire2.launch();
+		events.add(new LaunchFirework(this, fire0, 0));
+		events.add(new LaunchFirework(this, fire1, 0));
+		events.add(new LaunchFirework(this, fire2, 0));
 		
 		physicsObjects.add(fire0);
 		physicsObjects.add(fire1);
