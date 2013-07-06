@@ -8,7 +8,7 @@ public class ExplodeFirework extends TimedEvent {
 
 		this.firework = firework;
 	}
-
+ 
 	@Override
 	public void onTrigger() {
 		firework.explode();
