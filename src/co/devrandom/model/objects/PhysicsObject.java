@@ -80,7 +80,7 @@ public class PhysicsObject {
 
 			return new Vector[] {c1, c2};
 		} else {
-			float rad = shape.getRadius() * 2;
+			float rad = shape.getRadius();
 			return new Vector[] { new Vector(-rad, -rad), new Vector(rad, rad) };
 		}
 	}
@@ -112,7 +112,7 @@ public class PhysicsObject {
 	/**
 	 * Creates a new box with the specified width and height
 	 */
-	protected static Shape makeBoxShape(float w, float h) {
+	public static Shape makeBoxShape(float w, float h) {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(w, h);
 		return shape;
@@ -121,7 +121,7 @@ public class PhysicsObject {
 	/**
 	 * Creates a new box with the specified width and height
 	 */
-	protected static Shape makeCircle(float r) {
+	public static Shape makeCircle(float r) {
 		CircleShape shape = new CircleShape();
 		shape.m_radius = r;
 		return shape;

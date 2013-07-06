@@ -19,11 +19,12 @@ public class Particle extends PhysicsObject {
 	private static final float RESTITUTION = 0.5f;
 	private static final float GRAVITY = 1f;
 	
-	private static final Shape SHAPE = PhysicsObject.makeCircle(0.5f);
+	private static final Shape SHAPE = PhysicsObject.makeCircle(0.3f);
 	
 	private static final BodyDef BD = new BodyDefBuilder()
 		.type(BodyType.DYNAMIC)
 		.gravityScale(GRAVITY)
+		//.bullet(true)
 		.build();
 	
 	private static final FixtureDef FD = new FixtureDefBuilder()

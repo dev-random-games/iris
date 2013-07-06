@@ -13,10 +13,7 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
 import co.devrandom.main.GameState;
-import co.devrandom.model.events.ExplodeFirework;
-import co.devrandom.model.events.LaunchFirework;
 import co.devrandom.model.events.TimedEvent;
-import co.devrandom.model.objects.Firework;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.util.BodyDefBuilder;
 import co.devrandom.model.objects.util.FixtureDefBuilder;
@@ -43,12 +40,12 @@ public class Model implements Runnable {
 	}
 
 	public void run() {
-		for (int x = -30; x <= 30; x += 10) {
-			Firework fire = new Firework(this, new Vector(x, 0));
-			events.add(new LaunchFirework(this, fire, 9000 + x * 300));
-			physicsObjects.add(fire);
-			events.add(new ExplodeFirework(this, fire, 10000 + x * 300));
-		}
+//		for (int x = -30; x <= 30; x += 10) {
+//			Firework fire = new Firework(this, new Vector(x, 0));
+//			events.add(new LaunchFirework(this, fire, 9000 + x * 300));
+//			physicsObjects.add(fire);
+//			events.add(new ExplodeFirework(this, fire, 10000 + x * 300));
+//		}
 
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(60, 10);
@@ -64,19 +61,32 @@ public class Model implements Runnable {
 		physicsObjects.add(ground);
 
 		{
-			for (int i = 0; i < 20; i++) {
-				BodyDef weightBody = new BodyDefBuilder().position(new Vector(0, -i * 5))
-						.type(BodyType.DYNAMIC).build();
-			
-				FixtureDef[] weightFixtures = new FixtureListBuilder().shape(new float[] {-8f, -8f, -16f, -8f, -16f, 8f, -8f, 8f})
-																	  .shape(new float[] {8f, -8f, 16f, -8f, 16f, 8f, 8f, 8f})
-																	  .shape(new float[] {-8f, -2f, 8f, -2f, 8f, 2f, -8f, 2f}).size(new Vector(10, 5)).build();
+			for (int x = 0; x < 5; x++) {
+				for (int y = 0; y < 20; y++) {
+					BodyDef weightBody = new BodyDefBuilder().position(new Vector( x * .5f + y * .1f, -1 -y * .25f))
+							.type(BodyType.DYNAMIC).build();
 				
-				PhysicsObject weight = new PhysicsObject(this, weightBody, weightFixtures,
-						new TextureAttributes(TextureList.WEIGHT));
-	
-				physicsObjects.add(weight);
+					FixtureDef[] weightFixtures = new FixtureListBuilder().shape(new float[] {-8f, -8f, -16f, -8f, -16f, 8f, -8f, 8f})
+																		  .shape(new float[] {8f, -8f, 16f, -8f, 16f, 8f, 8f, 8f})
+																		  .shape(new float[] {-8f, -2f, 8f, -2f, 8f, 2f, -8f, 2f})
+																		  .size(new Vector(.25f, .125f)).density(10).build();
+					
+					PhysicsObject weight = new PhysicsObject(this, weightBody, weightFixtures,
+							new TextureAttributes(TextureList.WEIGHT));
+		
+					physicsObjects.add(weight);
+				}
 			}
+			
+			BodyDef barrelBody = new BodyDefBuilder().position(new Vector(0, -5))
+					.type(BodyType.DYNAMIC).build();
+		
+			FixtureDef barrelFixture = new FixtureDefBuilder().shape(PhysicsObject.makeCircle(1.0f)).build();
+			
+			PhysicsObject weight = new PhysicsObject(this, barrelBody, barrelFixture,
+					new TextureAttributes(TextureList.BARREL, new Vector(1.0f, 1.0f)));
+
+			physicsObjects.add(weight);
 		}
 
 		// FixtureDef weightFixture1 = new FixtureDefBuilder().shape

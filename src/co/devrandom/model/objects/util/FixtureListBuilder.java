@@ -13,6 +13,8 @@ public class FixtureListBuilder {
 	private ArrayList<Vector[]> shapes;
 	
 	private Vector size = new Vector(100, 100);
+	
+	private float density, restitution, friction;
 
 	public FixtureListBuilder() {
 		allVertices = new ArrayList<Vector>();
@@ -37,6 +39,21 @@ public class FixtureListBuilder {
 	
 	public FixtureListBuilder size(Vector size) {
 		this.size = size;
+		return this;
+	}
+	
+	public FixtureListBuilder density(float d) {
+		density = d;
+		return this;
+	}
+	
+	public FixtureListBuilder friction(float f) {
+		friction = f;
+		return this;
+	}
+	
+	public FixtureListBuilder restitution(float r) {
+		restitution = r;
 		return this;
 	}
 	
@@ -71,6 +88,15 @@ public class FixtureListBuilder {
 			
 			PolygonShape shape = new PolygonShapeBuilder().v(finalVerts).build();
 			FixtureDef fixture = new FixtureDefBuilder().shape(shape).build();
+			
+			if (friction != 0)
+				fixture.friction = friction;
+			if (density != 0)
+				fixture.density = density;
+			if (restitution != 0)
+				fixture.restitution = restitution;
+			
+			
 			fixtures[i] = fixture;
 		}
 		

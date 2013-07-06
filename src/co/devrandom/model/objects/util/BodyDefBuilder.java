@@ -36,6 +36,11 @@ public class BodyDefBuilder {
 		return this;
 	}
 	
+	public BodyDefBuilder bullet(boolean bullet){
+		bd.bullet = bullet;
+		return this;
+	}
+	
 	public static BodyDef setPosition(BodyDef bd, Vector position) {
 		bd.position = position.toVec2();
 		return bd;
