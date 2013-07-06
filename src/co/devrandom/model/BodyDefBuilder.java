@@ -19,7 +19,7 @@ public class BodyDefBuilder {
 	}
 	
 	public BodyDefBuilder position(Vector v) {
-		bd.position = new Vec2(v.x, v.y);
+		bd.position.set(v.x, v.y);
 		return this;
 	}
 	

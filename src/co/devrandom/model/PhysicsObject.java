@@ -37,11 +37,11 @@ public class PhysicsObject {
 		this.texAttributes = texAttributes;
 		texAttributes.setSize(getSize().scale(GameState.SCALE));
 
-		bd = new BodyDef();
-		bd.position.set(position.x, position.y);
-		bd.type = type;
-		bd.gravityScale = gravity;
-		bd.fixedRotation = !canRotate;
+		bd = new BodyDefBuilder().position(position)
+								 .type(type)
+								 .gravityScale(gravity)
+								 .canRotate(canRotate)
+								 .build();
 
 		FixtureDef fd = new FixtureDef();
 		fd.shape = shape;
