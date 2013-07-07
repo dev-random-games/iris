@@ -6,9 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.PriorityBlockingQueue;
 
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
 import co.devrandom.main.GameState;
@@ -16,11 +13,7 @@ import co.devrandom.model.events.TimedEvent;
 import co.devrandom.model.objects.Block;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.Player;
-import co.devrandom.model.objects.util.BodyDefBuilder;
-import co.devrandom.model.objects.util.FixtureListBuilder;
 import co.devrandom.util.Vector;
-import co.devrandom.vc.view.TextureAttributes;
-import co.devrandom.vc.view.TextureList;
 
 public class Model implements Runnable {
 	private static final int SLEEP_TIME = 10;
@@ -43,8 +36,8 @@ public class Model implements Runnable {
 	public void run() {
 		
 		{
-			for (int x = -5; x < 5; x++) {
-				for (int y = -10; y < -2; y++) {
+			for (int x = -10; x < 10; x++) {
+				for (int y = -20; y < -2; y++) {
 					Block block = new Block(this, new Vector(x * 0.25f, y * 0.25f));
 		
 					physicsObjects.add(block);

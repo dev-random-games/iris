@@ -107,6 +107,9 @@ public class ViewController implements Runnable {
 					handlePausedInput();	
 				} else {
 					handleGameInput();
+					
+					// TODO investigate the magic scalar
+					cameraLocation = model.getPlayer().getPosition().scale(-0.05f);
 				}
 				
 				/*

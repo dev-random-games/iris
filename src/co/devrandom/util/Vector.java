@@ -18,6 +18,11 @@ public class Vector {
 		x = v.x;
 		y = v.y;
 	}
+	
+	public Vector(Vec2 v) {
+		x = v.x;
+		y = v.y;
+	}
 
 	public float dot(Vector v) {
 		return x * v.x + y * v.y;
