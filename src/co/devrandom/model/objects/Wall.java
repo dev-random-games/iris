@@ -2,7 +2,6 @@ package co.devrandom.model.objects;
 
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.FixtureDef;
 
 import co.devrandom.model.Model;
 import co.devrandom.model.objects.util.BodyDefBuilder;
@@ -21,18 +20,15 @@ public class Wall extends PhysicsObject {
 		.type(BodyType.STATIC)
 		.gravityScale(GRAVITY)
 		.build();
-	
-	private static final FixtureDefBuilder FD = new FixtureDefBuilder()
+
+	private final static FixtureDefBuilder FD = new FixtureDefBuilder()
 		.density(DENSITY)
 		.friction(FRICTION)
 		.restitution(RESTITUTION);
 	
-	private static final TextureAttributes TEX_ATTRIBUTES = new TextureAttributes(
-			TextureList.WALL);
-
 	public Wall(Model model, Vector position, Vector size) {
 		super(model, BodyDefBuilder.setPosition(BD, position),
-			new FixtureDef[] { FD.shape(PhysicsObject.makeBoxShape(size)).build() },
-			TEX_ATTRIBUTES);
+			FD.shape(PhysicsObject.makeBoxShape(size)).build(),
+			 new TextureAttributes(TextureList.WALL));
 	}
 }

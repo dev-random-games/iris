@@ -17,6 +17,10 @@ public class FixtureDefBuilder {
 		.friction(DEFAULT_FRICTION)
 		.restitution(DEFAULT_RESTITUTION);
 	}
+	
+	public FixtureDefBuilder(FixtureDefBuilder fd) {
+		this();
+	}
 
 	public FixtureDef build() {
 		return fd;
@@ -41,4 +45,13 @@ public class FixtureDefBuilder {
 		fd.restitution = restitution;
 		return this;
 	}
+//	
+//	public FixtureDefBuilder duplicate() {
+//		try {
+//			return (FixtureDefBuilder) clone();
+//		} catch (CloneNotSupportedException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
 }

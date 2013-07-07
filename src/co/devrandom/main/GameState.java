@@ -10,10 +10,11 @@ public class GameState {
 	 * File path settings
 	 */
 	public static final String NAME = "Gravy";
-	public static final String ASSET_PATH = "/assets/";
+	public static final String ASSET_PATH = "assets/";
 	public static final String FONT_PATH = ASSET_PATH + "fonts/";
 	public static final String IMG_PATH = ASSET_PATH + "img/";
 	public static final String AUDIO_PATH = ASSET_PATH + "audio/";
+	public static final String LEVEL_PATH = ASSET_PATH + "levels/";
 	
 	/*
 	 * Game window settings
@@ -22,6 +23,11 @@ public class GameState {
 	public static final int WINDOW_HEIGHT = 600;
 	public static final boolean ANTIALIAS = true;
 	public static final int FPS = 60; 
+	
+	/*
+	 * Level loading settings
+	 */
+	public static final float LEVEL_SCALE = 0.1f;
 	
 	/*
 	 * jBox2D settings
