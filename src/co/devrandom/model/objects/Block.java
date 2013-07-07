@@ -18,7 +18,7 @@ public class Block extends PhysicsObject {
 	private static final float RESTITUTION = 0.0001f;
 	private static final float GRAVITY = 1f;
 	
-	private static final Shape SHAPE = PhysicsObject.makeBoxShape(new Vector(0.1f, 0.1f));
+	private static final Shape SHAPE = PhysicsObject.makeBoxShape(new Vector(0.3f, 0.3f));
 
 	private static final BodyDef BD = new BodyDefBuilder()
 		.type(BodyType.DYNAMIC)

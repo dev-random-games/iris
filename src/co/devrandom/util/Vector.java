@@ -62,9 +62,13 @@ public class Vector {
 	public void subtractInPlace(Vector v) {
 		addInPlace(v.scale(-1));
 	}
+	
+	public float mag2() {
+		return (float) (x * x + y * y);
+	}
 
 	public float mag() {
-		return (float) Math.sqrt(x * x + y * y);
+		return (float) Math.sqrt(mag2());
 	}
 
 	public Vector norm() {

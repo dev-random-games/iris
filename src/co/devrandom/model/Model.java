@@ -11,6 +11,7 @@ import org.jbox2d.dynamics.World;
 import co.devrandom.main.GameState;
 import co.devrandom.model.events.TimedEvent;
 import co.devrandom.model.load.LevelLoader;
+import co.devrandom.model.objects.Block;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.Player;
 import co.devrandom.util.Vector;
@@ -38,20 +39,13 @@ public class Model implements Runnable {
 		LevelLoader loader = new LevelLoader(this, "first.svg");
 		loader.loadPhysics();
 		
-		
-//		System.out.println(loader.loadPhysics());
-//		
-//		Wall wall = new Wall(this, new Vector(0f, 0f), new Vector(0.1f, 10f));
-//
-//		physicsObjects.add(wall);
-//		
-//		for (int x = 2; x < 10; x++) {
-//			for (int y = 2; y < 10; y++) {
-//				Block block = new Block(this, new Vector(x * 0.25f, y * 0.25f));
-//
-//				physicsObjects.add(block);
-//			}
-//		}
+		for (int x = 2; x < 20; x++) {
+			for (int y = 2; y < 20; y++) {
+				Block block = new Block(this, new Vector(x * 1f, y * 1f));
+
+				physicsObjects.add(block);
+			}
+		}
 
 		player = new Player(this, new Vector(2, 0));		
 		physicsObjects.add(player);
