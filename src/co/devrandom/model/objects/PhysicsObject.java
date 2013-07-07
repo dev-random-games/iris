@@ -1,5 +1,7 @@
 package co.devrandom.model.objects;
 
+import java.util.ArrayList;
+
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.collision.shapes.Shape;
@@ -19,6 +21,7 @@ public class PhysicsObject {
 	private TextureAttributes texAttributes;
 	private BodyDef bd;
 	private Body body;
+	private ArrayList<Shape> shapeList;
 
 	public PhysicsObject(Model model, BodyDef bd, FixtureDef[] fixtures, TextureAttributes texAttributes) {
 		this.model = model;
@@ -28,8 +31,11 @@ public class PhysicsObject {
 		Vector c1 = new Vector(Float.MAX_VALUE, Float.MAX_VALUE);
 		Vector c2 = new Vector(Float.MIN_VALUE, Float.MIN_VALUE);
 		
+		shapeList = new ArrayList<Shape>();
+		
 		for (FixtureDef fd : fixtures) {
 			body.createFixture(fd);
+			shapeList.add(fd.shape);
 			Vector[] corners = getCorners(fd.shape);
 			c1.x = Math.min(corners[0].x, c1.x);
 			c1.y = Math.min(corners[0].y, c1.y);
@@ -39,6 +45,10 @@ public class PhysicsObject {
 		
 		this.texAttributes = texAttributes;
 		texAttributes.setSize(c2.minus(c1).scale(GameState.SCALE));
+	}
+	
+	public Vec2[] getVertices() {
+		return ((PolygonShape) body.getFixtureList().getShape()).getVertices();
 	}
 
 	public PhysicsObject(Model model, BodyDef bd, FixtureDef fixtures, TextureAttributes texAttributes) {
@@ -56,6 +66,10 @@ public class PhysicsObject {
 	public Vector getPosition() {
 		Vec2 position = body.getPosition();
 		return new Vector(position.x, position.y).scale(GameState.SCALE);
+	}
+
+	public ArrayList<Shape> getShapeList() {
+		return shapeList;
 	}
 	
 	private Vector[] getCorners(Shape shape) {
