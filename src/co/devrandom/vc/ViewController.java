@@ -108,8 +108,10 @@ public class ViewController implements Runnable {
 				} else {
 					handleGameInput();
 					
+					System.out.println(cameraLocation.minus(model.getPlayer().getPosition().scale(-0.05f)).scale(0.05f).toString());
+					
 					// TODO investigate the magic scalar
-					cameraLocation = model.getPlayer().getPosition().scale(-0.05f);
+					cameraLocation.addInPlace(cameraLocation.minus(model.getPlayer().getPosition().scale(-0.05f)).scale(-0.2f));
 				}
 				
 				/*
