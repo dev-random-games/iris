@@ -24,7 +24,6 @@ import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import org.jbox2d.common.Vec2;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -38,6 +37,7 @@ import co.devrandom.audio.AudioList;
 import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
 import co.devrandom.model.objects.PhysicsObject;
+import co.devrandom.model.objects.util.Ray;
 import co.devrandom.model.objects.util.RayCaster;
 import co.devrandom.util.Vector;
 import co.devrandom.vc.controller.KeyPress;
@@ -130,18 +130,24 @@ public class ViewController implements Runnable {
 
 				Vector origin = model.getPlayer().getPosition().scale(1.0f / (GameState.SCALE));
 				Vector ray = this.getMousePositionInGame().minus(model.getPlayer().getPosition());
-				
-				Vector collision = RayCaster.getClosestIntersect(origin, ray,
-						model.getPlayer(), model.getGameObjects());
+
+				Ray collision = RayCaster.getClosestIntersect(origin, ray, model.getPlayer(),
+						model.getGameObjects());
 
 				if (collision != null) {
 					this.renderLine(model.getPlayer().getPosition(),
-							collision.scale(GameState.SCALE));
+							collision.getEnd().scale(GameState.SCALE));
+					Vector collisionDir = collision.getEnd().minus(collision.getOrigin()).norm();
+					if (Mouse.isButtonDown(0)) {
+						collision.getDest().applyForce(collisionDir.scale(1), collision.getEnd());
+						model.getPlayer().applyForce(collisionDir.scale(-1), collision.getOrigin());
+					} else if (Mouse.isButtonDown(1)) {
+						collision.getDest().applyForce(collisionDir.scale(-1), collision.getEnd());
+						model.getPlayer().applyForce(collisionDir.scale(1), collision.getOrigin());
+					}
 				} else {
 					this.renderLine(model.getPlayer().getPosition(), ray.scale(1000));
 				}
-
-				System.out.println(this.getMousePositionInGame());
 
 				glPopMatrix();
 

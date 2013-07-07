@@ -63,6 +63,10 @@ public class PhysicsObject {
 	public TextureAttributes getTexAttributes() {
 		return texAttributes;
 	}
+	
+	public void applyForce (Vector force, Vector point) {
+		getBody().applyForce(new Vec2(force.x, force.y), new Vec2(point.x, point.y));
+	}
 
 	/**
 	 * Translates Box2D coordinates to on screen coordinates using

@@ -23,7 +23,7 @@ public class RayCaster {
 	 * @return A Vec2 object containing the intersection found closest to the
 	 *         provided position or NULL if no intersestions were found
 	 */
-	public static Vector getClosestIntersect(Vector origin, Vector direction, PhysicsObject source,
+	public static Ray getClosestIntersect(Vector origin, Vector direction, PhysicsObject source,
 			List<PhysicsObject> objects) {
 		direction = direction.norm();
 
@@ -122,7 +122,9 @@ public class RayCaster {
 
 		// Return the closest intersection found or NULL if there were no
 		// intersections
-		return closestIntersection;
+		if (closestIntersection != null)
+			return new Ray(origin, closestIntersection, source, closestObject);
+		else return null;
 	}
 
 	public static boolean linesIntersect(double x1, double y1, double x2, double y2, double x3,

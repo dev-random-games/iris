@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.PriorityBlockingQueue;
 
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
 import co.devrandom.main.GameState;
@@ -15,6 +13,7 @@ import co.devrandom.model.events.TimedEvent;
 import co.devrandom.model.objects.Block;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.Player;
+import co.devrandom.model.objects.Wall;
 import co.devrandom.util.Vector;
 
 public class Model implements Runnable {
@@ -37,13 +36,13 @@ public class Model implements Runnable {
 
 	public void run() {
 
-//		Wall wall = new Wall(this, new Vector(0f, 0f), new Vector(0.1f, 10f));
+		Wall wall = new Wall(this, new Vector(0f, 0f), new Vector(0.1f, 10f));
 
-//		physicddddddddddddddddsObjects.add(wall);
+		physicsObjects.add(wall);
 		
-		for (int x = 2; x < 10; x++) {
-			for (int y = 2; y < 10; y++) {
-				Block block = new Block(this, new Vector(x * 1.0f, y * 1.0f));
+		for (int x = 2; x < 20; x++) {
+			for (int y = 2; y < 20; y++) {
+				Block block = new Block(this, new Vector(x * 1f, y * 1f));
 
 				physicsObjects.add(block);
 			}
