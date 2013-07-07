@@ -266,17 +266,19 @@ public class ViewController implements Runnable {
 			}
 		}
 
+		boolean sprinting = KeyPress.SPRINT.isDown();
+		
 		if (KeyPress.FORWARD.isDown()) {
-			model.getPlayer().moveForward();
+			model.getPlayer().moveForward(sprinting);
 		}
 		if (KeyPress.BACKWARD.isDown()) {
-			model.getPlayer().moveBackward();
+			model.getPlayer().moveBackward(sprinting);
 		}
 		if (KeyPress.LEFT.isDown()) {
-			model.getPlayer().moveLeft();
+			model.getPlayer().moveLeft(sprinting);
 		}
 		if (KeyPress.RIGHT.isDown()) {
-			model.getPlayer().moveRight();
+			model.getPlayer().moveRight(sprinting);
 		}
 	}
 

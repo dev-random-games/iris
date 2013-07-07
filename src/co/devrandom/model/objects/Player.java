@@ -13,6 +13,7 @@ import co.devrandom.vc.view.TextureList;
 
 public class Player extends PhysicsObject {
 	private static final float MOVEMENT_SPEED = 1f;
+	private static final float SPRINT_MULTIPLIER = 2f;
 	
 	private static final float DENSITY = 0.1f;
 	private static final float FRICTION = 0f;
@@ -35,19 +36,19 @@ public class Player extends PhysicsObject {
 				 new TextureAttributes(TextureList.PLAYER));
 	}
 	
-	public void moveForward() {
-		this.getBody().applyForceToCenter(new Vec2(0, -MOVEMENT_SPEED));
+	public void moveForward(boolean sprinting) {
+		this.getBody().applyForceToCenter(new Vec2(0, (sprinting ? SPRINT_MULTIPLIER : 1) * -MOVEMENT_SPEED));
 	}
 	
-	public void moveBackward() {
-		this.getBody().applyForceToCenter(new Vec2(0, MOVEMENT_SPEED));
+	public void moveBackward(boolean sprinting) {
+		this.getBody().applyForceToCenter(new Vec2(0, (sprinting ? SPRINT_MULTIPLIER : 1) * MOVEMENT_SPEED));
 	}
 
-	public void moveLeft() {
-		this.getBody().applyForceToCenter(new Vec2(-MOVEMENT_SPEED, 0));
+	public void moveLeft(boolean sprinting) {
+		this.getBody().applyForceToCenter(new Vec2((sprinting ? SPRINT_MULTIPLIER : 1) * -MOVEMENT_SPEED, 0));
 	}	
 	
-	public void moveRight() {
-		this.getBody().applyForceToCenter(new Vec2(MOVEMENT_SPEED, 0));
+	public void moveRight(boolean sprinting) {
+		this.getBody().applyForceToCenter(new Vec2((sprinting ? SPRINT_MULTIPLIER : 1) * MOVEMENT_SPEED, 0));
 	}
 }

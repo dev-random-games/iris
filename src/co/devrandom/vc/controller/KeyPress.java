@@ -7,6 +7,7 @@ public enum KeyPress {
 	BACKWARD(Keyboard.KEY_S),
 	RIGHT(Keyboard.KEY_D),
 	LEFT(Keyboard.KEY_A),
+	SPRINT(Keyboard.KEY_LSHIFT),
 	PING(Keyboard.KEY_P),
 	PAUSE(Keyboard.KEY_SPACE),
 	START(Keyboard.KEY_SPACE);
