@@ -65,7 +65,7 @@ public class GameState {
 	}
 	
 	public static void startGame() {
-		currentState = State.PAUSED;
+		currentState = State.RUNNING;
 	}
 	
 	public static void pauseUnpause() {
