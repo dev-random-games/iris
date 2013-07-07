@@ -103,7 +103,11 @@ public class ViewController implements Runnable {
 				renderTexture(textures, new Vector(GameState.WINDOW_WIDTH / 2f, GameState.WINDOW_HEIGHT / 2f), 0f);
 				
 			} else {
-				handleGameInput();
+				if (GameState.isPaused()) {
+					handlePausedInput();	
+				} else {
+					handleGameInput();
+				}
 				
 				/*
 				 * Draw all gameObjects;
@@ -134,8 +138,9 @@ public class ViewController implements Runnable {
 					FontList.HEADER.getFont().drawString(10, 10, String.format("FPS: %.1f", fps), Color.black);
 				}
 				
-				if (GameState.isPaused())
+				if (GameState.isPaused()) {
 					renderTexture(new TextureAttributes(TextureList.PAUSE, new Vector(64, 64)), new Vector(GameState.WINDOW_WIDTH - 42 , 42), 0);
+				}
 			}
 			
 			SoundStore.get().poll(0);
@@ -195,28 +200,8 @@ public class ViewController implements Runnable {
 	private void handleGameInput() {
 		while (Keyboard.next()) {
 			if (Keyboard.getEventKeyState()) {
-				if (Keyboard.getEventKey() == KeyPress.FORWARD.getKeyID()) {
-					System.out.println("forward");
-				} else if (Keyboard.getEventKey() == KeyPress.BACKWARD.getKeyID()) {
-					System.out.println("backward");
-				} else if (Keyboard.getEventKey() == KeyPress.LEFT.getKeyID()) {
-					System.out.println("left");
-				} else if (Keyboard.getEventKey() == KeyPress.RIGHT.getKeyID()) {
-					System.out.println("right");
-				} else if (Keyboard.getEventKey() == KeyPress.PING.getKeyID()) {
-					AudioList.PING.getAudio().playAsSoundEffect(1.0f, 1.0f, false);
-				} else if (Keyboard.getEventKey() == KeyPress.PAUSE.getKeyID()) {
+				if (Keyboard.getEventKey() == KeyPress.PAUSE.getKeyID()) {
 					GameState.pauseUnpause();
-				}
-			} else {
-				if (Keyboard.getEventKey() == KeyPress.FORWARD.getKeyID()) {
-					System.out.println("forward released");
-				} else if (Keyboard.getEventKey() == KeyPress.BACKWARD.getKeyID()) {
-					System.out.println("backward released");
-				} else if (Keyboard.getEventKey() == KeyPress.LEFT.getKeyID()) {
-					System.out.println("left released");
-				} else if (Keyboard.getEventKey() == KeyPress.RIGHT.getKeyID()) {
-					System.out.println("right released");
 				}
 			}
 		}
@@ -232,6 +217,16 @@ public class ViewController implements Runnable {
 		}
 		if (KeyPress.RIGHT.isDown()){
 			model.getPlayer().moveRight();
+		}
+	}
+	
+	private void handlePausedInput() {
+		while (Keyboard.next()) {
+			if (Keyboard.getEventKeyState()) {
+				if (Keyboard.getEventKey() == KeyPress.PAUSE.getKeyID()) {
+					GameState.pauseUnpause();
+				}
+			}
 		}
 	}
 

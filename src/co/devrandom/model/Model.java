@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.PriorityBlockingQueue;
 
-import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
