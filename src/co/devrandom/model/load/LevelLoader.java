@@ -62,10 +62,13 @@ public class LevelLoader {
 						object = new Block(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE),
 								new Vector(w, h).scale(GameState.LEVEL_SCALE));
 					} else if (color.equals(ColorList.PLAYER.getColor())) {
-						Player player = new Player(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE));
+						Player player = new Player(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE),
+								new Vector(w, h).scale(GameState.LEVEL_SCALE));
 						object = player;
 						
 						model.setPlayer(player);
+						
+						System.out.println("hello");
 					}
 
 					model.addPhysicsObject(object);

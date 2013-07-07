@@ -1,10 +1,8 @@
 package co.devrandom.model.objects;
 
-import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.FixtureDef;
 
 import co.devrandom.model.Model;
 import co.devrandom.model.objects.util.BodyDefBuilder;
@@ -20,26 +18,21 @@ public class Player extends PhysicsObject {
 	private static final float FRICTION = 1f;
 	private static final float RESTITUTION = 0.0001f;
 	private static final float GRAVITY = 1f;
-	
-	private static final Shape SHAPE = PhysicsObject.makeBoxShape(new Vector(0.3f, 0.3f));
 
 	private static final BodyDef BD = new BodyDefBuilder()
 		.type(BodyType.DYNAMIC)
 		.gravityScale(GRAVITY)
 		.build();
 	
-	private static final FixtureDef FD = new FixtureDefBuilder()
-		.shape(SHAPE)
+	private final static FixtureDefBuilder FD = new FixtureDefBuilder()
 		.density(DENSITY)
 		.friction(FRICTION)
-		.restitution(RESTITUTION)
-		.build();
+		.restitution(RESTITUTION);
 	
-	private static final TextureAttributes TEX_ATTRIBUTES = new TextureAttributes(
-			TextureList.PLAYER);
-
-	public Player(Model model, Vector position) {
-		super(model, BodyDefBuilder.setPosition(BD, position), new FixtureDef[] { FD }, TEX_ATTRIBUTES);
+	public Player(Model model, Vector position, Vector size) {
+		super(model, BodyDefBuilder.setPosition(BD, position),
+				FD.shape(PhysicsObject.makeBoxShape(size)).build(),
+				 new TextureAttributes(TextureList.PLAYER));
 	}
 	
 	public void moveForward() {
