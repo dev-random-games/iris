@@ -15,7 +15,7 @@ public class Player extends PhysicsObject {
 	private static final float MOVEMENT_SPEED = 1f;
 	
 	private static final float DENSITY = 0.1f;
-	private static final float FRICTION = 1f;
+	private static final float FRICTION = 0f;
 	private static final float RESTITUTION = 0.0001f;
 	private static final float GRAVITY = 1f;
 
