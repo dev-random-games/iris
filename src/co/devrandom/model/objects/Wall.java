@@ -12,7 +12,7 @@ import co.devrandom.vc.view.TextureList;
 
 public class Wall extends PhysicsObject {
 	private static final float DENSITY = 0.1f;
-	private static final float FRICTION = 1f;
+	private static final float FRICTION = 1.0f;
 	private static final float RESTITUTION = 0.0001f;
 	private static final float GRAVITY = 1f;
 
