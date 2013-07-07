@@ -43,7 +43,7 @@ public class Model implements Runnable {
 		
 		for (int x = 2; x < 10; x++) {
 			for (int y = 2; y < 10; y++) {
-				Block block = new Block(this, new Vector(x * 0.25f, y * 0.25f));
+				Block block = new Block(this, new Vector(x * 1.0f, y * 1.0f));
 
 				physicsObjects.add(block);
 			}

@@ -48,7 +48,12 @@ public class PhysicsObject {
 	}
 	
 	public Vec2[] getVertices() {
-		return ((PolygonShape) body.getFixtureList().getShape()).getVertices();
+		Vec2[] vertices = ((PolygonShape) body.getFixtureList().getShape()).getVertices();
+		// Why the hell do I need to do this.
+		Vec2[] actualVertices = new Vec2[vertices.length / 2];
+		for (int i = 0; i < actualVertices.length; i++)
+			actualVertices[i] = vertices[i];
+		return actualVertices;
 	}
 
 	public PhysicsObject(Model model, BodyDef bd, FixtureDef fixtures, TextureAttributes texAttributes) {
