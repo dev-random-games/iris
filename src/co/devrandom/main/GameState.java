@@ -31,6 +31,8 @@ public class GameState {
 	public static int VELOCITY_ITERATIONS = 6;
 	public static int POSITION_ITERATIONS = 2;
 	public static final Vec2 DEFAULT_GRAVITY = new Vec2(0.0f, 0.0f);
+	public static final float DEFAULT_LINEAR_DAMPING = 4f;
+	public static final float DEFAULT_ANGULAR_DAMPING = 4f;
 
 	public enum State {
 		RUNNING,

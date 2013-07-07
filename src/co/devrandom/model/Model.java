@@ -7,13 +7,20 @@ import java.util.List;
 import java.util.concurrent.PriorityBlockingQueue;
 
 import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
 import co.devrandom.main.GameState;
 import co.devrandom.model.events.TimedEvent;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.Player;
+import co.devrandom.model.objects.util.BodyDefBuilder;
+import co.devrandom.model.objects.util.FixtureListBuilder;
 import co.devrandom.util.Vector;
+import co.devrandom.vc.view.TextureAttributes;
+import co.devrandom.vc.view.TextureList;
 
 public class Model implements Runnable {
 	private static final int SLEEP_TIME = 10;
@@ -34,23 +41,27 @@ public class Model implements Runnable {
 	}
 
 	public void run() {
-		PolygonShape ps = new PolygonShape();
-		ps.setAsBox(60, 10);
 
+		{
+			for (int x = 0; x < 5; x++) {
+				for (int y = 0; y < 20; y++) {
+					BodyDef weightBody = new BodyDefBuilder().position(new Vector( x * .5f + y * .1f, -1 -y * .25f))
+							.type(BodyType.DYNAMIC).build();
+				
+					FixtureDef[] weightFixtures = new FixtureListBuilder().shape(new float[] {-8f, -8f, -16f, -8f, -16f, 8f, -8f, 8f})
+																		  .shape(new float[] {8f, -8f, 16f, -8f, 16f, 8f, 8f, 8f})
+																		  .shape(new float[] {-8f, -2f, 8f, -2f, 8f, 2f, -8f, 2f})
+																		  .size(new Vector(.25f, .125f)).density(10).build();
+					
+					PhysicsObject weight = new PhysicsObject(this, weightBody, weightFixtures,
+							new TextureAttributes(TextureList.WEIGHT));
 		
-		
-//		BodyDef groundBody = new BodyDefBuilder().position(new Vector(0, 10)).type(BodyType.STATIC)
-//				.build();
-//
-//		FixtureDef groundFixture = new FixtureDefBuilder().shape(ps).build();
-//
-//		PhysicsObject ground = new PhysicsObject(this, groundBody,
-//				new FixtureDef[] { groundFixture }, new TextureAttributes(TextureList.DOT));
-//
-//		physicsObjects.add(ground);
+					physicsObjects.add(weight);
+				}
+			}
+		}
 
-		player = new Player(this, new Vector(0, 0));
-		
+		player = new Player(this, new Vector(0, 0));		
 		physicsObjects.add(player);
 		
 		while (true) {

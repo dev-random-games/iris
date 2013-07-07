@@ -3,6 +3,7 @@ package co.devrandom.model.objects.util;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 
+import co.devrandom.main.GameState;
 import co.devrandom.util.Vector;
 
 public class BodyDefBuilder {
@@ -10,6 +11,9 @@ public class BodyDefBuilder {
 	
 	public BodyDefBuilder() {
 		bd = new BodyDef();
+		
+		linearDamping(GameState.DEFAULT_LINEAR_DAMPING)
+		.angularDamping(GameState.DEFAULT_ANGULAR_DAMPING);
 	}
 	
 	public BodyDef build() {
@@ -43,6 +47,11 @@ public class BodyDefBuilder {
 	
 	public BodyDefBuilder linearDamping(float linearDamping) {
 		bd.linearDamping = linearDamping;
+		return this;
+	}
+	
+	public BodyDefBuilder angularDamping(float angularDamping) {
+		bd.angularDamping = angularDamping;
 		return this;
 	}
 	
