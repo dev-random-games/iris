@@ -1,6 +1,5 @@
 package co.devrandom.model.objects;
 
-import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
@@ -17,25 +16,23 @@ public class Wall extends PhysicsObject {
 	private static final float FRICTION = 1f;
 	private static final float RESTITUTION = 0.0001f;
 	private static final float GRAVITY = 1f;
-	
-	private static final Shape SHAPE = PhysicsObject.makeBoxShape(0.1f, 0.1f);
 
 	private static final BodyDef BD = new BodyDefBuilder()
 		.type(BodyType.STATIC)
 		.gravityScale(GRAVITY)
 		.build();
 	
-	private static final FixtureDef FD = new FixtureDefBuilder()
-		.shape(SHAPE)
+	private static final FixtureDefBuilder FD = new FixtureDefBuilder()
 		.density(DENSITY)
 		.friction(FRICTION)
-		.restitution(RESTITUTION)
-		.build();
+		.restitution(RESTITUTION);
 	
 	private static final TextureAttributes TEX_ATTRIBUTES = new TextureAttributes(
 			TextureList.WALL);
 
 	public Wall(Model model, Vector position, Vector size) {
-		super(model, BodyDefBuilder.setPosition(BD, position), new FixtureDef[] { FD }, TEX_ATTRIBUTES);
+		super(model, BodyDefBuilder.setPosition(BD, position),
+			new FixtureDef[] { FD.shape(PhysicsObject.makeBoxShape(size)).build() },
+			TEX_ATTRIBUTES);
 	}
 }

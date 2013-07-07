@@ -57,10 +57,6 @@ public class PhysicsObject {
 		Vec2 position = body.getPosition();
 		return new Vector(position.x, position.y).scale(GameState.SCALE);
 	}
-
-	private Vector getSize() {
-		return getSize(body.getFixtureList().getShape());
-	}
 	
 	private Vector[] getCorners(Shape shape) {
 		if (shape.m_type == ShapeType.POLYGON) {
@@ -84,14 +80,6 @@ public class PhysicsObject {
 			return new Vector[] { new Vector(-rad, -rad), new Vector(rad, rad) };
 		}
 	}
-	
-	/**
-	 * Attempts to find the minimum bounding box of the physics shape.
-	 */
-	private Vector getSize(Shape shape) {
-		Vector[] corners = getCorners(shape);
-		return corners[1].minus(corners[0]);
-	}
 
 	public Model getModel() {
 		return this.model;
@@ -112,9 +100,9 @@ public class PhysicsObject {
 	/**
 	 * Creates a new box with the specified width and height
 	 */
-	public static Shape makeBoxShape(float w, float h) {
+	public static Shape makeBoxShape(Vector size) {
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(w, h);
+		shape.setAsBox(size.x, size.y);
 		return shape;
 	}
 
