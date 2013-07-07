@@ -67,8 +67,6 @@ public class LevelLoader {
 						object = player;
 						
 						model.setPlayer(player);
-						
-						System.out.println("hello");
 					}
 
 					model.addPhysicsObject(object);
