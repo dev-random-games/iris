@@ -7,7 +7,7 @@ public class FixtureDefBuilder {
 	private static final float DEFAULT_DENSITY = 0.5f;
 	private static final float DEFAULT_FRICTION = 0.3f;
 	private static final float DEFAULT_RESTITUTION = 0.5f;
-
+	
 	FixtureDef fd;
 
 	public FixtureDefBuilder() {

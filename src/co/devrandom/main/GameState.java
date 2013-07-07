@@ -9,7 +9,7 @@ public class GameState {
 	/*
 	 * File path settings
 	 */
-	public static final String NAME = "Iris";
+	public static final String NAME = "Gravy";
 	public static final String ASSET_PATH = "/assets/";
 	public static final String FONT_PATH = ASSET_PATH + "fonts/";
 	public static final String IMG_PATH = ASSET_PATH + "img/";
@@ -30,7 +30,7 @@ public class GameState {
 	public static float TIME_STEP = 1f / 60f;
 	public static int VELOCITY_ITERATIONS = 6;
 	public static int POSITION_ITERATIONS = 2;
-	public static final Vec2 DEFAULT_GRAVITY = new Vec2(0.0f, 9.8f);
+	public static final Vec2 DEFAULT_GRAVITY = new Vec2(0.0f, 0.0f);
 
 	public enum State {
 		RUNNING,

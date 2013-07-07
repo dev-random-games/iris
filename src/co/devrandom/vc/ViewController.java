@@ -222,16 +222,16 @@ public class ViewController implements Runnable {
 		}
 		
 		if (KeyPress.FORWARD.isDown()){
-			cameraLocation.addInPlace(new Vector(0, 5));
+			model.getPlayer().moveForward();
 		}
 		if (KeyPress.BACKWARD.isDown()){
-			cameraLocation.addInPlace(new Vector(0, -5));
+			model.getPlayer().moveBackward();
 		}
 		if (KeyPress.LEFT.isDown()){
-			cameraLocation.addInPlace(new Vector(5, 0));
+			model.getPlayer().moveLeft();
 		}
 		if (KeyPress.RIGHT.isDown()){
-			cameraLocation.addInPlace(new Vector(-5, 0));
+			model.getPlayer().moveRight();
 		}
 	}
 

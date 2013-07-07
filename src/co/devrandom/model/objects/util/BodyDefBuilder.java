@@ -41,6 +41,11 @@ public class BodyDefBuilder {
 		return this;
 	}
 	
+	public BodyDefBuilder linearDamping(float linearDamping) {
+		bd.linearDamping = linearDamping;
+		return this;
+	}
+	
 	public static BodyDef setPosition(BodyDef bd, Vector position) {
 		bd.position = position.toVec2();
 		return bd;
