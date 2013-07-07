@@ -58,7 +58,8 @@ public class LevelLoader {
 						object = new Wall(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE),
 								new Vector(w, h).scale(GameState.LEVEL_SCALE));	
 					} else if (color.equals(ColorList.BOX.getColor())) {
-						object = new Block(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE));
+						object = new Block(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE),
+								new Vector(w, h).scale(GameState.LEVEL_SCALE));
 					} else {
 						
 					}

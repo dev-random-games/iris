@@ -38,14 +38,6 @@ public class Model implements Runnable {
 
 		LevelLoader loader = new LevelLoader(this, "first.svg");
 		loader.loadPhysics();
-		
-		for (int x = 2; x < 20; x++) {
-			for (int y = 2; y < 20; y++) {
-				Block block = new Block(this, new Vector(x * 1f, y * 1f));
-
-				physicsObjects.add(block);
-			}
-		}
 
 		player = new Player(this, new Vector(2, 0));		
 		physicsObjects.add(player);

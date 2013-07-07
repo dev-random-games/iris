@@ -3,7 +3,6 @@ package co.devrandom.model.objects;
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.FixtureDef;
 
 import co.devrandom.model.Model;
 import co.devrandom.model.objects.util.BodyDefBuilder;
@@ -25,17 +24,14 @@ public class Block extends PhysicsObject {
 		.gravityScale(GRAVITY)
 		.build();
 	
-	private static final FixtureDef FD = new FixtureDefBuilder()
-		.shape(SHAPE)
+	private final static FixtureDefBuilder FD = new FixtureDefBuilder()
 		.density(DENSITY)
 		.friction(FRICTION)
-		.restitution(RESTITUTION)
-		.build();
+		.restitution(RESTITUTION);
 	
-	private static final TextureAttributes TEX_ATTRIBUTES = new TextureAttributes(
-			TextureList.BLOCK);
-
-	public Block(Model model, Vector position) {
-		super(model, BodyDefBuilder.setPosition(BD, position), new FixtureDef[] { FD }, TEX_ATTRIBUTES);
+	public Block(Model model, Vector position, Vector size) {
+		super(model, BodyDefBuilder.setPosition(BD, position),
+				FD.shape(PhysicsObject.makeBoxShape(size)).build(),
+				 new TextureAttributes(TextureList.BLOCK));
 	}
 }
