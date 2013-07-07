@@ -29,7 +29,7 @@ public class LevelLoader {
 		this.levelName = levelName;
 	}
 
-	public String loadPhysics() {
+	public void loadObjects() {
 		File levelFile = load(levelName);
 		
 		try {
@@ -77,8 +77,6 @@ public class LevelLoader {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return "";
 	}
 
 	private static String extractElement(String key, String list) {

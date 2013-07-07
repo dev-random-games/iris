@@ -34,7 +34,7 @@ public class Model implements Runnable {
 
 	public void run() {
 		LevelLoader loader = new LevelLoader(this, "first.svg");
-		loader.loadPhysics();
+		loader.loadObjects();
 		
 		while (true) {
 			lastFrame = System.currentTimeMillis();
