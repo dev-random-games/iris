@@ -28,6 +28,7 @@ public enum TextureList {
 	PAUSE("pause.png", false),
 	BARREL("barrel.png", false),
 	PLAYER("player.png", false),
+	BLOCK("block.png", false),
 	SMILEY_MOUTH_1("smiley-mouth.png", false, new Vector(0, 0), new Vector(16, 16)),
 	SMILEY_MOUTH_2("smiley-mouth.png", false, new Vector(16, 0), new Vector(32, 16)),
 	SMILEY_MOUTH_3("smiley-mouth.png", false, new Vector(0, 16), new Vector(16, 32)),

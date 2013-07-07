@@ -13,6 +13,7 @@ import org.jbox2d.dynamics.World;
 
 import co.devrandom.main.GameState;
 import co.devrandom.model.events.TimedEvent;
+import co.devrandom.model.objects.Block;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.Player;
 import co.devrandom.model.objects.util.BodyDefBuilder;
@@ -42,20 +43,11 @@ public class Model implements Runnable {
 	public void run() {
 		
 		{
-			for (int x = 0; x < 5; x++) {
-				for (int y = 0; y < 20; y++) {
-					BodyDef weightBody = new BodyDefBuilder().position(new Vector( x * .5f + y * .1f, -1 -y * .25f))
-							.type(BodyType.DYNAMIC).build();
-				
-					FixtureDef[] weightFixtures = new FixtureListBuilder().shape(new float[] {-8f, -8f, -16f, -8f, -16f, 8f, -8f, 8f})
-																		  .shape(new float[] {8f, -8f, 16f, -8f, 16f, 8f, 8f, 8f})
-																		  .shape(new float[] {-8f, -2f, 8f, -2f, 8f, 2f, -8f, 2f})
-																		  .size(new Vector(.25f, .125f)).density(10).build();
-					
-					PhysicsObject weight = new PhysicsObject(this, weightBody, weightFixtures,
-							new TextureAttributes(TextureList.WEIGHT));
+			for (int x = -5; x < 5; x++) {
+				for (int y = -10; y < -2; y++) {
+					Block block = new Block(this, new Vector(x * 0.25f, y * 0.25f));
 		
-					physicsObjects.add(weight);
+					physicsObjects.add(block);
 				}
 			}
 		}
