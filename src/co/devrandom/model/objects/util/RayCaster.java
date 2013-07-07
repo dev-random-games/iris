@@ -1,14 +1,10 @@
 package co.devrandom.model.objects.util;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 
-import co.devrandom.main.GameState;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.util.Vector;
 

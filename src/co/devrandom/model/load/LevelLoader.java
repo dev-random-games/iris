@@ -16,6 +16,7 @@ import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
 import co.devrandom.model.objects.Block;
 import co.devrandom.model.objects.PhysicsObject;
+import co.devrandom.model.objects.Player;
 import co.devrandom.model.objects.Wall;
 import co.devrandom.util.Vector;
 
@@ -60,8 +61,11 @@ public class LevelLoader {
 					} else if (color.equals(ColorList.BOX.getColor())) {
 						object = new Block(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE),
 								new Vector(w, h).scale(GameState.LEVEL_SCALE));
-					} else {
+					} else if (color.equals(ColorList.PLAYER.getColor())) {
+						Player player = new Player(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE));
+						object = player;
 						
+						model.setPlayer(player);
 					}
 
 					model.addPhysicsObject(object);

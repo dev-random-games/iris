@@ -99,5 +99,19 @@
        height="1"
        x="3"
        y="5" />
+    <rect
+       style="fill:#00ff00;fill-opacity:1;stroke:none"
+       id="rect4000"
+       width="4"
+       height="3"
+       x="7"
+       y="7" />
+    <rect
+       style="fill:#0000ff;fill-opacity:1;stroke:none"
+       id="rect4002"
+       width="1"
+       height="1"
+       x="9"
+       y="3" />
   </g>
 </svg>

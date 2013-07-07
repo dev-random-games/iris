@@ -11,10 +11,8 @@ import org.jbox2d.dynamics.World;
 import co.devrandom.main.GameState;
 import co.devrandom.model.events.TimedEvent;
 import co.devrandom.model.load.LevelLoader;
-import co.devrandom.model.objects.Block;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.Player;
-import co.devrandom.util.Vector;
 
 public class Model implements Runnable {
 	private static final int SLEEP_TIME = 10;
@@ -35,12 +33,8 @@ public class Model implements Runnable {
 	}
 
 	public void run() {
-
 		LevelLoader loader = new LevelLoader(this, "first.svg");
 		loader.loadPhysics();
-
-		player = new Player(this, new Vector(2, 0));		
-		physicsObjects.add(player);
 		
 		while (true) {
 			lastFrame = System.currentTimeMillis();
@@ -84,6 +78,10 @@ public class Model implements Runnable {
 	
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 
 	public World getWorld() {

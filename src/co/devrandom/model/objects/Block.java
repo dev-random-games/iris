@@ -1,6 +1,5 @@
 package co.devrandom.model.objects;
 
-import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 
@@ -17,8 +16,6 @@ public class Block extends PhysicsObject {
 	private static final float RESTITUTION = 0.0001f;
 	private static final float GRAVITY = 1f;
 	
-	private static final Shape SHAPE = PhysicsObject.makeBoxShape(new Vector(0.3f, 0.3f));
-
 	private static final BodyDef BD = new BodyDefBuilder()
 		.type(BodyType.DYNAMIC)
 		.gravityScale(GRAVITY)
