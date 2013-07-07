@@ -13,8 +13,6 @@ public enum AudioList {
 		this.audio = AudioLoader.loadOGG(fileName);
 	}
 	
-	
-	
 	public Audio getAudio() {
 		return audio;
 	}

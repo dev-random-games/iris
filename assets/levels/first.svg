@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.313708"
-     inkscape:cx="32"
-     inkscape:cy="50.617905"
+     inkscape:zoom="32"
+     inkscape:cx="5.0870055"
+     inkscape:cy="58.117905"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:document-units="px"
@@ -59,66 +59,45 @@
      inkscape:groupmode="layer">
     <rect
        style="fill:#000000;fill-opacity:1;stroke:none"
-       id="rect3932"
+       id="rect3956"
        width="1"
-       height="1"
+       height="14"
        x="0"
        y="0" />
     <rect
        style="fill:#000000;fill-opacity:1;stroke:none"
-       id="rect3936"
-       width="2"
+       id="rect3958"
+       width="14"
        height="1"
-       x="0"
-       y="3" />
-    <rect
-       style="fill:#000000;fill-opacity:1;stroke:none"
-       id="rect3938"
-       width="3"
-       height="1"
-       x="0"
-       y="6" />
-    <rect
-       style="fill:#000000;fill-opacity:1;stroke:none"
-       id="rect3942"
-       width="3"
-       height="1"
-       x="0"
-       y="9" />
-    <rect
-       style="fill:#000000;fill-opacity:1;stroke:none"
-       id="rect3946"
-       width="8"
-       height="1"
-       x="2"
+       x="1"
        y="0" />
     <rect
-       style="fill:#000000;fill-opacity:1;stroke:none"
-       id="rect3948"
-       width="8"
+       style="fill:#00ff00;fill-opacity:1;stroke:none"
+       id="rect3960"
+       width="1"
        height="1"
        x="2"
        y="2" />
     <rect
-       style="fill:#000000;fill-opacity:1;stroke:none"
-       id="rect3950"
+       style="fill:#00ff00;fill-opacity:1;stroke:none"
+       id="rect3960-2"
        width="1"
        height="1"
-       x="15"
-       y="4" />
+       x="3"
+       y="2" />
     <rect
-       style="fill:#000000;fill-opacity:1;stroke:none"
-       id="rect3952"
+       style="fill:#00ff00;fill-opacity:1;stroke:none"
+       id="rect3960-7"
        width="1"
        height="1"
-       x="16"
+       x="5"
+       y="3" />
+    <rect
+       style="fill:#00ff00;fill-opacity:1;stroke:none"
+       id="rect3960-3"
+       width="1"
+       height="1"
+       x="3"
        y="5" />
-    <rect
-       style="fill:#000000;fill-opacity:1;stroke:none"
-       id="rect3954"
-       width="1"
-       height="1"
-       x="17"
-       y="6" />
   </g>
 </svg>

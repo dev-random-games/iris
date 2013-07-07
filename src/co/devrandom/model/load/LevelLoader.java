@@ -1,6 +1,8 @@
 package co.devrandom.model.load;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,6 +14,8 @@ import org.w3c.dom.NodeList;
 
 import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
+import co.devrandom.model.objects.Block;
+import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.Wall;
 import co.devrandom.util.Vector;
 
@@ -46,15 +50,20 @@ public class LevelLoader {
 					float w = Float.parseFloat(attrs.getNamedItem("width").getNodeValue());
 					float h = Float.parseFloat(attrs.getNamedItem("height").getNodeValue());
 					
-//					System.out.println( new Vector(x + w / 2f, y + h / 2).toString());
-					System.out.println(new Vector(w, h));
+					String color = extractElement("fill", attrs.getNamedItem("style").getNodeValue()).substring(1);
 					
-					Wall wall = new Wall(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE),
-							new Vector(w, h).scale(GameState.LEVEL_SCALE));
+					PhysicsObject object = null;
+					
+					if (color.equals(ColorList.WALL.getColor())) {
+						object = new Wall(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE),
+								new Vector(w, h).scale(GameState.LEVEL_SCALE));	
+					} else if (color.equals(ColorList.BOX.getColor())) {
+						object = new Block(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE));
+					} else {
+						
+					}
 
-					model.addPhysicsObject(wall);
-					
-//					System.out.println(extractElement(attrs.getNamedItem("style").getNodeValue(), "fill"));
+					model.addPhysicsObject(object);
 				}
 			}
 		} catch (Exception e) {
@@ -64,20 +73,18 @@ public class LevelLoader {
 		return "";
 	}
 
-//	private static String extractElement(String list, String key) {
-//		String[] elements = list.split(";");
-//		
-//		System.out.println(list);
-//		
-////		Pattern extractor = Pattern.compile(key + ":([^:;]*?);");
-//		Pattern extractor = Pattern.compile("(" + key + ")");
-//		System.out.println(extractor.toString());
-//		System.out.println(extractor.matcher(list).group());
-//		
-////		System.out.println(elements);
-//		
-//		return "";
-//	}
+	private static String extractElement(String key, String list) {
+		Pattern extractor = Pattern.compile(key + ":([^:;]*)");
+		Matcher matcher = extractor.matcher(list);
+		
+		if (matcher.find()) {
+			return matcher.group(1);
+		} else {
+			System.err.println("Level loader encountered a problem");
+			System.exit(1);
+			return null;
+		}
+	}
 	
 	private static File load(String fileName) {
 		return new File(GameState.LEVEL_PATH + fileName);
