@@ -10,9 +10,9 @@ import org.jbox2d.dynamics.World;
 
 import co.devrandom.main.GameState;
 import co.devrandom.model.events.TimedEvent;
-import co.devrandom.model.objects.Block;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.Player;
+import co.devrandom.model.objects.Wall;
 import co.devrandom.util.Vector;
 
 public class Model implements Runnable {
@@ -38,7 +38,7 @@ public class Model implements Runnable {
 		{
 			for (int x = -10; x < 10; x++) {
 				for (int y = -20; y < -2; y++) {
-					Block block = new Block(this, new Vector(x * 0.25f, y * 0.25f));
+					Wall block = new Wall(this, new Vector(x * 0.25f, y * 0.25f), new Vector(2f, 2f));
 		
 					physicsObjects.add(block);
 				}
