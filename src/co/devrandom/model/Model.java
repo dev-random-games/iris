@@ -40,7 +40,7 @@ public class Model implements Runnable {
 	}
 
 	public void run() {
-
+		
 		{
 			for (int x = 0; x < 5; x++) {
 				for (int y = 0; y < 20; y++) {
