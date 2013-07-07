@@ -67,8 +67,6 @@ public class PolygonShapeBuilder {
 	public PolygonShape build() {
 		PolygonShape shape = new PolygonShape();
 		
-		Vector center = c2.plus(c1).scale(.5f);
-		
 		Vec2[] finalVerts = new Vec2[vertices.size()];
 		
 		for (int i = 0; i < vertices.size(); i++){

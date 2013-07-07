@@ -37,8 +37,8 @@ import co.devrandom.audio.AudioList;
 import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
 import co.devrandom.model.objects.PhysicsObject;
-import co.devrandom.model.objects.util.Ray;
-import co.devrandom.model.objects.util.RayCaster;
+import co.devrandom.model.objects.ray.Ray;
+import co.devrandom.model.objects.ray.RayCaster;
 import co.devrandom.util.Vector;
 import co.devrandom.vc.controller.KeyPress;
 import co.devrandom.vc.view.TextureAttributes;
@@ -83,7 +83,6 @@ public class ViewController implements Runnable {
 		loadTextures();
 
 		while (!Display.isCloseRequested()) {
-			Display.sync(GameState.FPS);
 
 			TextureList.newFrame();
 			setCamera();
@@ -98,16 +97,6 @@ public class ViewController implements Runnable {
 						GameState.WINDOW_HEIGHT / 2f), 0f);
 
 			} else {
-				if (GameState.isPaused()) {
-					handlePausedInput();
-				} else {
-					handleGameInput();
-
-					cameraLocation.addInPlace(cameraLocation.minus(
-							model.getPlayer().getPosition().scale(-cameraZoom)).scale(-0.2f));
-				}
-
-				handleGameInput();
 
 				glPushMatrix();
 
@@ -115,6 +104,17 @@ public class ViewController implements Runnable {
 				 * Anything controlled by the camera goes below.
 				 */
 
+				if (GameState.isPaused()) {
+					handlePausedInput();
+				} else {
+					handleGameInput();
+				}
+				
+				Vector playerPos = model.getPlayer().getPosition();
+				
+				cameraLocation.addInPlace(cameraLocation.minus(
+						playerPos.scale(-cameraZoom)).scale(-1f));
+				
 				// Put all world matrix transforms here.
 				glTranslatef((float) GameState.WINDOW_WIDTH / 2 + cameraLocation.x,
 						(float) GameState.WINDOW_HEIGHT / 2 + cameraLocation.y, 0);
@@ -124,29 +124,39 @@ public class ViewController implements Runnable {
 				 * Draw all gameObjects;
 				 */
 				for (PhysicsObject physicsObject : model.getGameObjects()) {
-					this.renderTexture(physicsObject.getTexAttributes(),
-							physicsObject.getPosition(), physicsObject.getRotation());
+					if (physicsObject.equals(model.getPlayer())){
+						this.renderTexture(physicsObject.getTexAttributes(),
+								playerPos, physicsObject.getRotation());
+					} else {
+						this.renderTexture(physicsObject.getTexAttributes(),
+								physicsObject.getPosition(), physicsObject.getRotation());
+					}
 				}
 
-				Vector origin = model.getPlayer().getPosition().scale(1.0f / (GameState.SCALE));
-				Vector ray = this.getMousePositionInGame().minus(model.getPlayer().getPosition());
+				Vector origin = playerPos.scale(1.0f / (GameState.SCALE));
+				Vector ray = this.getMousePositionInGame().minus(playerPos);
 
 				Ray collision = RayCaster.getClosestIntersect(origin, ray, model.getPlayer(),
 						model.getGameObjects());
 
 				if (collision != null) {
-					this.renderLine(model.getPlayer().getPosition(),
+					this.renderLine(playerPos,
 							collision.getEnd().scale(GameState.SCALE));
-					Vector collisionDir = collision.getEnd().minus(collision.getOrigin()).norm();
-					if (Mouse.isButtonDown(0)) {
-						collision.getDest().applyForce(collisionDir.scale(1), collision.getEnd());
-						model.getPlayer().applyForce(collisionDir.scale(-1), collision.getOrigin());
-					} else if (Mouse.isButtonDown(1)) {
-						collision.getDest().applyForce(collisionDir.scale(-1), collision.getEnd());
-						model.getPlayer().applyForce(collisionDir.scale(1), collision.getOrigin());
+					/*
+					 * Pushing and pulling on other objects with the gun.
+					 */
+					if (GameState.isModelRunning()){
+						Vector collisionDir = collision.getEnd().minus(collision.getOrigin()).norm();
+						if (Mouse.isButtonDown(0)) {
+							collision.getDest().applyForce(collisionDir.scale(1), collision.getEnd());
+							model.getPlayer().applyForce(collisionDir.scale(-1), collision.getOrigin());
+						} else if (Mouse.isButtonDown(1)) {
+							collision.getDest().applyForce(collisionDir.scale(-1), collision.getEnd());
+							model.getPlayer().applyForce(collisionDir.scale(1), collision.getOrigin());
+						}
 					}
 				} else {
-					this.renderLine(model.getPlayer().getPosition(), ray.scale(1000));
+					this.renderLine(playerPos, ray.scale(1000));
 				}
 
 				glPopMatrix();
@@ -178,6 +188,8 @@ public class ViewController implements Runnable {
 				if (GameState.isPaused())
 					renderTexture(new TextureAttributes(TextureList.PAUSE, new Vector(64, 64)),
 							new Vector(GameState.WINDOW_WIDTH - 42, 42), 0);
+				
+				Display.sync(GameState.FPS);
 			}
 
 			SoundStore.get().poll(0);
