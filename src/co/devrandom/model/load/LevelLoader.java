@@ -56,13 +56,13 @@ public class LevelLoader {
 					PhysicsObject object = null;
 					
 					if (color.equals(ColorList.WALL.getColor())) {
-						object = new Wall(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE),
+						object = new Wall(model, new Vector(x + w / 2, y + h / 2).scale(GameState.LEVEL_SCALE * 2),
 								new Vector(w, h).scale(GameState.LEVEL_SCALE));	
 					} else if (color.equals(ColorList.BOX.getColor())) {
-						object = new Block(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE),
+						object = new Block(model, new Vector(x + w / 2, y + h / 2).scale(GameState.LEVEL_SCALE * 2),
 								new Vector(w, h).scale(GameState.LEVEL_SCALE));
 					} else if (color.equals(ColorList.PLAYER.getColor())) {
-						Player player = new Player(model, new Vector(x + w, y + h).scale(GameState.LEVEL_SCALE),
+						Player player = new Player(model, new Vector(x + w / 2, y + h / 2).scale(GameState.LEVEL_SCALE * 2),
 								new Vector(w, h).scale(GameState.LEVEL_SCALE));
 						object = player;
 						

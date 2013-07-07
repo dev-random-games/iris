@@ -33,7 +33,7 @@ public class Model implements Runnable {
 	}
 
 	public void run() {
-		LevelLoader loader = new LevelLoader(this, "first.svg");
+		LevelLoader loader = new LevelLoader(this, "another_test.svg");
 		loader.loadObjects();
 		
 		while (true) {

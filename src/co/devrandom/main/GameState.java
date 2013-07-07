@@ -27,7 +27,7 @@ public class GameState {
 	/*
 	 * Level loading settings
 	 */
-	public static final float LEVEL_SCALE = 0.1f;
+	public static final float LEVEL_SCALE = .1f;
 	
 	/*
 	 * jBox2D settings
