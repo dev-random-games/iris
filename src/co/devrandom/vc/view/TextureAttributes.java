@@ -40,6 +40,10 @@ public class TextureAttributes {
 		this(textures, dim, DEFAULT_FRAME_DURATION);
 	}
 	
+	public TextureAttributes(TextureList[] textures, long frameDuration){
+		this(textures, DEFAULT_DIM, frameDuration);
+	}
+	
 	public Vector getStartTexPosition() {
 		return textures[currentFrame].getStartTexPosition();
 	}

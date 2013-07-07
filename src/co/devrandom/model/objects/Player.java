@@ -32,7 +32,10 @@ public class Player extends PhysicsObject {
 	public Player(Model model, Vector position, Vector size) {
 		super(model, BodyDefBuilder.setPosition(BD, position),
 				FD.shape(PhysicsObject.makeBoxShape(size)).build(),
-				 new TextureAttributes(TextureList.PLAYER));
+				 new TextureAttributes(
+						 new TextureList[] { TextureList.PLAYER_1, TextureList.PLAYER_2, TextureList.PLAYER_3, TextureList.PLAYER_4,
+								 TextureList.PLAYER_3, TextureList.PLAYER_2 },
+						 50l));
 	}
 	
 	public void moveForward() {

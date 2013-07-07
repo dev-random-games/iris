@@ -39,6 +39,8 @@ public class Model implements Runnable {
 		while (true) {
 			lastFrame = System.currentTimeMillis();
 
+			player.getBody().m_fixtureList.m_friction = 1000f;
+			
 			try {
 				Thread.sleep(SLEEP_TIME);
 			} catch (InterruptedException e) {
