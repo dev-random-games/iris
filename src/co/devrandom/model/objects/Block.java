@@ -13,7 +13,7 @@ import co.devrandom.util.Vector;
 public class Block extends PhysicsObject {
 	private static final float DENSITY = 0.1f;
 	private static final float FRICTION = 1f;
-	private static final float RESTITUTION = 0.0001f;
+	private static final float RESTITUTION = 1f;
 	private static final float GRAVITY = 1f;
 	
 	private static final BodyDef BD = new BodyDefBuilder()
