@@ -21,6 +21,7 @@ public enum TextureList {
 	 * Put all textures needed in game right here!
 	 */
 	MAIN_MENU("main-menu.png", false),
+	GRAVY("gravy.png", false),
 	EVIL_SMILEY("evil-smiley.png", false),
 	DOT("dot.png", false),
 	SPARKLE("sparkle.png", false),

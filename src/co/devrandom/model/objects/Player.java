@@ -16,7 +16,7 @@ public class Player extends PhysicsObject {
 	private static final float SPRINT_MULTIPLIER = 2f;
 	
 	private static final float DENSITY = 0.1f;
-	private static final float FRICTION = 0f;
+	private static final float FRICTION = 0.3f;
 	private static final float RESTITUTION = 0.0001f;
 	private static final float GRAVITY = 1f;
 
@@ -35,7 +35,15 @@ public class Player extends PhysicsObject {
 				FD.shape(PhysicsObject.makeBoxShape(size)).build(),
 				 new TextureAttributes(TextureList.PLAYER));
 	}
-	
+
+	public void friction(boolean on) {
+		if (on) {
+			getBody().getFixtureList().setFriction(FRICTION);
+		} else {
+			getBody().getFixtureList().setFriction(0.0f);
+		}
+	}
+
 	public void moveForward(boolean sprinting) {
 		this.getBody().applyForceToCenter(new Vec2(0, (sprinting ? SPRINT_MULTIPLIER : 1) * -MOVEMENT_SPEED));
 	}

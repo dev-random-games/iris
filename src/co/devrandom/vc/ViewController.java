@@ -60,6 +60,8 @@ public class ViewController implements Runnable {
 	private int numFrames;
 	private static final int FPS_CHECK_TIME = 1000;
 	boolean fpsMeterVisible = true;
+	
+	private int main_menu;
 
 	public ViewController(Model model) {
 		this.model = model;
@@ -82,6 +84,8 @@ public class ViewController implements Runnable {
 		FontList.initFonts();
 		loadTextures();
 
+		main_menu = 0;
+
 		while (!Display.isCloseRequested()) {
 
 			TextureList.newFrame();
@@ -90,8 +94,14 @@ public class ViewController implements Runnable {
 			if (GameState.isMainMenu()) {
 				handleMainMenuInput();
 
-				TextureAttributes textures = new TextureAttributes(TextureList.MAIN_MENU,
-						new Vector(2048f, 2048f));
+				TextureAttributes textures;
+
+				if (main_menu == 0)
+					textures = new TextureAttributes(TextureList.MAIN_MENU,
+							new Vector(2048f, 2048f));
+				else
+					textures = new TextureAttributes(TextureList.GRAVY,
+							new Vector(2048f, 2048f));
 
 				renderTexture(textures, new Vector(GameState.WINDOW_WIDTH / 2f,
 						GameState.WINDOW_HEIGHT / 2f), 0f);
@@ -109,12 +119,12 @@ public class ViewController implements Runnable {
 				} else {
 					handleGameInput();
 				}
-				
+
 				Vector playerPos = model.getPlayer().getPosition();
-				
-				cameraLocation.addInPlace(cameraLocation.minus(
-						playerPos.scale(-cameraZoom)).scale(-1f));
-				
+
+				cameraLocation.addInPlace(cameraLocation.minus(playerPos.scale(-cameraZoom)).scale(
+						-1f));
+
 				// Put all world matrix transforms here.
 				glTranslatef((float) GameState.WINDOW_WIDTH / 2 + cameraLocation.x,
 						(float) GameState.WINDOW_HEIGHT / 2 + cameraLocation.y, 0);
@@ -124,9 +134,9 @@ public class ViewController implements Runnable {
 				 * Draw all gameObjects;
 				 */
 				for (PhysicsObject physicsObject : model.getGameObjects()) {
-					if (physicsObject.equals(model.getPlayer())){
-						this.renderTexture(physicsObject.getTexAttributes(),
-								playerPos, physicsObject.getRotation());
+					if (physicsObject.equals(model.getPlayer())) {
+						this.renderTexture(physicsObject.getTexAttributes(), playerPos,
+								physicsObject.getRotation());
 					} else {
 						this.renderTexture(physicsObject.getTexAttributes(),
 								physicsObject.getPosition(), physicsObject.getRotation());
@@ -140,19 +150,27 @@ public class ViewController implements Runnable {
 						model.getGameObjects());
 
 				if (collision != null) {
-					this.renderLine(playerPos,
-							collision.getEnd().scale(GameState.SCALE));
+					this.renderLine(playerPos, collision.getEnd().scale(GameState.SCALE));
 					/*
 					 * Pushing and pulling on other objects with the gun.
 					 */
-					if (GameState.isModelRunning()){
-						Vector collisionDir = collision.getEnd().minus(collision.getOrigin()).norm();
+					if (GameState.isModelRunning()) {
+						Vector collisionDir = collision.getEnd().minus(collision.getOrigin())
+								.norm();
 						if (Mouse.isButtonDown(0)) {
-							collision.getDest().applyForce(collisionDir.scale(1), collision.getEnd());
-							model.getPlayer().applyForce(collisionDir.scale(-1), collision.getOrigin());
+							collision.getDest().applyForce(collisionDir.scale(1),
+									collision.getEnd());
+							model.getPlayer().applyForce(collisionDir.scale(-1),
+									collision.getOrigin());
+							model.getPlayer().friction(true);
 						} else if (Mouse.isButtonDown(1)) {
-							collision.getDest().applyForce(collisionDir.scale(-1), collision.getEnd());
-							model.getPlayer().applyForce(collisionDir.scale(1), collision.getOrigin());
+							collision.getDest().applyForce(collisionDir.scale(-1),
+									collision.getEnd());
+							model.getPlayer().applyForce(collisionDir.scale(1),
+									collision.getOrigin());
+							model.getPlayer().friction(true);
+						} else {
+							model.getPlayer().friction(false);
 						}
 					}
 				} else {
@@ -188,7 +206,7 @@ public class ViewController implements Runnable {
 				if (GameState.isPaused())
 					renderTexture(new TextureAttributes(TextureList.PAUSE, new Vector(64, 64)),
 							new Vector(GameState.WINDOW_WIDTH - 42, 42), 0);
-				
+
 				Display.sync(GameState.FPS);
 			}
 
@@ -249,9 +267,10 @@ public class ViewController implements Runnable {
 		while (Keyboard.next()) {
 			if (Keyboard.getEventKeyState()) {
 				if (Keyboard.getEventKey() == KeyPress.START.getKeyID()) {
-					System.out.println("start");
-
-					GameState.startGame();
+					if (main_menu == 0)
+						main_menu = 1;
+					else
+						GameState.startGame();
 				}
 			}
 		}
