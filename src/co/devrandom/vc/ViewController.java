@@ -100,7 +100,7 @@ public class ViewController implements Runnable {
 					textures = new TextureAttributes(TextureList.MAIN_MENU,
 							new Vector(2048f, 2048f));
 				else
-					textures = new TextureAttributes(TextureList.GRAVY,
+					textures = new TextureAttributes(TextureList.GAME_SPLASH,
 							new Vector(2048f, 2048f));
 
 				renderTexture(textures, new Vector(GameState.WINDOW_WIDTH / 2f,
