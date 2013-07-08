@@ -1,6 +1,7 @@
 package co.devrandom.assets.level;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,10 +15,8 @@ import org.w3c.dom.NodeList;
 
 import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
-import co.devrandom.model.objects.Block;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.Player;
-import co.devrandom.model.objects.Wall;
 import co.devrandom.util.Vector;
 
 public class LevelLoader {
@@ -53,23 +52,18 @@ public class LevelLoader {
 					
 					String color = extractElement("fill", attrs.getNamedItem("style").getNodeValue()).substring(1);
 					
-					PhysicsObject object = null;
+					Class<?> cl = ColorList.getClassForColor(color);
+					Constructor<?> cons = cl.getConstructor(Model.class, Vector.class, Vector.class);
 					
-					if (color.equals(ColorList.WALL.getColor())) {
-						object = new Wall(model, new Vector(x + w / 2, y + h / 2).scale(GameState.LEVEL_SCALE * 2),
-								new Vector(w, h).scale(GameState.LEVEL_SCALE));	
-					} else if (color.equals(ColorList.BOX.getColor())) {
-						object = new Block(model, new Vector(x + w / 2, y + h / 2).scale(GameState.LEVEL_SCALE * 2),
-								new Vector(w, h).scale(GameState.LEVEL_SCALE));
-					} else if (color.equals(ColorList.PLAYER.getColor())) {
-						Player player = new Player(model, new Vector(x + w / 2, y + h / 2).scale(GameState.LEVEL_SCALE * 2),
-								new Vector(w, h).scale(GameState.LEVEL_SCALE));
-						object = player;
-						
-						model.setPlayer(player);
+					PhysicsObject po = (PhysicsObject) cons.newInstance(model, 
+							new Vector(x + w / 2, y + h / 2).scale(GameState.LEVEL_SCALE * 2),
+							new Vector(w, h).scale(GameState.LEVEL_SCALE));
+					
+					if (po instanceof Player) {
+						model.setPlayer((Player) po);
 					}
 
-					model.addPhysicsObject(object);
+					model.addPhysicsObject(po);
 				}
 			}
 		} catch (Exception e) {
