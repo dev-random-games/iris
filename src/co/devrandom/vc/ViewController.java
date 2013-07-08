@@ -2,11 +2,11 @@ package co.devrandom.vc;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_LINE_LOOP;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_LINE_LOOP;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glColor4f;
@@ -37,8 +37,6 @@ import co.devrandom.audio.AudioList;
 import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
 import co.devrandom.model.objects.PhysicsObject;
-import co.devrandom.model.objects.ray.Ray;
-import co.devrandom.model.objects.ray.RayCaster;
 import co.devrandom.util.Vector;
 import co.devrandom.vc.controller.KeyPress;
 import co.devrandom.vc.view.TextureAttributes;
@@ -143,40 +141,6 @@ public class ViewController implements Runnable {
 					}
 				}
 
-				Vector origin = playerPos.scale(1.0f / (GameState.SCALE));
-				Vector ray = this.getMousePositionInGame().minus(playerPos);
-
-				Ray collision = RayCaster.getClosestIntersect(origin, ray, model.getPlayer(),
-						model.getGameObjects());
-
-				if (collision != null) {
-					this.renderLine(playerPos, collision.getEnd().scale(GameState.SCALE));
-					/*
-					 * Pushing and pulling on other objects with the gun.
-					 */
-					if (GameState.isModelRunning()) {
-						Vector collisionDir = collision.getEnd().minus(collision.getOrigin())
-								.norm();
-						if (Mouse.isButtonDown(0)) {
-							collision.getDest().applyForce(collisionDir.scale(1),
-									collision.getEnd());
-							model.getPlayer().applyForce(collisionDir.scale(-1),
-									collision.getOrigin());
-							model.getPlayer().friction(true);
-						} else if (Mouse.isButtonDown(1)) {
-							collision.getDest().applyForce(collisionDir.scale(-1),
-									collision.getEnd());
-							model.getPlayer().applyForce(collisionDir.scale(1),
-									collision.getOrigin());
-							model.getPlayer().friction(true);
-						} else {
-							model.getPlayer().friction(false);
-						}
-					}
-				} else {
-					this.renderLine(playerPos, ray.scale(1000));
-				}
-
 				glPopMatrix();
 
 				/*
@@ -253,9 +217,8 @@ public class ViewController implements Runnable {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void renderLine(Vector start, Vector end) {
-		// start.scaleInPlace(GameState.SCALE);
-		// end.scaleInPlace(GameState.SCALE);
 		GL11.glColor3f(0, 0, 0);
 		glBegin(GL_LINE_LOOP);
 		glVertex2f(start.x, start.y);
@@ -346,6 +309,7 @@ public class ViewController implements Runnable {
 		glLoadIdentity();
 	}
 
+	@SuppressWarnings("unused")
 	private Vector getMousePositionInGame() {
 		float x = Mouse.getX();
 		float y = Mouse.getY();
