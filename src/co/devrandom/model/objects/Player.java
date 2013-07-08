@@ -4,12 +4,12 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 
+import co.devrandom.assets.textures.TextureAttributes;
+import co.devrandom.assets.textures.TextureList;
 import co.devrandom.model.Model;
 import co.devrandom.model.objects.util.BodyDefBuilder;
 import co.devrandom.model.objects.util.FixtureDefBuilder;
 import co.devrandom.util.Vector;
-import co.devrandom.vc.view.TextureAttributes;
-import co.devrandom.vc.view.TextureList;
 
 public class Player extends PhysicsObject {
 	private static final float MOVEMENT_SPEED = 1f;

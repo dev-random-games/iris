@@ -11,10 +11,10 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.FixtureDef;
 
+import co.devrandom.assets.textures.TextureAttributes;
 import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
 import co.devrandom.util.Vector;
-import co.devrandom.vc.view.TextureAttributes;
 
 public class PhysicsObject {
 	private Model model;

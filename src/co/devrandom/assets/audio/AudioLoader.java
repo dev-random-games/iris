@@ -1,4 +1,4 @@
-package co.devrandom.audio;
+package co.devrandom.assets.audio;
 
 import java.io.IOException;
 

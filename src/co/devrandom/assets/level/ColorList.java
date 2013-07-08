@@ -1,4 +1,4 @@
-package co.devrandom.model.load;
+package co.devrandom.assets.level;
 
 public enum ColorList {
 	WALL("000000"),

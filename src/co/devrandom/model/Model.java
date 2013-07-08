@@ -8,9 +8,9 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 import org.jbox2d.dynamics.World;
 
+import co.devrandom.assets.level.LevelLoader;
 import co.devrandom.main.GameState;
 import co.devrandom.model.events.TimedEvent;
-import co.devrandom.model.load.LevelLoader;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.Player;
 

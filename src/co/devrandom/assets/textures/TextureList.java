@@ -1,4 +1,4 @@
-package co.devrandom.vc.view;
+package co.devrandom.assets.textures;
 
 import static org.lwjgl.opengl.GL11.GL_LINEAR;
 import static org.lwjgl.opengl.GL11.GL_NEAREST;

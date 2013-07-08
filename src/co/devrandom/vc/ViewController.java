@@ -2,11 +2,11 @@ package co.devrandom.vc;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_LINE_LOOP;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.GL_LINE_LOOP;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glColor4f;
@@ -33,15 +33,15 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.openal.SoundStore;
 
-import co.devrandom.audio.AudioList;
+import co.devrandom.assets.audio.AudioList;
+import co.devrandom.assets.fonts.FontList;
+import co.devrandom.assets.textures.TextureAttributes;
+import co.devrandom.assets.textures.TextureList;
 import co.devrandom.main.GameState;
 import co.devrandom.model.Model;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.util.Vector;
 import co.devrandom.vc.controller.KeyPress;
-import co.devrandom.vc.view.TextureAttributes;
-import co.devrandom.vc.view.TextureList;
-import co.devrandom.vc.view.fonts.FontList;
 
 public class ViewController implements Runnable {
 	Model model;

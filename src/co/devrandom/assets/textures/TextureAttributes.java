@@ -1,4 +1,4 @@
-package co.devrandom.vc.view;
+package co.devrandom.assets.textures;
 
 import co.devrandom.util.Vector;
 

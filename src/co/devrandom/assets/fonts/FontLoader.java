@@ -1,4 +1,4 @@
-package co.devrandom.vc.view.fonts;
+package co.devrandom.assets.fonts;
 
 import java.awt.Font;
 import java.io.InputStream;

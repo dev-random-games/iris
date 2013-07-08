@@ -1,4 +1,4 @@
-package co.devrandom.model.load;
+package co.devrandom.assets.level;
 
 import java.io.File;
 import java.util.regex.Matcher;
