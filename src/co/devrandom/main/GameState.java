@@ -1,5 +1,7 @@
 package co.devrandom.main;
 
+import java.util.logging.Logger;
+
 import org.jbox2d.common.Vec2;
 
 
@@ -39,6 +41,11 @@ public class GameState {
 	public static final Vec2 DEFAULT_GRAVITY = new Vec2(0.0f, 0.0f);
 	public static final float DEFAULT_LINEAR_DAMPING = 1f;
 	public static final float DEFAULT_ANGULAR_DAMPING = 1f;
+	
+	/*
+	 * Logging
+	 */
+	public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	public enum State {
 		RUNNING,
