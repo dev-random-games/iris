@@ -9,10 +9,10 @@ public class GameState {
 	/*
 	 * File path settings
 	 */
-	public static final String NAME = "Gravy";
+	public static final String NAME = "Iris";
 	public static final String ASSET_PATH = "assets/";
 	public static final String FONT_PATH = ASSET_PATH + "fonts/";
-	public static final String IMG_PATH = ASSET_PATH + "img/";
+	public static final String IMG_PATH = ASSET_PATH + "textures/";
 	public static final String AUDIO_PATH = ASSET_PATH + "audio/";
 	public static final String LEVEL_PATH = ASSET_PATH + "levels/";
 	
