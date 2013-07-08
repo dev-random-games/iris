@@ -2,6 +2,7 @@ package co.devrandom.assets.level;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,18 +53,22 @@ public class LevelLoader {
 					
 					String color = extractElement("fill", attrs.getNamedItem("style").getNodeValue()).substring(1);
 					
-					Class<?> cl = ColorList.getClassForColor(color);
-					Constructor<?> cons = cl.getConstructor(Model.class, Vector.class, Vector.class);
-					
-					PhysicsObject po = (PhysicsObject) cons.newInstance(model, 
-							new Vector(x + w / 2, y + h / 2).scale(GameState.LEVEL_SCALE * 2),
-							new Vector(w, h).scale(GameState.LEVEL_SCALE));
-					
-					if (po instanceof Player) {
-						model.setPlayer((Player) po);
-					}
+					try {
+						Class<?> cl = ColorList.getClassForColor(color);
+						Constructor<?> cons = cl.getConstructor(Model.class, Vector.class, Vector.class);
 
-					model.addPhysicsObject(po);
+						PhysicsObject po = (PhysicsObject) cons.newInstance(model, 
+								new Vector(x + w / 2, y + h / 2).scale(GameState.LEVEL_SCALE * 2),
+								new Vector(w, h).scale(GameState.LEVEL_SCALE));
+
+						if (po instanceof Player) {
+							model.setPlayer((Player) po);
+						}
+
+						model.addPhysicsObject(po);
+					} catch(IllegalArgumentException e) {
+						GameState.LOGGER.log(Level.WARNING, "No object found for color: #" + color);
+					}
 				}
 			}
 		} catch (Exception e) {
