@@ -31,4 +31,11 @@ public class Block extends PhysicsObject {
 				FD.shape(PhysicsObject.makeBoxShape(size)).build(),
 				 new TextureAttributes(TextureList.BLOCK));
 	}
+	
+	public void goTo(Vector position) {
+		Vector force = position.minus(this.getPosition()).norm();
+		force = force.scale(0.01f);
+		
+		this.applyForceToCenter(force);
+	}
 }

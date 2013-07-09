@@ -64,7 +64,11 @@ public class PhysicsObject {
 		return texAttributes;
 	}
 	
-	public void applyForce (Vector force, Vector point) {
+	public void applyForceToCenter(Vector force) {
+		getBody().applyForceToCenter(new Vec2(force.x, force.y));
+	}
+	
+	public void applyForce(Vector force, Vector point) {
 		getBody().applyForce(new Vec2(force.x, force.y), new Vec2(point.x, point.y));
 	}
 

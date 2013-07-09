@@ -11,6 +11,7 @@ import org.jbox2d.dynamics.World;
 import co.devrandom.assets.level.LevelLoader;
 import co.devrandom.main.GameState;
 import co.devrandom.model.events.TimedEvent;
+import co.devrandom.model.objects.Block;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.model.objects.Player;
 
@@ -47,7 +48,14 @@ public class Model implements Runnable {
 			}
 			if (GameState.isModelRunning()) {
 				checkEvents();
+				
 				try {
+					for (PhysicsObject object : physicsObjects) {
+						if (object instanceof Block) {
+							((Block) object).goTo(player.getPosition());
+						}
+					}
+					
 					world.step(GameState.TIME_STEP, GameState.VELOCITY_ITERATIONS,
 							GameState.POSITION_ITERATIONS);
 				} catch (ArrayIndexOutOfBoundsException e) {
