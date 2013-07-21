@@ -23,7 +23,7 @@ public class TimedEvent implements Triggerable, Comparable<TimedEvent> {
 	}
 
 	@Override
-	public void onTrigger() {
+	public void trigger() {
 
 	}
 

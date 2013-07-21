@@ -10,5 +10,5 @@ public interface Triggerable {
 	/**
 	 * Called when the event is triggered
 	 */
-	public void onTrigger();
+	public void trigger();
 }
