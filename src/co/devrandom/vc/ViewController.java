@@ -42,6 +42,7 @@ import co.devrandom.model.Model;
 import co.devrandom.model.objects.PhysicsObject;
 import co.devrandom.util.Vector;
 import co.devrandom.vc.controller.KeyPress;
+import co.devrandom.vc.view.DisplayModeSetter;
 
 public class ViewController implements Runnable {
 	Model model;
@@ -58,7 +59,7 @@ public class ViewController implements Runnable {
 	private int numFrames;
 	private static final int FPS_CHECK_TIME = 1000;
 	boolean fpsMeterVisible = true;
-	
+
 	private int main_menu;
 
 	public ViewController(Model model) {
@@ -69,7 +70,7 @@ public class ViewController implements Runnable {
 
 	public void run() {
 		try {
-			Display.setDisplayMode(new DisplayMode(GameState.WINDOW_WIDTH, GameState.WINDOW_HEIGHT));
+			DisplayModeSetter.setFullScreen();
 			Display.setTitle(GameState.NAME);
 			Display.create();
 		} catch (LWJGLException e) {
@@ -84,7 +85,7 @@ public class ViewController implements Runnable {
 
 		main_menu = 0;
 
-		while (!Display.isCloseRequested()) {
+		while (!Display.isCloseRequested() && !KeyPress.EXIT.isDown()) {
 
 			TextureList.newFrame();
 			setCamera();
@@ -98,8 +99,8 @@ public class ViewController implements Runnable {
 					textures = new TextureAttributes(TextureList.MAIN_MENU,
 							new Vector(2048f, 2048f));
 				else
-					textures = new TextureAttributes(TextureList.GAME_SPLASH,
-							new Vector(2048f, 2048f));
+					textures = new TextureAttributes(TextureList.GAME_SPLASH, new Vector(2048f,
+							2048f));
 
 				renderTexture(textures, new Vector(GameState.WINDOW_WIDTH / 2f,
 						GameState.WINDOW_HEIGHT / 2f), 0f);
@@ -249,7 +250,7 @@ public class ViewController implements Runnable {
 		}
 
 		boolean sprinting = KeyPress.SPRINT.isDown();
-		
+
 		if (KeyPress.FORWARD.isDown()) {
 			model.getPlayer().moveForward(sprinting);
 		}

@@ -21,8 +21,8 @@ public class GameState {
 	/*
 	 * Game window settings
 	 */
-	public static final int WINDOW_WIDTH = 1200;
-	public static final int WINDOW_HEIGHT = 700;
+	public static int WINDOW_WIDTH = 1200;
+	public static int WINDOW_HEIGHT = 700;
 	public static final boolean ANTIALIAS = true;
 	public static final int FPS = 60; 
 	
